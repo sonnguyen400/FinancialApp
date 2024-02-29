@@ -1,14 +1,21 @@
 package com.sonnguyen.individual.nhs.Model;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.Collection;
 
-@Entity
 @Table(name = "account")
-public class Account {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Account implements Serializable {
     @Id
     @GeneratedValue
     private int id;
@@ -37,4 +44,91 @@ public class Account {
     @Column(name = "overdraft_limit", precision = 2)
     private BigDecimal overdraftLimit;
 
+    @Column(name = "username")
+    private String username;
+    @Column(name = "password")
+    private String password;
+
+    private Collection<Customer> customers;
+
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getBranchID() {
+        return branchID;
+    }
+
+    public void setBranchID(int branchID) {
+        this.branchID = branchID;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
+    }
+
+    public Boolean getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Boolean balance) {
+        this.balance = balance;
+    }
+
+    public Instant getOpenDate() {
+        return openDate;
+    }
+
+    public void setOpenDate(Instant openDate) {
+        this.openDate = openDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public BigDecimal getOverdraftLimit() {
+        return overdraftLimit;
+    }
+
+    public void setOverdraftLimit(BigDecimal overdraftLimit) {
+        this.overdraftLimit = overdraftLimit;
+    }
 }

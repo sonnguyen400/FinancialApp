@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+    <definition name="admin.page" template="/layout/admin/admin.jsp">
+        <put-attribute name="navheader"  />
+        <put-attribute name="header"  />
+        <put-attribute name="sidebar" />
+        <put-attribute name="content" />
+    </definition>
+    <definition name="main.base" template="/layout/base/main.jsp">
+        <put-attribute name="navheader"  />
+        <put-attribute name="header"  />
+        <put-attribute name="sidebar" />
+        <put-attribute name="content" />
+    </definition>
+    <definition name="base.page" template="/layout/base/base.jsp">
+        <put-attribute name="content"/>
+    </definition>
+
+</tiles-definitions>

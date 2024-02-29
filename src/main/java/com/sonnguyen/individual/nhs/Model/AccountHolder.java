@@ -1,6 +1,7 @@
 package com.sonnguyen.individual.nhs.Model;
 
-import jakarta.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Table;
 
 @Table(name = "account_holder")
 public class AccountHolder {

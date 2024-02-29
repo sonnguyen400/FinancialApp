@@ -1,8 +1,7 @@
 package com.sonnguyen.individual.nhs.Model;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
-
+import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
 @Entity

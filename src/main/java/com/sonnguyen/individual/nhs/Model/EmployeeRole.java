@@ -1,6 +1,6 @@
 package com.sonnguyen.individual.nhs.Model;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "employee_role")
