@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
+import static com.sonnguyen.individual.nhs.Utils.RequestUtils.ERROR_MESSAGE;
 import static com.sonnguyen.individual.nhs.Utils.SessionUtils.LOGIN_SESSION;
 
 @WebServlet(name = "login",urlPatterns = {"/login","/logout"})
@@ -41,7 +42,7 @@ public class LoginController extends HttpServlet {
                     throw new RuntimeException(e);
                 }
             }else{
-                req.setAttribute("error","Invalid password");
+                req.setAttribute(ERROR_MESSAGE,"Invalid password");
             }
         }
         req.getRequestDispatcher("/page/base/login.jsp").forward(req,resp);
