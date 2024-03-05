@@ -1,10 +1,7 @@
 package com.sonnguyen.individual.nhs.Utils;
 
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -17,8 +14,9 @@ import static com.sonnguyen.individual.nhs.Utils.Constants.*;
 public class EntityMapper<T> {
     public static <T> Field getId(Class<T> tClass){
         List<Field> fields=getField(tClass);
-        for(Field field:fields){
-            if(field.getAnnotation(Id.class)!=null){
+        for (Field field : fields) {
+            Id id = field.getAnnotation(Id.class);
+            if (id != null) {
                 return field;
             }
         }
@@ -56,18 +54,18 @@ public class EntityMapper<T> {
         }while(clazz!=null);
         return methods;
     }
-    public static <T> Map<String,String> objectMap(T object,Class<T> clazz){
+    public static <T> Map<String,Object> objectMap(T object,Class<T> clazz){
         List<Field> fields=getField(clazz);
-        Map<String,String> map=new HashMap<>();
+        Map<String,Object> map=new HashMap<>();
         try {
             for(Field field:fields){
                 field.setAccessible(true);
                 Object fieldValue=field.get(object);
                 if(fieldValue!=null){
                     if(fieldValue instanceof String){
-                        map.put(getColumnName(field),"\""+fieldValue+"\"");
+                        map.put(getColumnName(field),fieldValue);
                     }
-                    map.put(getColumnName(field),String.valueOf(fieldValue));
+                    map.put(getColumnName(field),fieldValue);
                 }
             }
         }catch (IllegalAccessException exception){
@@ -84,6 +82,7 @@ public class EntityMapper<T> {
             while(resultSet.next()){
                 T object=clazz.getConstructor().newInstance();
                 for (Field field : fields) {
+                    if(field.getAnnotation(Transient.class)!=null) continue;
                     field.setAccessible(true);
                     String type=field.getType().getSimpleName();
                     if(field.getType().isPrimitive()){
@@ -92,27 +91,31 @@ public class EntityMapper<T> {
                                 field.setInt(object,(int) resultSet.getInt(getColumnName(field)));
                                 break;
                             case LONG:
-                                field.setLong(object,resultSet.getLong(field.getName()));
+                                field.setLong(object,resultSet.getLong(getColumnName(field)));
                                 break;
                             case BYTE:
-                                field.setByte(object,resultSet.getByte(field.getName()));
+                                field.setByte(object,resultSet.getByte(getColumnName(field)));
                                 break;
                             case SHORT:
-                                field.setShort(object,resultSet.getShort(field.getName()));
+                                field.setShort(object,resultSet.getShort(getColumnName(field)));
                                 break;
                             case FLOAT:
-                                field.setFloat(object,resultSet.getFloat(field.getName()));
+                                field.setFloat(object,resultSet.getFloat(getColumnName(field)));
                                 break;
                             case DOUBLE:
-                                field.setDouble(object,resultSet.getDouble(field.getName()));
+                                field.setDouble(object,resultSet.getDouble(getColumnName(field)));
                                 break;
                             case BOOLEAN:
-                                field.setBoolean(object,resultSet.getBoolean(field.getName()));
+                                field.setBoolean(object,resultSet.getBoolean(getColumnName(field)));
                                 break;
                         }
                     }
                     else{
-                        field.set(object,resultSet.getObject(field.getName()));
+                        if(field.getType().getSimpleName().equals(Date.class.getSimpleName())){
+                            field.set(object,resultSet.getDate(getColumnName(field)));
+                            continue;
+                        }
+                        field.set(object,resultSet.getObject(getColumnName(field)));
                     }
                 }
                 results.add((T) object);

@@ -1,2 +1,10 @@
+<%@ page import="com.sonnguyen.individual.nhs.Model.Account" %>
+<%@ page import="com.sonnguyen.individual.nhs.Utils.SessionUtils" %>
 <%@include file="/taglib/taglib.jsp"%>
-<c:redirect url="/home" />
+<%
+    if(((Account)session.getAttribute(SessionUtils.LOGIN_SESSION))!=null){
+        response.sendRedirect(request.getContextPath()+"/home");
+    }else{
+        response.sendRedirect(request.getContextPath()+"/login");
+    }
+%>

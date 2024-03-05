@@ -1,113 +1,111 @@
 package com.sonnguyen.individual.nhs.Repository;
 
-import com.sonnguyen.individual.nhs.Repository.GeneralRepository;
 import com.sonnguyen.individual.nhs.Repository.IRepository.AbstractRepository;
 import com.sonnguyen.individual.nhs.Utils.Console;
 import com.sonnguyen.individual.nhs.Utils.EntityMapper;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class Repository<T,ID> extends GeneralRepository<T,ID> implements AbstractRepository<T,ID> {
-    protected Class<T> entityClass;
-    protected Class<ID> idClass;
-    protected Field idField;
-    public Repository(){
-        Type[] types=((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments();
-        this.entityClass=(Class<T>)types[0];
-        this.idClass=(Class<ID>)types[1];
-        this.idField=EntityMapper.getId(entityClass);
-        assert this.idField != null;
-        this.idField.setAccessible(true);
-    }
-
+public class Repository<T, ID> extends GeneralRepository<T, ID> implements AbstractRepository<T, ID> {
+//    public void executeQuery(String sql, Object... params) throws SQLException {
+//        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+//        for (int i = 0; i < params.length; i++) {
+//            preparedStatement.setObject(i + 1, params[i]);
+//        }
+//
+//    }
 
     @Override
-    public List<T> findAll() {
-        String query="Select * from " + EntityMapper.getTableName(entityClass);
+    public Class<T> getEntityClass() {
+        return (Class<T>) Object.class;
+    }
+    @Override
+    public List<T> findAll() throws SQLException {
+        String query = "Select * from " + EntityMapper.getTableName(getEntityClass());
         List<T> results;
-        try{
-             return results=executeSelect(query,entityClass);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return new ArrayList<T>();
+        return results = executeSelect(query, getEntityClass());
     }
 
     @Override
-    public Optional<T> findById(ID id) {
-        if (this.idField == null) {
-            throw new RuntimeException(entityClass.getSimpleName() +" ID does not exist");
+    public Optional<T> findById(ID id) throws SQLException {
+        Field idField = EntityMapper.getId(getEntityClass());
+        if (idField == null) {
+            throw new RuntimeException(getEntityClass().getSimpleName() + " ID does not exist");
         }
-        StringBuilder query=new StringBuilder("Select * from ");
-        query.append(EntityMapper.getTableName(entityClass));
-        query.append(" where "+idField.getName()+"=");
-        query.append(String.valueOf(id));
-        try {
-            List<T> results = executeSelect(query.toString(),entityClass);
-            if(results.size()!=1) {
-                Console.err("Returned result greater than 1");
-                return Optional.empty();
-            }else{
-                return Optional.of(results.get(0));
+        StringBuilder query = new StringBuilder("Select * from ");
+        query.append(EntityMapper.getTableName(getEntityClass()))
+                .append(" where ")
+                .append(idField.getName())
+                .append("=?");
+        List<T> results = executeSelect(query.toString(),getEntityClass(),id);
+        if(results.size() == 0) {
+            Console.err("No results found");
+        }
+        if (results.size() != 1) {
+            Console.err("Returned result greater than 1");
+            return Optional.empty();
+        } else {
+            return Optional.of(results.get(0));
+        }
+    }
+
+    @Override
+    public void deleteById(ID id) throws SQLException {
+        Field idField = EntityMapper.getId(getClass());
+        if (idField == null) {
+            throw new RuntimeException(getClass().getSimpleName() + " ID does not exist");
+        }
+        StringBuilder query = new StringBuilder("Delete * from ");
+        query.append(getEntityClass().getSimpleName());
+        query.append(" where id=?");
+        executeUpdate(query.toString(),id);
+    }
+
+    @Override
+    public T insert( T object) throws SQLException {
+        Integer id=executeInsert(object, getEntityClass());
+        Field idField = EntityMapper.getId(getEntityClass());
+        if(idField!=null){
+            idField.setAccessible(true);
+            try {
+                idField.set(object, id);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public void deleteById( ID id) {
-        if (this.idField == null) {
-            throw new RuntimeException(entityClass.getSimpleName() +" ID does not exist");
-        }
-        StringBuilder query=new StringBuilder("Delete * from ");
-        query.append(entityClass.getSimpleName());
-        query.append(" where id=");
-        query.append(String.valueOf(id));
-        executeUpdate(query.toString(),entityClass);
-    }
-
-    @Override
-    public T insert(T object) {
-        try {
-            idField.set(object,executeInsert(object,entityClass));
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
         }
         return object;
     }
 
 
     @Override
-    public T update(T object, ID id) {
-        List<Field> fields= EntityMapper.getField(entityClass);
-        Map<String,String> map=EntityMapper.objectMap(object,entityClass);
-        String updateSet=map.entrySet().stream().map(set->{
-            return set.getKey()+" "+set.getValue();
+    public T update(T object, ID id) throws SQLException {
+        List<Field> fields = EntityMapper.getField(getEntityClass());
+        Map<String, Object> map = EntityMapper.objectMap(object, getEntityClass());
+        String updateSet = map.entrySet().stream().map(set -> {
+            return set.getKey() + " " + set.getValue();
         }).collect(Collectors.joining("and"));
-        T newObject=findById(id).map(oldobject->{
+        T newObject = findById(id).map(oldobject -> {
             try {
-                for(Field field:fields){
+                for (Field field : fields) {
                     field.setAccessible(true);
-                    Object newValue=field.get(object);
-                    if(newValue==null) continue;
-                    field.set(oldobject,newValue);
+                    Object newValue = field.get(object);
+                    if (newValue == null) continue;
+                    field.set(oldobject, newValue);
                 }
             } catch (IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
-
             return oldobject;
-        }).orElseThrow(()->new RuntimeException("Id not existed"));
-
+        }).orElseThrow(() -> new RuntimeException("Id not existed"));
         return null;
+    }
+
+    public List<T> executeSelect(String query, Object... params) throws SQLException {
+        return executeSelect(query, getEntityClass(), params);
     }
 }

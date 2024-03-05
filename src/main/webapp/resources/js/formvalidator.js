@@ -93,7 +93,6 @@ function checkRule(element_rule,form){
         }else{
             console.warn(`Rule ${rule.rule} is not existed`);
         }
-
     }
     let errorContainer=element_rule.parent.querySelector(".invalid-feedback");
     if(errorContainer&&result.error){
@@ -125,33 +124,40 @@ export default function Form(form,onsubmit){
         }).toArray()
         element_rules.forEach(element_rule=>{
             element_rule.element.addEventListener("blur",e=>{
-                checkRule(element_rule,form)
+                checkRule(element_rule,form);
             })
         })
         function formData(){
-            const data=new FormData();
-            return element_rules.reduce((pre,element)=>{
-                let elementValue=checkRule(element,form);
-                return pre.append(elementValue.name,elementValue.value);
+            return element_rules.reduce((data, element_rule)=>{
+                let elementValue=checkRule(element_rule,form);
+                if(elementValue===false) {
+                    console.log(elementValue);
+                }
+                data.append(elementValue.name,elementValue.value);
+                return data;
             },new FormData());
         }
-
+        function isValid(){
+            let valid=true;
+            for(let element_rule of element_rules){
+                if(checkRule(element_rule,form)===false) {
+                    valid=false;
+                }
+            }
+            return valid;
+        }
         $(form).submit(e=>{
-            e.preventDefault();
-            onsubmit(formData())
+            if(onsubmit){
+                if(typeof onsubmit=='function') onsubmit(e,formData());
+            }else{
+                if(isValid()) return true;
+            }
+
         })
         return {
             formData,
             form:$(form),
-            isValid(){
-                let valid=true;
-                for(let element_rule of element_rules){
-                    if(checkRule(element_rule,form)==false) {
-                        valid=false;
-                    };
-                }
-                return valid;
-            }
+            isValid
         }
     }
 }

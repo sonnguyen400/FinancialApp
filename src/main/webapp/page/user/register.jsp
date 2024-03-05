@@ -1,21 +1,12 @@
-<!-- <%--
-  Created by IntelliJ IDEA.
-  User: Acer Swift 3
-  Date: 2/24/2024
-  Time: 3:10 PM
-  To change this template use File | Settings | File Templates.
---%> -->
 <%@include file="/taglib/taglib.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <title>Register</title>
     <link rel='stylesheet'
           href='<c:url value="https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css"/>'>
     <%@include file="/taglib/header.jsp" %>
 </head>
-
 <body>
 <div class="d-flex justify-content-center align-items-center" style="height: 100vh">
     <div class="card mw-570 w-100">
@@ -79,7 +70,7 @@
                             <div class="input-group-text bg-primary-darken-5"><i
                                     class="text-white fi-sr-phone-call"></i></div>
                         </div>
-                        <input id="phoneNumber" class="form-control" name="phoneNumber" data-rule="none"
+                        <input id="phoneNumber" class="form-control" name="phone" data-rule="none"
                                name="phone" type="text" placeholder="Phone number"/>
                     </div>
                     <span class="invalid-feedback animated fadeInDown"></span>
@@ -91,7 +82,7 @@
                             <div class="input-group-text bg-primary-darken-5"><i
                                     class="text-white fi-sr-id-badge"></i></div>
                         </div>
-                        <input class="form-control" name="idNumber" data-rule="minlength(8)" type="text"
+                        <input class="form-control" name="social_security_number" data-rule="minlength(8)" type="text"
                                placeholder="ID"/>
                     </div>
                     <span class="invalid-feedback animated fadeInDown"></span>
@@ -137,12 +128,11 @@
 </div>
 <%@include file="/taglib/basescript.jsp" %>
 <script type="module">
-    import Form from '<c:url value="/resources/js/FormValidator.js"/>'
-
+    import Form  from "<c:url value="/resources/js/formvalidator.js"/>";
     $(function () {
-        let form1 = Form("#form1")
-        let form2 = Form("#form2")
-        let form3 = Form("#form3")
+        let form1 = Form("#form1",e=>{e.preventDefault()});
+        let form2 = Form("#form2",e=>{e.preventDefault()});
+        let form3 = Form("#form3",e=>{e.preventDefault()});
         let state = {
             form: form1,
             index: 1
@@ -166,23 +156,17 @@
                     state.form = form2;
                     form2.form.css("display", "block");
                     form1.form.css("display", "none");
-                    ;
                     form3.form.css("display", "none");
-                    ;
                     nextForm.css("display", "block");
                     preForm.css("display", "block");
                     submitAll.css("display", "none");
-                    ;
                     break;
                 case 3:
                     state.form = form3;
                     form3.form.css("display", "block");
                     form2.form.css("display", "none");
-                    ;
                     form1.form.css("display", "none");
-                    ;
                     nextForm.css("display", "none");
-                    ;
                     preForm.css("display", "block");
                     submitAll.css("display", "block");
                     break;
@@ -190,8 +174,12 @@
         }
         changeState(1)
         nextForm.click(e => {
+            console.log(state.form)
             if (state.form.isValid()) {
+                console.log(state.form);
                 changeState(++state.index)
+            }else{
+                console.log("Invalid");
             }
 
         })
@@ -200,13 +188,18 @@
         })
         submitAll.click(e => {
             try {
-                let data = [...form1.formData(), ...form2.formData(), ...form3.formData()];
-                $.post("./register", data, (result) => {
+                var obj={};
+                var temp = [...form1.formData().entries(),...form2.formData().entries(), ...form3.formData().entries()];
+                temp.forEach(value => {
+                    Object.assign(obj,{[value[0]]:value[1]});
+                })
+                $.post("./register", obj, (result) => {
                     console.log(result);
                 })
             } catch {
-                console.log("invalid")
+                sweetAlert("Oops...", "Something went wrong !!", "error");
             }
+
         })
     })
 </script>

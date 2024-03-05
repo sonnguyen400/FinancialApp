@@ -1,3 +1,9 @@
+<%@ page import="com.sonnguyen.individual.nhs.Model.Customer" %>
+<%@ page import="java.util.Collection" %>
+<%!Collection<Customer> customers;%>
+<%
+//    customers= (Collection<Customer>) request.getAttribute("customers");
+%>
 <div class="header">
     <div class="header-content clearfix">
 
@@ -155,7 +161,13 @@
                         <div class="dropdown-content-body">
                             <ul>
                                 <li>
-                                    <a href="app-profile.html"><i class="icon-user"></i> <span>Profile</span></a>
+                                    <a href="app-profile.html"><i class="icon-user"></i> <span>
+                                        <%
+//                                            for(Customer customer:customers){
+//                                                out.println(customer.getFirstname()+" "+customer.getLastname());
+//                                            }
+                                        %>
+                                    </span></a>
                                 </li>
                                 <li>
                                     <a href="javascript:void()">

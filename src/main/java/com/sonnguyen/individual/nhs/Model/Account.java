@@ -3,10 +3,7 @@ package com.sonnguyen.individual.nhs.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -48,9 +45,33 @@ public class Account implements Serializable {
     private String username;
     @Column(name = "password")
     private String password;
-
+    @Transient
     private Collection<Customer> customers;
 
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", branchID=" + branchID +
+                ", accountNumber='" + accountNumber + '\'' +
+                ", accountType='" + accountType + '\'' +
+                ", balance=" + balance +
+                ", openDate=" + openDate +
+                ", status='" + status + '\'' +
+                ", overdraftLimit=" + overdraftLimit +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", customers=" + customers +
+                '}';
+    }
+
+    public Collection<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(Collection<Customer> customers) {
+        this.customers = customers;
+    }
 
     public String getUsername() {
         return username;

@@ -3,6 +3,9 @@
         "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
+    <definition name="error.page" template="/layout/base/error.jsp">
+        <put-attribute name="error_code"/>
+    </definition>
     <definition name="admin.page" template="/layout/admin/admin.jsp">
         <put-attribute name="navheader"  />
         <put-attribute name="header"  />
@@ -18,5 +21,6 @@
     <definition name="base.page" template="/layout/base/base.jsp">
         <put-attribute name="content"/>
     </definition>
+
 
 </tiles-definitions>
