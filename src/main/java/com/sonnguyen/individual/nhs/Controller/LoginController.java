@@ -41,10 +41,9 @@ public class LoginController extends HttpServlet {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-            }else{
-                req.setAttribute(ERROR_MESSAGE,"Invalid password");
             }
         }
+        req.setAttribute(ERROR_MESSAGE,"Invalid password");
         req.getRequestDispatcher("/page/base/login.jsp").forward(req,resp);
     }
 }

@@ -6,6 +6,30 @@
     <definition name="error.page" template="/layout/base/error.jsp">
         <put-attribute name="error_code"/>
     </definition>
+
+
+    <definition name="head_props" template="/definition/head_props.jsp">
+        <put-list-attribute name="props">
+        </put-list-attribute>
+    </definition>
+    <definition name="head" template="/definition/head.jsp">
+        <put-attribute name="title"/>
+        <put-attribute name="props" value="head_props"/>
+    </definition>
+
+    <definition name="script" template="/definition/script.jsp">
+        <put-list-attribute name="scripts">
+        </put-list-attribute>
+    </definition>
+    <definition name="body" template="/definition/body.jsp">
+        <put-attribute name="content"/>
+    </definition>
+
+    <definition name="page" template="/layout/page.jsp">
+        <put-attribute name="head" value="head"/>
+        <put-attribute name="body" value="body"/>
+    </definition>
+
     <definition name="admin.page" template="/layout/admin/admin.jsp">
         <put-attribute name="navheader"  />
         <put-attribute name="header"  />
@@ -20,6 +44,11 @@
     </definition>
     <definition name="base.page" template="/layout/base/base.jsp">
         <put-attribute name="content"/>
+    </definition>
+    <definition name="onlyhead.page" template="/layout/base/onlyhead.jsp">
+        <put-attribute name="navheader"  />
+        <put-attribute name="header"  />
+        <put-attribute name="content" />
     </definition>
 
 

@@ -11,7 +11,6 @@
 <html lang="en">
 
 <head>
-    <meta name="theme-name" content="quixlab" />
     <title>Quixlab - Bootstrap Admin Dashboard Template by Themefisher.com</title>
     <!-- Pignose Calender -->
     <link href='<c:url value="/resources/plugins/pg-calendar/css/pignose.calendar.min.css"/>' rel="stylesheet">
@@ -89,7 +88,7 @@
     ***********************************-->
     <div class="footer">
         <div class="copyright">
-            <%--            <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>--%>
+            <%--<p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>--%>
         </div>
     </div>
     <!--**********************************
@@ -126,7 +125,6 @@
 
 
 <script src='<c:url value="/resources/js/dashboard/dashboard-1.js"/> '></script>
-
 </body>
 
 </html>

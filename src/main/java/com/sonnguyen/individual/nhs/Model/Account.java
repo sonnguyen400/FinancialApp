@@ -45,6 +45,18 @@ public class Account implements Serializable {
     private String username;
     @Column(name = "password")
     private String password;
+
+    @Column(name = "PIN")
+    private String Pin;
+
+    public String getPin() {
+        return Pin;
+    }
+
+    public void setPin(String pin) {
+        Pin = pin;
+    }
+
     @Transient
     private Collection<Customer> customers;
 
