@@ -1,11 +1,5 @@
-<!-- <%--
-  Created by IntelliJ IDEA.
-  User: Acer Swift 3
-  Date: 2/24/2024
-  Time: 3:10 PM
-  To change this template use File | Settings | File Templates.
---%> -->
-<%@include file="/taglib/taglib.jsp" %>
+<%@ page import="static com.sonnguyen.individual.nhs.Utils.RequestUtils.ERROR_MESSAGE" %>
+<%@include file="/index.jsp"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,7 +12,7 @@
 
 <body>
 <%
-    String string=(String)request.getAttribute("error");
+    String string=(String)request.getAttribute(ERROR_MESSAGE);
     if(string!=null)
         out.println("<div class=\"alert alert-danger\">"+string+"!</div>");
 %>
