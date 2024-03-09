@@ -43,8 +43,6 @@
         </div>
     </div>
 </div>
-
-
 <%@include file="/taglib/basescript.jsp" %>
 <%@include file="/tiles/base/plugin/Form.jsp"%>
 <script>
@@ -61,4 +59,5 @@
     })
 </script>
 </body>
+
 </html>
