@@ -24,4 +24,9 @@ public class CustomerRepository extends Repository<Customer,Integer> implements 
         String query="select * from customer where customer.id in (Select customer_id from account_holder where account_holder.account_id=?)";
         return executeSelect(query,accountId);
     }
+
+    @Override
+    public Collection<Customer> findAllByAccountNumber(String accountNumber) throws SQLException {
+        return null;
+    }
 }

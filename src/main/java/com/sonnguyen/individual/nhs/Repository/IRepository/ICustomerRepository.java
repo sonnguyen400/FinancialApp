@@ -8,4 +8,5 @@ import java.util.Collection;
 public interface ICustomerRepository extends AbstractRepository<Customer,Integer> {
     public Customer insert(Customer object) throws SQLException;
     public Collection<Customer> findAllByAccountId(int accountId) throws SQLException;
+    public Collection<Customer> findAllByAccountNumber(String accountNumber) throws SQLException;
 }

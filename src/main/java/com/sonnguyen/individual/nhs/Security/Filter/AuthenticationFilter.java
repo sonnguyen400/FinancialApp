@@ -30,21 +30,22 @@ public class AuthenticationFilter  implements Filter {
     }
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
-        HttpServletResponse response = (HttpServletResponse) servletResponse;
-        if(ExclusiveFilter.isAllow(request)){
-            filterChain.doFilter(servletRequest,response);
-        }else{
-            Account account = (Account) (request.getSession().getAttribute(SessionUtils.LOGIN_SESSION));
-            if(account == null||accountService.findByUsername(account.getUsername()).isEmpty()){
-                response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                request.setAttribute(ERROR_MESSAGE,"unauthorized");
-                request.getRequestDispatcher("/page/base/error.jsp").forward(request,response);
-            }else{
-                filterChain.doFilter(request,response);
-            }
-
-        }
+//        HttpServletRequest request = (HttpServletRequest) servletRequest;
+//        HttpServletResponse response = (HttpServletResponse) servletResponse;
+//        if(ExclusiveFilter.isAllow(request)){
+//            filterChain.doFilter(servletRequest,response);
+//        }else{
+//            Account account = (Account) (request.getSession().getAttribute(SessionUtils.LOGIN_SESSION));
+//            if(account == null||accountService.findByUsername(account.getUsername()).isEmpty()){
+//                response.setStatus(HttpStatus.UNAUTHORIZED.value());
+//                request.setAttribute(ERROR_MESSAGE,"unauthorized");
+//                request.getRequestDispatcher("/page/base/error.jsp").forward(request,response);
+//            }else{
+//                filterChain.doFilter(request,response);
+//            }
+//
+//        }
+        filterChain.doFilter(servletRequest,servletResponse);
 
     }
 }

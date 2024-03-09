@@ -1,5 +1,5 @@
 <%@ page import="static com.sonnguyen.individual.nhs.Utils.RequestUtils.ERROR_MESSAGE" %>
-<%@include file="/index.jsp"%>
+<%@include file="/taglib/taglib.jsp"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,6 +43,8 @@
         </div>
     </div>
 </div>
+
+
 <%@include file="/taglib/basescript.jsp" %>
 <%@include file="/tiles/base/plugin/Form.jsp"%>
 <script>
@@ -59,5 +61,4 @@
     })
 </script>
 </body>
-
 </html>

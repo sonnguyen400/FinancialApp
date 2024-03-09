@@ -6,6 +6,9 @@
     error=(String) request.getAttribute(ERROR_MESSAGE);
     if(error==null) error="Unknown error";
 %>
+<% final String errorMessage = (String)request.getAttribute("ErrorMessage"); %>
+<% final Throwable errorCause = (Throwable)request.getAttribute("ErrorCause"); %>
+<% final String errorLocation = (String)request.getAttribute("ErrorLocation"); %>
 <!DOCTYPE html>
 <html class="h-100" lang="en">
 
@@ -41,6 +44,20 @@
                             </h1>
                             <h4 class="mt-4"><i class="fa fa-thumbs-down text-danger"></i> Bad Request</h4>
                             <p><%=error%></p>
+                            <small>
+                                <%
+                                    if(exception!=null){
+                                        out.println(exception.getLocalizedMessage());
+                                        out.println(exception.getMessage());
+                                        out.println(exception.toString());
+                                        exception.printStackTrace();
+                                    }
+                                %>
+
+                                <%= errorMessage %><br><br>
+
+                                <%= errorCause %><br><br>
+                            </small>
                             <form class="mt-5 mb-5">
                                 <div class="text-center mb-4 mt-4"><a href="/" class="btn btn-primary">Go to Homepage</a>
                                 </div>
@@ -65,6 +82,7 @@
         </div>
     </div>
 </div>
+
 <%@include file="/taglib/basescript.jsp"%>
 </body>
 </html>
