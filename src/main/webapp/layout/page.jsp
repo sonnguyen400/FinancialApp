@@ -23,8 +23,6 @@
 </div>
 <tiles:insertAttribute name="body"/>
 <tiles:insertAttribute name="script"/>
-<script>
-    <tiles:insertAttribute name="inline-script"/>
-</script>
+<tiles:insertAttribute name="inline-script"/>
 </body>
 </html>

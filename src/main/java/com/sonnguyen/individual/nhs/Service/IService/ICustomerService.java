@@ -10,4 +10,5 @@ import java.util.Collection;
 public interface ICustomerService {
     Customer insert(Customer customer) throws SQLException ;
     Collection<Customer> findAllByAccountId(Integer accountId) throws SQLException;
+    Collection<Customer> findAllByAccountNumber(String accountNumber) throws SQLException;
 }

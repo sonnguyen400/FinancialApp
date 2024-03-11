@@ -45,19 +45,16 @@
 </div>
 <%@include file="/taglib/basescript.jsp" %>
 <%@include file="/tiles/base/plugin/Form.jsp"%>
-<script>
-    $(function () {
-        let form1 = Form("#form1","Default");
-        $("#submit").click(function(e){
-            console.log("btn submit");
-            $.post("/login",form1.formData()).done(function (data){
-                console.log(data);
-                window.location.href="/home";
-            })
-        })
+<%--<script>--%>
+<%--    $(function () {--%>
+<%--        let form1 = Form("#form1","Default");--%>
+<%--        $("#submit").click(function(e){--%>
+<%--            $.post("./login",form1.formData()).done(function (data){--%>
+<%--            })--%>
+<%--        })--%>
 
-    })
-</script>
+<%--    })--%>
+<%--</script>--%>
 </body>
 
 </html>

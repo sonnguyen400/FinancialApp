@@ -48,7 +48,7 @@
         <put-attribute name="css" value="css"/>
         <put-attribute name="head-props" value="head-props"/>
         <put-attribute name="body"/>
-        <put-attribute name="script" value="script"/>
+        <put-attribute name="script" />
         <put-attribute name="inline-script" value="default"/>
     </definition>
 

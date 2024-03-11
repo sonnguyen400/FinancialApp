@@ -1,4 +1,4 @@
-package com.sonnguyen.individual.nhs.Controller.User;
+package com.sonnguyen.individual.nhs.WebController.User;
 
 import com.sonnguyen.individual.nhs.Model.Account;
 import com.sonnguyen.individual.nhs.Service.IService.ICustomerService;

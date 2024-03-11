@@ -1,14 +1,23 @@
+<%@ page import="com.sonnguyen.individual.nhs.Service.AccountService" %>
+<%!String accountNumber;
+String amount;
+String message;%>
+<%
+    accountNumber=request.getParameter("account_number");
+    amount=request.getParameter("amount");
+    amount=request.getParameter("message");
+%>
 <div class="row">
     <div class="col">
         <div class="card">
             <div class="card-body">
-                <form>
+                <form id="form1" method="POST" action="${pageContext.request.contextPath}/transfer">
                     <div class="form-group col">
                         <label for="amount" class="col-form-label">
                             <span>Organize</span>
                             <span class="text-danger">*</span>
                         </label>
-                        <select class="form-control input-default">
+                        <select data-rule="none" class="form-control input-default">
                             <option value="">Mb</option>
                         </select>
                     </div>
@@ -17,23 +26,27 @@
                             <span>Receiver account number</span>
                             <span class="text-danger">*</span>
                         </label>
-                        <input type="text" name="account_number" class="form-control input-default"
-                               id="receiver_account_number">
+                        <input type="text" data-rule="none" name="account_number" class="form-control input-default"
+                               id="receiver_account_number"
+                               value="<%=accountNumber==null?"":accountNumber%>">
                     </div>
                     <div class="form-group col">
                         <label for="amount" class="col-form-label">
                             <span>Amount</span>
                             <span class="text-danger">*</span>
                         </label>
-                        <input type="number" min=0 name="amount" class="form-control input-default">
+                        <input type="number" data-rule="required" min=0 name="amount" class="form-control input-default"
+                               value="<%=amount==null?"":amount%>">
                     </div>
                     <div class="form-group col">
-                        <label for="Message" class="col-form-label">
+                        <label for="message" class="col-form-label">
                             <span>Message</span>
                             <span class="text-danger">*</span>
                         </label>
-                        <input type="text" name="Message" class="form-control input-default">
+                        <input type="text" data-rule="none" name="message" class="form-control input-default"
+                               value="<%=message==null?"":message%>">
                     </div>
+                    <button type="submit" class="d-none" id="form1submit"></button>
                 </form>
             </div>
         </div>
@@ -50,19 +63,19 @@
         </div>
         <div class="card">
             <div class="card-body">
-                <div class="col">
-                    <label id="current-balance col-form-label">Receiver Information</label>
-                    <input class="input-default form-control" disabled id="receiver_name">
-                </div>
+                <form id="form2">
+                    <div class="form-group col">
+                        <label id="current-balance col-form-label">Receiver Information</label>
+                        <input class="input-default form-control" data-rule="none" disabled id="receiver_name"
+                        value="<%=request.getAttribute("receiver_name")%>">
+                    </div>
+                </form>
             </div>
         </div>
         <div class="bootstrap-modal">
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal"
-                    data-target="#EnterPIN">Continue</button>
+            <button type="button" class="btn btn-primary">Continue</button>
         </div>
-
-
     </div>
 </div>
 <div class="modal fade" id="EnterPIN" data-backdrop="static">
@@ -73,28 +86,33 @@
                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
                 </button>
             </div>
-
-            <form action="POST">
+            <form action="POST" id="form3">
                 <div class="modal-body">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col">
-                                <input type="PIN" maxlength="1" class="p-2 text-lg form-control input-default">
+                            <div class="col form-group">
+                                <input type="PIN" name="pin-0" maxlength="1" data-rule="none"
+                                       class="p-2 text-lg form-control input-default">
                             </div>
-                            <div class="col">
-                                <input type="PIN" maxlength="1" class="p-2 text-lg form-control input-default">
+                            <div class="col form-group">
+                                <input type="PIN" name="pin-1" maxlength="1" data-rule="none"
+                                       class="p-2 text-lg form-control input-default">
                             </div>
-                            <div class="col">
-                                <input type="PIN" maxlength="1" class="p-2 text-lg form-control input-default">
+                            <div class="col form-group">
+                                <input type="PIN" name="pin-2" maxlength="1" data-rule="none"
+                                       class="p-2 text-lg form-control input-default">
                             </div>
-                            <div class="col">
-                                <input type="PIN" maxlength="1" class="p-2 text-lg form-control input-default">
+                            <div class="col form-group">
+                                <input type="PIN" name="pin-3" maxlength="1" data-rule="none"
+                                       class="p-2 text-lg form-control input-default">
                             </div>
-                            <div class="col">
-                                <input type="PIN" maxlength="1" class="p-2 text-lg form-control input-default">
+                            <div class="col form-group">
+                                <input type="PIN" name="pin-4" maxlength="1" data-rule="none"
+                                       class="p-2 text-lg form-control input-default">
                             </div>
-                            <div class="col">
-                                <input type="PIN" maxlength="1" class="p-2 text-lg form-control input-default">
+                            <div class="col form-group">
+                                <input type="PIN" name="pin-5" maxlength="1" data-rule="none"
+                                       class="p-2 text-lg form-control input-default">
                             </div>
                             <input type="hidden" name="PIN_ENTERED">
                         </div>
@@ -104,76 +122,11 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <div class="bootstrap-modal">
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-toggle="modal"
-                                data-target="#EnterOTP">Continue</button>
-                    </div>
-                </div>
-            </form>
-
-
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="EnterOTP" data-backdrop="static">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Enter OTP</h5>
-                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
-                </button>
-            </div>
-            <form action="POST">
-                <div class="modal-body">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col">
-                                <input type="PIN" maxlength="1" class="p-2 text-lg form-control input-default">
-                            </div>
-                            <div class="col">
-                                <input type="PIN" maxlength="1" class="p-2 text-lg form-control input-default">
-                            </div>
-                            <div class="col">
-                                <input type="PIN" maxlength="1" class="p-2 text-lg form-control input-default">
-                            </div>
-                            <div class="col">
-                                <input type="PIN" maxlength="1" class="p-2 text-lg form-control input-default">
-                            </div>
-                            <div class="col">
-                                <input type="PIN" maxlength="1" class="p-2 text-lg form-control input-default">
-                            </div>
-                            <div class="col">
-                                <input type="PIN" maxlength="1" class="p-2 text-lg form-control input-default">
-                            </div>
-                            <input type="hidden" name="PIN_ENTERED">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <div class="bootstrap-modal">
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-toggle="modal"
-                                data-target="#EnterOTP">Continue</button>
+                        <button type="button" class="btn btn-primary">Continue</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 </div>
-<script>
-    (function ($) {
-        "use strict"
-        new quixSettings({
-            version: "light", //2 options "light" and "dark"
-            layout: "horizontal", //2 options, "vertical" and "horizontal"
-            navheaderBg: "color_1", //have 10 options, "color_1" to "color_10"
-            headerBg: "color_1", //have 10 options, "color_1" to "color_10"
-            sidebarStyle: "vertical", //defines how sidebar should look like, options are: "full", "compact", "mini" and "overlay". If layout is "horizontal", sidebarStyle won't take "overlay" argument anymore, this will turn into "full" automatically!
-            sidebarBg: "color_1", //have 10 options, "color_1" to "color_10"
-            sidebarPosition: "static", //have two options, "static" and "fixed"
-            headerPosition: "fixed", //have two options, "static" and "fixed"
-            containerLayout: "wide",  //"boxed" and  "wide". If layout "vertical" and containerLayout "boxed", sidebarStyle will automatically turn into "overlay".
-            direction: "ltr" //"ltr" = Left to Right; "rtl" = Right to Left
-        });
-    })(jQuery);
-</script>
+<button type="hidden" id="triggerAlert"></button>

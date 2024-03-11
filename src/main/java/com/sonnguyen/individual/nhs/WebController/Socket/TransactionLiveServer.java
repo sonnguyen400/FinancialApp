@@ -1,4 +1,4 @@
-package com.sonnguyen.individual.nhs.Controller.Socket;
+package com.sonnguyen.individual.nhs.WebController.Socket;
 
 
 

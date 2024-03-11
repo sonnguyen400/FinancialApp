@@ -1,4 +1,4 @@
-package com.sonnguyen.individual.nhs.Controller.Admin;
+package com.sonnguyen.individual.nhs.WebController.Admin;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

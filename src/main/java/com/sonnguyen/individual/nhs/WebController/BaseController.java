@@ -1,4 +1,4 @@
-package com.sonnguyen.individual.nhs.Controller;
+package com.sonnguyen.individual.nhs.WebController;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

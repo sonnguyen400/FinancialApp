@@ -21,4 +21,9 @@ public class CustomerService implements ICustomerService {
     public Collection<Customer> findAllByAccountId(Integer accountId) throws SQLException {
         return customerRepository.findAllByAccountId(accountId);
     }
+
+    @Override
+    public Collection<Customer> findAllByAccountNumber(String accountNumber) throws SQLException {
+        return customerRepository.findAllByAccountNumber(accountNumber);
+    }
 }

@@ -193,7 +193,7 @@
                 temp.forEach(value => {
                     Object.assign(obj,{[value[0]]:value[1]});
                 })
-                $.post("./register", obj, (result) => {
+                $.get("./register", obj, (result) => {
                     console.log(result);
                 })
             } catch {
