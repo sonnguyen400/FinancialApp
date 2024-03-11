@@ -111,8 +111,30 @@
                             <div class="input-group-text bg-primary-darken-5"><i class="text-white fi-sr-lock"></i>
                             </div>
                         </div>
-                        <input id="phoneNumber" class="form-control" name="password" data-rule="none"
+                        <input id="password" class="form-control" name="password" data-rule="none"
                                name="password" type="text" placeholder="Password"/>
+                    </div>
+                    <span class="invalid-feedback"></span>
+                </div>
+                <div class="col form-group pb-4">
+                    <label class="pb-2" for="dob">PIN</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text bg-primary-darken-5"><i class="text-white fi-sr-lock"></i>
+                            </div>
+                        </div>
+                        <input id="PIN" class="form-control" name="Pin" data-rule="none" type="text" placeholder="PIN"/>
+                    </div>
+                    <span class="invalid-feedback"></span>
+                </div>
+                <div class="col form-group pb-4">
+                    <label class="pb-2" for="dob">AccountNumber</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text bg-primary-darken-5"><i class="text-white fi-sr-lock"></i>
+                            </div>
+                        </div>
+                        <input id="ACcountNUmber" class="form-control" name="accountNumber" data-rule="none" type="text" placeholder="PIN"/>
                     </div>
                     <span class="invalid-feedback"></span>
                 </div>
@@ -193,7 +215,7 @@
                 temp.forEach(value => {
                     Object.assign(obj,{[value[0]]:value[1]});
                 })
-                $.get("./register", obj, (result) => {
+                $.post("./register", obj, (result) => {
                     console.log(result);
                 })
             } catch {

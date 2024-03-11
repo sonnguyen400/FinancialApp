@@ -59,7 +59,7 @@
                                 <%= errorCause %><br><br>
                             </small>
                             <form class="mt-5 mb-5">
-                                <div class="text-center mb-4 mt-4"><a href="/" class="btn btn-primary">Go to Homepage</a>
+                                <div class="text-center mb-4 mt-4"><a href="${pageContext.request.contextPath}/" class="btn btn-primary">Go to Homepage</a>
                                 </div>
                             </form>
                             <div class="text-center">

@@ -27,6 +27,9 @@ public class CustomerRepository extends Repository<Customer,Integer> implements 
 
     @Override
     public Collection<Customer> findAllByAccountNumber(String accountNumber) throws SQLException {
-        return null;
+        StringBuilder query=new StringBuilder("select * from customer where id in");
+        query.append("(Select customer_id from account_holder where account_id in(");
+        query.append("select id from account where account_number=?))");
+        return executeSelect(query.toString(),accountNumber);
     }
 }

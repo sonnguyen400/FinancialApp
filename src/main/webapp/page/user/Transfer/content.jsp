@@ -1,11 +1,18 @@
 <%@ page import="com.sonnguyen.individual.nhs.Service.AccountService" %>
+<%@ page import="static com.sonnguyen.individual.nhs.Utils.Constants.CONFIRM_PIN" %>
+<%@ page import="static com.sonnguyen.individual.nhs.Utils.Constants.PIN" %>
+<%@ page import="java.io.IOException" %>
+<%@ page import="static com.sonnguyen.individual.nhs.Utils.Constants.*" %>
 <%!String accountNumber;
 String amount;
-String message;%>
+String message;
+Object receiver_name;%>
 <%
+
     accountNumber=request.getParameter("account_number");
     amount=request.getParameter("amount");
-    amount=request.getParameter("message");
+    message=request.getParameter("message");
+    receiver_name= request.getAttribute("receiver_name");
 %>
 <div class="row">
     <div class="col">
@@ -13,7 +20,7 @@ String message;%>
             <div class="card-body">
                 <form id="form1" method="POST" action="${pageContext.request.contextPath}/transfer">
                     <div class="form-group col">
-                        <label for="amount" class="col-form-label">
+                        <label for="provider" class="col-form-label">
                             <span>Organize</span>
                             <span class="text-danger">*</span>
                         </label>
@@ -66,19 +73,21 @@ String message;%>
                 <form id="form2">
                     <div class="form-group col">
                         <label id="current-balance col-form-label">Receiver Information</label>
-                        <input class="input-default form-control" data-rule="none" disabled id="receiver_name"
-                        value="<%=request.getAttribute("receiver_name")%>">
+                        <input data-rule="required" style="font-size: 18px;color: gray;text-transform: uppercase;letter-spacing: 2px" class="input-default form-control" data-rule="none"  disabled id="receiver_name"
+                        value="<%=receiver_name==null?"":String.valueOf(receiver_name)%>">
                     </div>
                 </form>
             </div>
         </div>
         <div class="bootstrap-modal">
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary">Continue</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#enterPINForm">Continue</button>
         </div>
     </div>
 </div>
-<div class="modal fade" id="EnterPIN" data-backdrop="static">
+
+<%--//Enter PIN MODAL--%>
+<div class="modal fade" id="enterPINForm" data-backdrop="static">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -86,35 +95,18 @@ String message;%>
                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
                 </button>
             </div>
-            <form action="POST" id="form3">
+            <form action="${pageContext.request.contextPath}/transfer"  method="post" id="form3">
                 <div class="modal-body">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col form-group">
-                                <input type="PIN" name="pin-0" maxlength="1" data-rule="none"
-                                       class="p-2 text-lg form-control input-default">
-                            </div>
-                            <div class="col form-group">
-                                <input type="PIN" name="pin-1" maxlength="1" data-rule="none"
-                                       class="p-2 text-lg form-control input-default">
-                            </div>
-                            <div class="col form-group">
-                                <input type="PIN" name="pin-2" maxlength="1" data-rule="none"
-                                       class="p-2 text-lg form-control input-default">
-                            </div>
-                            <div class="col form-group">
-                                <input type="PIN" name="pin-3" maxlength="1" data-rule="none"
-                                       class="p-2 text-lg form-control input-default">
-                            </div>
-                            <div class="col form-group">
-                                <input type="PIN" name="pin-4" maxlength="1" data-rule="none"
-                                       class="p-2 text-lg form-control input-default">
-                            </div>
-                            <div class="col form-group">
-                                <input type="PIN" name="pin-5" maxlength="1" data-rule="none"
-                                       class="p-2 text-lg form-control input-default">
-                            </div>
-                            <input type="hidden" name="PIN_ENTERED">
+                                <div class="col form-group">
+                                    <input type="PIN" maxlength="6" name="<%=PIN%>" data-rule="none"
+                                           class="p-2 text-lg form-control input-default">
+                                </div>
+                                <input type="hidden" name="amount">
+                                <input type="hidden" name="message">
+                                <input type="hidden" name="account_number">
+                            <input type="hidden" name="<%=CONFIRM_PIN%>" value="true">
                         </div>
                     </div>
                 </div>
@@ -122,11 +114,47 @@ String message;%>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <div class="bootstrap-modal">
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary">Continue</button>
+                        <button type="submit" class="btn btn-primary">Continue</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 </div>
-<button type="hidden" id="triggerAlert"></button>
+
+
+<%--Enter OTP--%>
+<div class="modal fade" id="enterOTPForm" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Enter your OTP</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                </button>
+            </div>
+            <form action="${pageContext.request.contextPath}/transfer"  method="post" id="form4">
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col form-group">
+                                <input type="PIN" maxlength="6" name="<%=OTP%>" data-rule="none"
+                                       class="p-2 text-lg form-control input-default">
+                            </div>
+                            <input type="hidden" name="amount">
+                            <input type="hidden" name="message">
+                            <input type="hidden" name="account_number">
+                            <input type="hidden" name="<%=CONFIRM_PIN%>" value="true">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <div class="bootstrap-modal">
+                        <!-- Button trigger modal -->
+                        <button type="submit" class="btn btn-primary">Continue</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

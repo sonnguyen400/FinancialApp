@@ -29,4 +29,12 @@ public class Constants {
     public static final String STRING="String";
     public static final String BOOLEANVAL="Boolean";
     public static final String DATE="Date";
+    public static final String ACCOUNT_NUMBER_INVALID="InvalidAccountNumber";
+    public static final String WRONG_PIN="WrongPin";
+    public static final String EXACT_PIN="exactPin";
+    public static final String PIN="pin";
+    public static final String OTP="otp";
+
+    public static final String CONFIRM_PIN="ConfirmPIN";
+
 }

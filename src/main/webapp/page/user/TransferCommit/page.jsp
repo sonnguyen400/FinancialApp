@@ -11,12 +11,14 @@
         <title:addAttribute value="/resources/plugins/sweetalert/js/sweetalert.min.js"/>
     </tiles:putListAttribute>
 </tiles:definition>
+
 <tiles:definition name="transfer_page_css" extends="css" template="/definition/css.jsp">
     <tiles:putListAttribute inherit="true" name="css">
         <tiles:addAttribute value="/resources/plugins/sweetalert/css/sweetalert.css"/>
         <title:addAttribute value="/resources/plugins/toastr/css/toastr.min.css"/>
     </tiles:putListAttribute>
 </tiles:definition>
+
 <tiles:definition name="cur.page" extends="page">
     <tiles:putAttribute name="title" value="Transfer"/>
     <title:putAttribute name="css" value="transfer_page_css"/>

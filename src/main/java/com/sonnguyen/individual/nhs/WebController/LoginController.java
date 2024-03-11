@@ -32,17 +32,17 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Account account= RequestUtils.parseEntity(req,Account.class);
         Optional<Account> account_=accountService.findByUsername(account.getUsername());
-//        if(account_.isPresent()){
-//            if(account_.get().getPassword().equals(account.getPassword())){
-//                SessionUtils.setSession(req,LOGIN_SESSION,account_.get());
-//                try {
-//                    resp.sendRedirect(req.getContextPath()+"/");
-//                    return;
-//                } catch (IOException e) {
-//                    throw new RuntimeException(e);
-//                }
-//            }
-//        }
+        if(account_.isPresent()){
+            if(account_.get().getPassword().equals(account.getPassword())){
+                SessionUtils.setSession(req,LOGIN_SESSION,account_.get());
+                try {
+                    resp.sendRedirect(req.getContextPath()+"/");
+                    return;
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
         req.setAttribute(ERROR_MESSAGE,"Invalid password");
         req.getRequestDispatcher("/page/base/login.jsp").forward(req,resp);
     }

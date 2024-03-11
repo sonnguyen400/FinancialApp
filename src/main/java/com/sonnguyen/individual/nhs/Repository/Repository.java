@@ -5,6 +5,8 @@ import com.sonnguyen.individual.nhs.Utils.Console;
 import com.sonnguyen.individual.nhs.Utils.EntityMapper;
 
 import java.lang.reflect.Field;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -12,13 +14,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Repository<T, ID> extends GeneralRepository<T, ID> implements AbstractRepository<T, ID> {
-//    public void executeQuery(String sql, Object... params) throws SQLException {
-//        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-//        for (int i = 0; i < params.length; i++) {
-//            preparedStatement.setObject(i + 1, params[i]);
-//        }
-//
-//    }
 
     @Override
     public Class<T> getEntityClass() {
@@ -108,4 +103,5 @@ public class Repository<T, ID> extends GeneralRepository<T, ID> implements Abstr
     public List<T> executeSelect(String query, Object... params) throws SQLException {
         return executeSelect(query, getEntityClass(), params);
     }
+   
 }

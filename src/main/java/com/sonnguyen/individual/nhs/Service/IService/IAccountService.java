@@ -9,4 +9,6 @@ import java.util.Optional;
 public interface IAccountService{
     Account createNewAccount(Account account, Customer customer) throws FailureTransaction;
     Optional<Account> findByUsername(String username) ;
+    public String findPINByAccountId(Integer id);
+    public Optional<Account> findAccountByAccountNumber(String username);
 }

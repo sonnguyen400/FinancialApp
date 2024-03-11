@@ -23,7 +23,11 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Collection<Customer> findAllByAccountNumber(String accountNumber) throws SQLException {
-        return customerRepository.findAllByAccountNumber(accountNumber);
+    public Collection<Customer> findAllByAccountNumber(String accountNumber) {
+        try {
+            return customerRepository.findAllByAccountNumber(accountNumber);
+        } catch (SQLException e) {
+            return null;
+        }
     }
 }

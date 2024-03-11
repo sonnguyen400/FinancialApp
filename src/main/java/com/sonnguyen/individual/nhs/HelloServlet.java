@@ -1,24 +1,19 @@
 package com.sonnguyen.individual.nhs;
 
+import com.sonnguyen.individual.nhs.Model.Account;
+import com.sonnguyen.individual.nhs.Repository.AccountRepository;
+import com.sonnguyen.individual.nhs.Service.EmailService;
 
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import javax.mail.MessagingException;
+import java.util.Optional;
 
-@WebServlet(name = "helloServlet", value = "/hello-servlet")
-public class HelloServlet extends HttpServlet {
-    public String message;
-
-    public void init() {
-        message = "Hello World!";
-    }
-
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-    }
-
-    public void destroy() {
+public class HelloServlet {
+    public static void main(String[] args){
+        EmailService emailService=new EmailService();
+        try {
+            emailService.sendEmail("hellohoangson@gmail.com","","");
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

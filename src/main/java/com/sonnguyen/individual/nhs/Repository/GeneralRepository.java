@@ -17,33 +17,38 @@ public class GeneralRepository<T,ID> {
     private static final String PASSWORD="Jscs5fU+AFuEnDyOqcE1XA==";
     private static final String ENCYPTOR="HoangBao2003";
     private static final String dbURL="jdbc:mysql://localhost:3306/nhsbank";
-    protected static Connection connection;
     private static String decrypt(String encryptor){
         StandardPBEStringEncryptor standardPBEStringEncryptor=new StandardPBEStringEncryptor();
         standardPBEStringEncryptor.setPassword(ENCYPTOR);
         return standardPBEStringEncryptor.decrypt(encryptor);
     }
-    static {
+    public Connection getConnection(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            connection= DriverManager.getConnection(dbURL,"root", "");
+            return DriverManager.getConnection(dbURL,"root", "");
+
         }catch (ClassNotFoundException e){
             Console.err("Class not found - SQL Driver was lost!");
             e.printStackTrace();
         }catch (SQLException e){
             Console.err("SQL Exception - Connection could not be established!");
-
         }
+        return null;
     }
-    public static void transactionStart(Transactional transactional) throws FailureTransaction{
+
+
+    public void transactionStart(Transactional transactional) throws FailureTransaction{
+        Connection connection=getConnection();
         try {
             connection.setAutoCommit(false);
             transactional.startTransaction();
             connection.commit();
         } catch (Exception e) {
+            e.printStackTrace();
             try {
                 connection.commit();
             } catch (SQLException ex) {
+                ex.printStackTrace();
                 throw new FailureTransaction();
             }
             e.printStackTrace();
@@ -58,9 +63,12 @@ public class GeneralRepository<T,ID> {
     }
 
     public List<T> executeSelect(String query, Class<T> clazz,Object ...params) throws SQLException {
+        Connection connection=getConnection();
         ResultSet resultSet=null;
         List<T> list = null;
-        try (PreparedStatement statement=connection.prepareStatement(query)) {
+        PreparedStatement statement;
+        try  {
+            statement=connection.prepareStatement(query);
             setPreparedStatement(statement,List.of(params));
             resultSet=statement.executeQuery();
             list= EntityMapper.mapEntity(resultSet,clazz);
@@ -69,8 +77,30 @@ public class GeneralRepository<T,ID> {
         }
         return list;
     }
+    public ResultSet rawExecuteSelect(String query,Object ...params) {
+        Connection connection=getConnection();
+        ResultSet resultSet=null;
+        List<T> list = null;
+        try (PreparedStatement statement=connection.prepareStatement(query)) {
+            setPreparedStatement(statement,List.of(params));
+            resultSet=statement.executeQuery();
+            return resultSet;
+        } catch (SQLException e) {
+            System.out.println("Error raw");
+            e.printStackTrace();
+            return null;
+        }finally {
+            try {
+                connection.close();
+            } catch (SQLException|NullPointerException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     public Integer executeInsert(T object, Class<T> clazz) throws SQLException {
+        Connection connection=getConnection();
         PreparedStatement statement=null;
         List<Field> fields=EntityMapper.getField(clazz);
         ResultSet resultSet=null;
@@ -100,6 +130,7 @@ public class GeneralRepository<T,ID> {
         return null;
     }
     public int executeUpdate(String query,Object ...param) throws SQLException{
+        Connection connection=getConnection();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             for (int i = 0; i < param.length; i++) {
                 statement.setObject(i + 1, param[i]);
@@ -121,4 +152,5 @@ public class GeneralRepository<T,ID> {
             }
         });
     }
+
 }

@@ -1,8 +1,9 @@
 <%@ page import="com.sonnguyen.individual.nhs.Model.Customer" %>
 <%@ page import="java.util.Collection" %>
-<%!Collection<Customer> customers;%>
+<%@ page import="com.sonnguyen.individual.nhs.Utils.SessionUtils" %>
+<%@ page import="com.sonnguyen.individual.nhs.Model.Account" %>
 <%
-//    customers= (Collection<Customer>) request.getAttribute("customers");
+    Account account= (Account) session.getAttribute(SessionUtils.LOGIN_SESSION);
 %>
 <div class="header">
     <div class="header-content clearfix">
@@ -162,11 +163,7 @@
                             <ul>
                                 <li>
                                     <a href="app-profile.html"><i class="icon-user"></i> <span>
-                                        <%
-//                                            for(Customer customer:customers){
-//                                                out.println(customer.getFirstname()+" "+customer.getLastname());
-//                                            }
-                                        %>
+                                        <%=account.getUsername()%>
                                     </span></a>
                                 </li>
                                 <li>

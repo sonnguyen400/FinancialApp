@@ -1,5 +1,4 @@
 <%@ page import="static com.sonnguyen.individual.nhs.Utils.RequestUtils.ERROR_MESSAGE" %>
-<%@ page import="static com.sonnguyen.individual.nhs.Utils.Constants.EXACT_PIN" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="module">
     import Form from '<c:url value="/resources/js/formvalidator.js"/>';
@@ -29,25 +28,10 @@
             $("#form1submit").click();
         })
 
-        $("#form3").on("submit",function (e) {
-            form1.formData().forEach((v,k)=>{
-                let input="input[name="+k+"]";
-                if(k.trim()!==""){
-                    let a=$(this).find(input);
-                    a.val(v);
-                }
-            })
-            return true;
-        })
 
         <%
             if(request.getAttribute(ERROR_MESSAGE)!=null){
                 out.print("sweetAlert(\"Oops...\", \" "+ request.getAttribute(ERROR_MESSAGE)+ " \", \"error\");");
-            }
-        %>
-        <%
-            if(request.getAttribute(EXACT_PIN)!=null){
-                out.print("$(\"#enterOTPForm\").modal();");
             }
         %>
     })(jQuery);

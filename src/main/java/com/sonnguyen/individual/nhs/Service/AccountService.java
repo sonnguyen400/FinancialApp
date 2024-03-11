@@ -24,7 +24,7 @@ public class AccountService implements IAccountService {
     @Override
     public Account createNewAccount(Account account,Customer customer) throws FailureTransaction {
         account.setBranchID(1);
-        GeneralRepository.transactionStart(()->{
+        accountRepository.transactionStart(()->{
             Customer customer1=customerService.insert(customer);
             Account account1=accountRepository.insert(account);
             account.setId(account1.getId());
@@ -34,11 +34,20 @@ public class AccountService implements IAccountService {
                 accountHolder.insert(customer1.getId(),account1.getId());
             }
         });
-
         return account;
     }
     public Optional<Account> findByUsername(String username) {
         return accountRepository.findByUsername(username);
+    }
+
+    @Override
+    public String findPINByAccountId(Integer id) {
+        return accountRepository.findPINByAccountId(id);
+    }
+
+    @Override
+    public Optional<Account> findAccountByAccountNumber(String username) {
+        return accountRepository.findAccountByAccountNumber(username);
     }
 
 }
