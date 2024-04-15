@@ -6,10 +6,22 @@ public class Transfer{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
-    private int id;
+    private Integer id;
+
+    public Transaction getTransaction() {
+        return transaction;
+    }
+
+    public void setTransaction(Transaction transaction) {
+        this.transaction = transaction;
+    }
+
     @Basic
     @Column(name = "transaction_id")
-    private int transactionId;
+    private Integer transactionId;
+
+    @Transient
+    private Transaction transaction;
     @Basic
     @Column(name = "account_id")
     private int accountId;
@@ -69,5 +81,16 @@ public class Transfer{
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (message != null ? message.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Transfer{" +
+                "id=" + id +
+                ", transactionId=" + transactionId +
+                ", accountId=" + accountId +
+                ", status='" + status + '\'' +
+                ", message='" + message + '\'' +
+                '}';
     }
 }

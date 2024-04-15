@@ -1,5 +1,7 @@
 package com.sonnguyen.individual.nhs.Utils;
 
+import java.sql.Connection;
+
 public interface Transactional {
-    public void startTransaction() throws Exception;
+    Object startTransaction(Connection connection) throws Exception;
 }

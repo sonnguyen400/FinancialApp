@@ -4,6 +4,9 @@ import com.sonnguyen.individual.nhs.Exception.FailureTransaction;
 import com.sonnguyen.individual.nhs.Model.Account;
 import com.sonnguyen.individual.nhs.Model.Customer;
 
+import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Optional;
 
 public interface IAccountService{
@@ -11,4 +14,5 @@ public interface IAccountService{
     Optional<Account> findByUsername(String username) ;
     public String findPINByAccountId(Integer id);
     public Optional<Account> findAccountByAccountNumber(String username);
+    public BigDecimal updateBalanceByAccountId(Connection connection,Integer accountId, BigDecimal value) throws SQLException;
 }

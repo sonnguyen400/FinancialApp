@@ -1,3 +1,9 @@
+<%@ page import="com.sonnguyen.individual.nhs.Model.Account" %>
+<%@ page import="com.sonnguyen.individual.nhs.Utils.SessionUtils" %>
+<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
+<%
+    Account account= (Account) session.getAttribute(SessionUtils.LOGIN_SESSION);
+%>
 <div id="carouselExampleCaptions" class="carousel slide card" style="overflow: hidden;"
      data-ride="carousel">
     <ol class="carousel-indicators">
@@ -44,7 +50,9 @@
                     <div class="col">
                         <div class="card">
                             <h4 class="text-secondary">Balance</h4>
-                            <div class="font-weight-semi-bold text-md">12.000.000</div>
+                            <div class="font-weight-semi-bold text-md">
+                                <%=account.getBalance()%>
+                            </div>
                         </div>
                     </div>
                     <div class="col">

@@ -1,19 +1,23 @@
 package com.sonnguyen.individual.nhs;
 
-import com.sonnguyen.individual.nhs.Model.Account;
-import com.sonnguyen.individual.nhs.Repository.AccountRepository;
-import com.sonnguyen.individual.nhs.Service.EmailService;
+import com.sonnguyen.individual.nhs.Model.Transaction;
+import com.sonnguyen.individual.nhs.Model.Transfer;
+import com.sonnguyen.individual.nhs.Repository.GeneralRepository;
+import com.sonnguyen.individual.nhs.Service.TransferService;
 
-import javax.mail.MessagingException;
-import java.util.Optional;
+import java.math.BigDecimal;
+import java.sql.Connection;
 
 public class HelloServlet {
     public static void main(String[] args){
-        EmailService emailService=new EmailService();
-        try {
-            emailService.sendEmail("hellohoangson@gmail.com","","");
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
+        Connection connection=GeneralRepository.getConnection();
+        TransferService transferService=new TransferService();
+        Transfer transfer=new Transfer();
+        transfer.setAccountId(4);
+        Transaction transaction=new Transaction();
+        transaction.setValue(BigDecimal.valueOf(5000000));
+        transaction.setAccountId(7);
+        transfer.setTransaction(transaction);
+        transferService.startTransfer(transfer);
     }
 }

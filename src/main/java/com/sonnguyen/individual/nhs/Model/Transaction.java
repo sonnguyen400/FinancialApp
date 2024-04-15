@@ -18,12 +18,11 @@ public class Transaction {
     @Column(name = "transaction_type", length = 20)
     private String transactionType;
 
-    @Column(name = "value", precision = 2)
+    @Column(name = "value",scale = 9,precision = 2)
     private BigDecimal value;
 
     @Column(name = "transaction_date")
     private Instant transactionDate;
-
     @Size(max = 255)
     @Column(name = "description")
     private String description;
@@ -98,5 +97,19 @@ public class Transaction {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "id=" + id +
+                ", accountId=" + accountId +
+                ", transactionType='" + transactionType + '\'' +
+                ", value=" + value +
+                ", transactionDate=" + transactionDate +
+                ", description='" + description + '\'' +
+                ", referenceNumber='" + referenceNumber + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

@@ -29,7 +29,7 @@ public class Account implements Serializable {
     private String accountType;
 
     @Column(name = "balance", precision = 2)
-    private Boolean balance;
+    private BigDecimal balance;
 
     @Column(name = "open_date")
     private Instant openDate;
@@ -133,11 +133,11 @@ public class Account implements Serializable {
         this.accountType = accountType;
     }
 
-    public Boolean getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(Boolean balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 

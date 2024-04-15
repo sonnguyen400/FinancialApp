@@ -22,7 +22,7 @@ public class CustomerRepository extends Repository<Customer,Integer> implements 
     @Override
     public Collection<Customer> findAllByAccountId(int accountId) throws SQLException {
         String query="select * from customer where customer.id in (Select customer_id from account_holder where account_holder.account_id=?)";
-        return executeSelect(query,accountId);
+        return find(query,accountId);
     }
 
     @Override
@@ -30,6 +30,6 @@ public class CustomerRepository extends Repository<Customer,Integer> implements 
         StringBuilder query=new StringBuilder("select * from customer where id in");
         query.append("(Select customer_id from account_holder where account_id in(");
         query.append("select id from account where account_number=?))");
-        return executeSelect(query.toString(),accountNumber);
+        return find(query.toString(),accountNumber);
     }
 }

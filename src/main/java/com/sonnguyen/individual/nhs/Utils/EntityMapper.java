@@ -59,9 +59,10 @@ public class EntityMapper<T> {
         Map<String,Object> map=new HashMap<>();
         try {
             for(Field field:fields){
+
                 field.setAccessible(true);
                 Object fieldValue=field.get(object);
-                if(fieldValue!=null){
+                if(fieldValue!=null&&field.getDeclaredAnnotation(Transient.class)==null){
                     if(fieldValue instanceof String){
                         map.put(getColumnName(field),fieldValue);
                     }

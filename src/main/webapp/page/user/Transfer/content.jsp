@@ -123,7 +123,7 @@ Object receiver_name;%>
 </div>
 
 
-<%--Enter OTP--%>
+<%-- //Enter OTP--%>
 <div class="modal fade" id="enterOTPForm" data-backdrop="static">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -143,7 +143,7 @@ Object receiver_name;%>
                             <input type="hidden" name="amount">
                             <input type="hidden" name="message">
                             <input type="hidden" name="account_number">
-                            <input type="hidden" name="<%=CONFIRM_PIN%>" value="true">
+                            <input type="hidden" name="<%=OTP%>" value="true">
                         </div>
                     </div>
                 </div>

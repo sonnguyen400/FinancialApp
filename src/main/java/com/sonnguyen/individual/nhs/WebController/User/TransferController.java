@@ -4,13 +4,13 @@ import com.sonnguyen.individual.nhs.Model.Account;
 import com.sonnguyen.individual.nhs.Model.Customer;
 import com.sonnguyen.individual.nhs.Model.Transaction;
 import com.sonnguyen.individual.nhs.Model.Transfer;
-import com.sonnguyen.individual.nhs.Service.EmailService;
 import com.sonnguyen.individual.nhs.Service.IService.IAccountService;
 import com.sonnguyen.individual.nhs.Service.IService.ICustomerService;
+import com.sonnguyen.individual.nhs.Service.IService.ITransferService;
+import com.sonnguyen.individual.nhs.Utils.OTPUtils;
 import com.sonnguyen.individual.nhs.Utils.SessionUtils;
 
 import javax.inject.Inject;
-import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.UUID;
 
 import static com.sonnguyen.individual.nhs.Utils.Constants.*;
 import static com.sonnguyen.individual.nhs.Utils.RequestUtils.ERROR_MESSAGE;
@@ -28,10 +27,13 @@ import static com.sonnguyen.individual.nhs.Utils.RequestUtils.ERROR_MESSAGE;
 public class TransferController extends HttpServlet {
     @Inject
     ICustomerService customerService;
+
     @Inject
-    EmailService emailService;
+    OTPUtils otpUtils;
     @Inject
     IAccountService accountService;
+    @Inject
+    ITransferService transferService;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/page/user/Transfer/page.jsp").forward(req,resp);
@@ -52,7 +54,18 @@ public class TransferController extends HttpServlet {
         if(req.getParameter(PIN)!=null){
             String pin=accountService.findPINByAccountId(account.getId());
             if(req.getParameter(PIN).equals(pin)){
-                System.out.println("exact pin");
+                req.setAttribute(EXACT_PIN,true);
+                creatAndSendOTP(req,"hellohoangson@gmail.com");
+            }else{
+                req.setAttribute(ERROR_MESSAGE,"Invalid entered PIN");
+            }
+        }
+
+
+        if(req.getParameter(OTP)!=null){
+            String otp= (String) req.getSession().getAttribute(OTP);
+            if(req.getParameter(OTP).equals(otp)){
+                req.setAttribute(EXACT_OTP,true);
                 Transfer transfer = new Transfer();
                 accountService.findAccountByAccountNumber(req.getParameter("account_number")).ifPresent(account_ -> {
                     transfer.setAccountId(account_.getId());
@@ -61,24 +74,20 @@ public class TransferController extends HttpServlet {
                 Transaction transaction = new Transaction();
                 transaction.setAccountId(account.getId());
                 transaction.setValue(BigDecimal.valueOf(Double.parseDouble(req.getParameter("amount"))));
-                req.setAttribute("transfer", transfer);
-                req.setAttribute("transaction", transaction);
-                req.setAttribute(EXACT_PIN,true);
-                creatAndSendOTP(req,resp);
+                transfer.setTransaction(transaction);
+                transferService.startTransfer(transfer);
+                req.getRequestDispatcher("/page/user/Bill/page.jsp").forward(req,resp);
+                return;
             }else{
-                req.setAttribute(ERROR_MESSAGE,"Invalid entered PIN");
+                req.setAttribute(EXACT_OTP,false);
+                req.setAttribute(ERROR_MESSAGE,"Invalid entered OTP");
             }
         }
         req.getRequestDispatcher("/page/user/Transfer/page.jsp").forward(req,resp);
     }
-    public void creatAndSendOTP(HttpServletRequest req, HttpServletResponse response){
-        String otp= UUID.randomUUID().toString().substring(0,6);
-        req.getSession().setAttribute(OTP,otp);
-        try {
-            emailService.sendEmail("hellohoangson@gmail.com",otp,otp+"subject");
-        } catch (MessagingException e) {
-            e.printStackTrace();
-            System.out.println("Error sending email");
-        }
+    public void creatAndSendOTP(HttpServletRequest req,String email){
+        otpUtils.generateOTP()
+                .sendToEmail(email)
+                .sessionSave(req);
     }
 }
