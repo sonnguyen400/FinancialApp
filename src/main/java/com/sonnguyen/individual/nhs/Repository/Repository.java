@@ -117,5 +117,7 @@ public class Repository<T, ID> extends GeneralRepository<T, ID> implements Abstr
         connection.close();
         return result;
     }
-   
+    public List<T> executeSelect(Connection connection, String query, Object... params) throws SQLException {
+        return executeSelect(connection,query,getEntityClass(),params);
+    }
 }

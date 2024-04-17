@@ -1,4 +1,4 @@
-package com.sonnguyen.individual.nhs.WebController;
+package com.sonnguyen.individual.nhs.WebController.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "test",urlPatterns = "/test")
-public class BaseController extends HttpServlet {
+@WebServlet(name = "transaction-history",urlPatterns = "/history")
+public class TransactionHistoryController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/page/user/Bill/page.jsp").forward(req,resp);
+        req.getRequestDispatcher("/page/user/TransactionHistory/page.jsp").forward(req, resp);
     }
 }

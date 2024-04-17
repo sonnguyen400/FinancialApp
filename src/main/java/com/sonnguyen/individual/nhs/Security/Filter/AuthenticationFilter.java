@@ -44,6 +44,5 @@ public class AuthenticationFilter  implements Filter {
                 filterChain.doFilter(request,response);
             }
         }
-
     }
 }

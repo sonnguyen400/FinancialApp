@@ -2,16 +2,9 @@
     <div class="nk-nav-scroll">
         <ul class="metismenu" id="menu">
             <li>
-                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                    <i class="icon-home menu-icon"></i><span class="nav-text">Home</span>
+                <a class="has-arrow" href="./home" aria-expanded="false">
+                    <i class="fi fi-sr-house-chimney"></i><span class="nav-text">Home</span>
                 </a>
-                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                    <i class="icon-home menu-icon"></i><span class="nav-text">Home</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="/home">Home 1</a></li>
-                    <!-- <li><a href="./index-2.html">Home 2</a></li> -->
-                </ul>
             </li>
             <li>
                 <a class="has-arrow" href="javascript:void()" aria-expanded="false">

@@ -1,16 +1,15 @@
 <%@ taglib prefix="title" uri="http://tiles.apache.org/tags-tiles" %>
 <%@include file="/taglib/taglib.jsp"%>
 
-<tiles:definition name="bill-content" extends="user.header-layout">
-    <tiles:putAttribute name="content" value="/page/user/Bill/content.jsp"/>
+<tiles:definition name="home-content" extends="user.default-layout">
+    <tiles:putAttribute name="content" value="/page/user/HomePage/content.jsp"/>
 </tiles:definition>
 
-<tiles:definition name="bill.page" extends="page">
-    <tiles:putAttribute name="title" value="Bill"/>
+<tiles:definition name="home.page" extends="page">
+    <tiles:putAttribute name="title" value="Home"/>
     <tiles:putAttribute name="body">
         <tiles:definition extends="main-wrapper">
-            <title:putAttribute name="class" value="menu-toggle"/>
-            <tiles:putAttribute name="content" value="bill-content"/>
+            <tiles:putAttribute name="content" value="home-content"/>
         </tiles:definition>
     </tiles:putAttribute>
     <tiles:putAttribute name="script">
@@ -23,4 +22,4 @@
 </tiles:definition>
 
 
-<tiles:insertDefinition name="bill.page"/>
+<tiles:insertDefinition name="home.page"/>

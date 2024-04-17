@@ -29,6 +29,7 @@
 
     <definition name="main-wrapper" template="/layout/base/main-wrapper.jsp">
         <put-attribute name="content"/>
+        <put-attribute name="class"  value=""/>
     </definition>
     <definition name="header-layout" template="/layout/base/header-layout.jsp">
         <put-attribute name="header"/>

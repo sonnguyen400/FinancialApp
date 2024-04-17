@@ -43,13 +43,13 @@ public class TransferController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if(req.getParameter("account_number")!=null){
             List<Customer> customers= (List<Customer>) customerService.findAllByAccountNumber(req.getParameter("account_number"));
-
             if(customers.size()>0){
                 req.setAttribute("receiver_name",customers.get(0).getFirstname()+customers.get(0).getLastname());
             }else{
                 req.setAttribute(ERROR_MESSAGE,"Cant not find receiver information! Reenter account number" );
             }
         }
+
         Account account= (Account) req.getSession().getAttribute(SessionUtils.LOGIN_SESSION);
         if(req.getParameter(PIN)!=null){
             String pin=accountService.findPINByAccountId(account.getId());
@@ -75,7 +75,7 @@ public class TransferController extends HttpServlet {
                 transaction.setAccountId(account.getId());
                 transaction.setValue(BigDecimal.valueOf(Double.parseDouble(req.getParameter("amount"))));
                 transfer.setTransaction(transaction);
-                transferService.startTransfer(transfer);
+                req.setAttribute("transfer", transferService.startTransfer(transfer));
                 req.getRequestDispatcher("/page/user/Bill/page.jsp").forward(req,resp);
                 return;
             }else{
