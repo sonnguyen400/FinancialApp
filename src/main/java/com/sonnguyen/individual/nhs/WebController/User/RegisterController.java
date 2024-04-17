@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "auth",urlPatterns = "/register")
+@WebServlet(name = "auth",urlPatterns = "/app/register")
 @Model
 public class RegisterController extends HttpServlet {
     @Inject

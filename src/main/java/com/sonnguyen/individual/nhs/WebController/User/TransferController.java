@@ -23,7 +23,7 @@ import java.util.List;
 import static com.sonnguyen.individual.nhs.Utils.Constants.*;
 import static com.sonnguyen.individual.nhs.Utils.RequestUtils.ERROR_MESSAGE;
 
-@WebServlet(name = "transfer",urlPatterns = "/transfer")
+@WebServlet(name = "transfer",urlPatterns = "/app/transfer")
 public class TransferController extends HttpServlet {
     @Inject
     ICustomerService customerService;

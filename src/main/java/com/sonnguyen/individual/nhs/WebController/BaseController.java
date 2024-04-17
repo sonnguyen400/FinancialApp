@@ -11,6 +11,6 @@ import java.io.IOException;
 public class BaseController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/page/user/Bill/page.jsp").forward(req,resp);
+        req.getRequestDispatcher("/page/user/Websocket/Test.jsp").forward(req,resp);
     }
 }

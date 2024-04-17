@@ -84,7 +84,7 @@
 
 <%--Toolbar--%>
 <div class="row ">
-    <a href="./transfer" class="col-md-2">
+    <a href="${pageContext.request.contextPath}/app/transfer" class="col-md-2">
         <div class="card react-widget gradient-2">
             <div class="gutter-md-2">
                 <div class="col">
@@ -95,7 +95,7 @@
             </div>
         </div>
     </a>
-    <a href="./history" class="col-md-2">
+    <a href="${pageContext.request.contextPath}/app/history" class="col-md-2">
         <div class="card react-widget gradient-3">
             <div class="gutter-md-2">
                 <div class="col">
@@ -106,8 +106,7 @@
             </div>
         </div>
     </a>
-
-    <a href="./transfer" class="col-md-2">
+    <a href="${pageContext.request.contextPath}/app/transfer" class="col-md-2">
         <div class="card react-widget gradient-3">
             <div class="gutter-md-2">
                 <div class="col">

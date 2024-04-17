@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(name = "user-home",urlPatterns = "/home")
+@WebServlet(name = "user-home",urlPatterns = "/app/home")
 public class Home extends HttpServlet {
     private final Logger logger= Logger.getLogger(this.getClass().getName());
     @Inject

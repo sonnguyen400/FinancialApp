@@ -9,7 +9,6 @@
     <tiles:putAttribute name="title" value="Bill"/>
     <tiles:putAttribute name="body">
         <tiles:definition extends="main-wrapper">
-            <title:putAttribute name="class" value="menu-toggle"/>
             <tiles:putAttribute name="content" value="bill-content"/>
         </tiles:definition>
     </tiles:putAttribute>
