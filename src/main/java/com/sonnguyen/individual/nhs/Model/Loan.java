@@ -1,5 +1,7 @@
 package com.sonnguyen.individual.nhs.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
@@ -7,6 +9,7 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "loan")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Loan {
     @Id
     @GeneratedValue
@@ -23,7 +26,7 @@ public class Loan {
     private BigDecimal amount;
 
     @Column(name = "interest_rate")
-    private Float interestRate;
+    private BigDecimal interestRate;
 
     @Column(name = "term")
     private Integer term;
@@ -39,8 +42,118 @@ public class Loan {
     @Column(name = "repayment", length = 45)
     private String repayment;
 
+
+
     @Column(name = "branch_id")
     private int branchId;
 
+    @Column(name = "disbursement_account_number")
+    private String disbursementAccountNumber;
 
+    public String getDisbursementAccountNumber() {
+        return disbursementAccountNumber;
+    }
+
+    public void setDisbursementAccountNumber(String disbursementAccountNumber) {
+        this.disbursementAccountNumber = disbursementAccountNumber;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    public BigDecimal getInterestRate() {
+        return interestRate;
+    }
+
+    public void setInterestRate(BigDecimal interestRate) {
+        this.interestRate = interestRate;
+    }
+
+    public Integer getTerm() {
+        return term;
+    }
+
+    public void setTerm(Integer term) {
+        this.term = term;
+    }
+
+    public Instant getApprovalDate() {
+        return approvalDate;
+    }
+
+    public void setApprovalDate(Instant approvalDate) {
+        this.approvalDate = approvalDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getRepayment() {
+        return repayment;
+    }
+
+    public void setRepayment(String repayment) {
+        this.repayment = repayment;
+    }
+
+
+
+    public int getBranchId() {
+        return branchId;
+    }
+
+    public void setBranchId(int branchId) {
+        this.branchId = branchId;
+    }
+
+    @Override
+    public String toString() {
+        return "Loan{" +
+                "id=" + id +
+                ", customerId=" + customerId +
+                ", type='" + type + '\'' +
+                ", amount=" + amount +
+                ", interestRate=" + interestRate +
+                ", term=" + term +
+                ", approvalDate=" + approvalDate +
+                ", status='" + status + '\'' +
+                ", repayment='" + repayment + '\'' +
+                ", branchId=" + branchId +
+                ", disbursementAccountNumber='" + disbursementAccountNumber + '\'' +
+                '}';
+    }
 }

@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 import java.sql.Date;
+import java.time.Instant;
 import java.util.Collection;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -15,14 +16,33 @@ public class Customer {
     private int id;
     private String firstname;
     private String lastname;
-    private Date dateOfBirth;
+    private Instant dateOfBirth;
     private int address_id;
     private String email;
     private String phone;
     private String social_security_number;
     private String occupation;
+    private String membership;
     @Transient
     private Collection<Account> accounts;
+    @Transient
+    private Login login;
+
+    public String getMembership() {
+        return membership;
+    }
+
+    public void setMembership(String membership) {
+        this.membership = membership;
+    }
+
+    public Login getLogin() {
+        return login;
+    }
+
+    public void setLogin(Login login) {
+        this.login = login;
+    }
 
     public Collection<Account> getAccounts() {
         return accounts;
@@ -72,11 +92,11 @@ public class Customer {
         this.lastname = lastname;
     }
 
-    public Date getDateOfBirth() {
+    public Instant getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(Instant dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

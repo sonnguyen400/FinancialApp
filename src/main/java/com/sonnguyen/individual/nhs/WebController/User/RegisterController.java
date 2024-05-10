@@ -3,7 +3,9 @@ package com.sonnguyen.individual.nhs.WebController.User;
 
 import com.sonnguyen.individual.nhs.Model.Account;
 import com.sonnguyen.individual.nhs.Model.Customer;
+import com.sonnguyen.individual.nhs.Model.Login;
 import com.sonnguyen.individual.nhs.Service.IService.IAccountService;
+import com.sonnguyen.individual.nhs.Service.IService.ILoginCustomerService;
 import com.sonnguyen.individual.nhs.Utils.RequestUtils;
 import org.springframework.http.HttpStatus;
 
@@ -16,27 +18,29 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "auth",urlPatterns = "/app/register")
+@WebServlet(name = "auth",urlPatterns = "/register")
 @Model
 public class RegisterController extends HttpServlet {
     @Inject
-    private IAccountService accountService;
+    ILoginCustomerService loginCustomerService;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/page/user/register.jsp").forward(req,resp);
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Account account= RequestUtils.parseEntity(req,Account.class);
+        Login login= RequestUtils.parseEntity(req,Login.class);
         Customer customer=RequestUtils.parseEntity(req,Customer.class);
         try{
-            accountService.createNewAccount(account,customer);
+            loginCustomerService.save(login,customer);
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println("lỗi");
             resp.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
             resp.getWriter().println("Fail to create new account");
+            req.getRequestDispatcher("/page/user/register.jsp").forward(req,resp);
+            return;
         }
+        resp.sendRedirect(req.getContextPath()+"/login");
 
     }
 }

@@ -1,12 +1,7 @@
 package com.sonnguyen.individual.nhs.WebController.User;
 
-import com.sonnguyen.individual.nhs.Model.Account;
-import com.sonnguyen.individual.nhs.Model.Customer;
-import com.sonnguyen.individual.nhs.Model.Transaction;
-import com.sonnguyen.individual.nhs.Model.Transfer;
-import com.sonnguyen.individual.nhs.Service.IService.IAccountService;
-import com.sonnguyen.individual.nhs.Service.IService.ICustomerService;
-import com.sonnguyen.individual.nhs.Service.IService.ITransferService;
+import com.sonnguyen.individual.nhs.Model.*;
+import com.sonnguyen.individual.nhs.Service.IService.*;
 import com.sonnguyen.individual.nhs.Utils.OTPUtils;
 import com.sonnguyen.individual.nhs.Utils.SessionUtils;
 
@@ -27,7 +22,10 @@ import static com.sonnguyen.individual.nhs.Utils.RequestUtils.ERROR_MESSAGE;
 public class TransferController extends HttpServlet {
     @Inject
     ICustomerService customerService;
-
+    @Inject
+    ILoginCustomerService loginCustomerService;
+    @Inject
+    ILoginService loginService;
     @Inject
     OTPUtils otpUtils;
     @Inject
@@ -50,10 +48,9 @@ public class TransferController extends HttpServlet {
             }
         }
 
-        Account account= (Account) req.getSession().getAttribute(SessionUtils.LOGIN_SESSION);
+        Login login=SessionUtils.getPrincipal(req);
         if(req.getParameter(PIN)!=null){
-            String pin=accountService.findPINByAccountId(account.getId());
-            if(req.getParameter(PIN).equals(pin)){
+            if(loginService.validatePIN(login.getId(),req.getParameter(PIN))){
                 req.setAttribute(EXACT_PIN,true);
                 creatAndSendOTP(req,"hellohoangson@gmail.com");
             }else{
@@ -63,7 +60,7 @@ public class TransferController extends HttpServlet {
 
 
         if(req.getParameter(OTP)!=null){
-            String otp= (String) req.getSession().getAttribute(OTP);
+            String otp= (String) SessionUtils.getSession(req,OTP);
             if(req.getParameter(OTP).equals(otp)){
                 req.setAttribute(EXACT_OTP,true);
                 Transfer transfer = new Transfer();
@@ -72,7 +69,6 @@ public class TransferController extends HttpServlet {
                     transfer.setMessage(req.getParameter("message"));
                 });
                 Transaction transaction = new Transaction();
-                transaction.setAccountId(account.getId());
                 transaction.setValue(BigDecimal.valueOf(Double.parseDouble(req.getParameter("amount"))));
                 transfer.setTransaction(transaction);
                 req.setAttribute("transfer", transferService.startTransfer(transfer));

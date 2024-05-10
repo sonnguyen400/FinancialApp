@@ -1,6 +1,8 @@
 package com.sonnguyen.individual.nhs.WebController.User;
 
 import com.sonnguyen.individual.nhs.Model.Account;
+import com.sonnguyen.individual.nhs.Model.Login;
+import com.sonnguyen.individual.nhs.Service.IService.IAccountService;
 import com.sonnguyen.individual.nhs.Service.IService.ICustomerService;
 import com.sonnguyen.individual.nhs.Utils.SessionUtils;
 import org.jboss.logging.Logger;
@@ -19,16 +21,13 @@ public class Home extends HttpServlet {
     private final Logger logger= Logger.getLogger(this.getClass().getName());
     @Inject
     ICustomerService customerService;
+    @Inject
+    IAccountService accountService;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Account account= (Account) SessionUtils.getSession(req,SessionUtils.LOGIN_SESSION);
-        try {
-            if(account!=null){
-                req.setAttribute("customers",customerService.findAllByAccountId(account.getId()));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        Login login=SessionUtils.getPrincipal(req);
+        Account principalAccount=accountService.findPrincipalAccountByCustomerId(login.getCustomerId());
+        req.setAttribute("account", principalAccount);
         req.getRequestDispatcher("/page/user/HomePage/page.jsp").forward(req,resp);
     }
 }

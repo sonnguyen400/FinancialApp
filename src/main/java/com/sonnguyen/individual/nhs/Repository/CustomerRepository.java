@@ -14,15 +14,16 @@ public class CustomerRepository extends Repository<Customer,Integer> implements 
         return Customer.class;
     }
 
-    @Override
-    public Customer insert( Customer object) throws SQLException {
-        return super.insert(object);
-    }
+
 
     @Override
-    public Collection<Customer> findAllByAccountId(int accountId) throws SQLException {
+    public Collection<Customer> findAllByAccountId(int accountId){
         String query="select * from customer where customer.id in (Select customer_id from account_holder where account_holder.account_id=?)";
-        return find(query,accountId);
+        try {
+            return find(query,accountId);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

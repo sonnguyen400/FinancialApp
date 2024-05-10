@@ -7,6 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Instant;
 import java.util.*;
 
 import static com.sonnguyen.individual.nhs.Utils.Constants.*;
@@ -114,6 +115,10 @@ public class EntityMapper<T> {
                     else{
                         if(field.getType().getSimpleName().equals(Date.class.getSimpleName())){
                             field.set(object,resultSet.getDate(getColumnName(field)));
+                            continue;
+                        }
+                        if(field.getType().getSimpleName().equals(Instant.class.getSimpleName())){
+                            field.set(object,Instant.ofEpochMilli(resultSet.getDate(getColumnName(field)).getTime()));
                             continue;
                         }
                         field.set(object,resultSet.getObject(getColumnName(field)));

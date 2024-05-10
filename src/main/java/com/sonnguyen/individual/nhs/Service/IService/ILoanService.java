@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ILoanService{
     Collection<Loan> findAllByCustomerId(Integer customerId);
+    Loan save(Loan loan);
 }

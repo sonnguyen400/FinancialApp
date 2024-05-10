@@ -1,8 +1,10 @@
 <%@ page import="com.sonnguyen.individual.nhs.Model.Account" %>
 <%@ page import="com.sonnguyen.individual.nhs.Utils.SessionUtils" %>
+<%@ page import="com.sonnguyen.individual.nhs.Model.Login" %>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
 <%
-    Account account = (Account) session.getAttribute(SessionUtils.LOGIN_SESSION);
+    Login account = SessionUtils.getPrincipal(request);
+    Account principalAccount = (Account) request.getAttribute("account");
 %>
 
 <div class="row">
@@ -12,7 +14,7 @@
                 <div class="text-center">
                     <span class="text-md-11 opacity-5 text-white"><i class="fi fi-sr-sack-dollar"></i></span>
                     <h6 class="mt-2 mb-2 text-white-50 text-white">Balance</h6>
-                    <h3 class="text-white"><%=account.getBalance()%>
+                    <h3 class="text-white"><%=principalAccount.getBalance()%>
                     </h3>
                     <button class="btn gradient-3 btn-lg border-0 btn-rounded px-5">
                         <i class="fi fi-sr-eye"></i>
@@ -28,7 +30,7 @@
                 <div class="text-center">
                     <span class="text-md-11 opacity-5 text-white"><i class="fi fi-sr-piggy-bank"></i></span>
                     <h6 class="mt-2 mb-2 text-gray text-white">Save</h6>
-                    <h3 class="text-white"><%=account.getBalance()%>
+                    <h3 class="text-white"><%=principalAccount.getBalance()%>
                     </h3>
                     <button class="btn gradient-3 btn-lg border-0 btn-rounded px-5">
                         <i class="fi fi-sr-eye"></i>
@@ -106,11 +108,11 @@
             </div>
         </div>
     </a>
-    <a href="${pageContext.request.contextPath}/app/transfer" class="col-md-2">
+    <a href="${pageContext.request.contextPath}/app/loan" class="col-md-2">
         <div class="card react-widget gradient-3">
             <div class="gutter-md-2">
                 <div class="col">
-                    <h4 class="text-white text-md-8">Debt</h4>
+                    <h4 class="text-white text-md-8">Loan</h4>
                     <span class="float-right text-md-11 opacity-5 ">
                         <i class="fi fi-sr-hand-holding-usd"></i></span>
                 </div>

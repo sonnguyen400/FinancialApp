@@ -81,25 +81,6 @@ public class GeneralRepository<T,ID> {
         }
         return list;
     }
-    public ResultSet rawExecuteSelect(String query,Object ...params) {
-        Connection connection=getConnection();
-        ResultSet resultSet=null;
-        List<T> list = null;
-        try (PreparedStatement statement=connection.prepareStatement(query)) {
-            setPreparedStatement(statement,List.of(params));
-            resultSet=statement.executeQuery();
-            return resultSet;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }finally {
-            try {
-                connection.close();
-            } catch (SQLException|NullPointerException e) {
-                e.printStackTrace();
-            }
-        }
-    }
     public <S> S executeSelect(String query,Class<S> tClass,Object ...params) {
         Connection connection=getConnection();
         ResultSet resultSet=null;

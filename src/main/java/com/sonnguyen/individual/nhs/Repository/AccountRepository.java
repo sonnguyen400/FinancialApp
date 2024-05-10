@@ -2,6 +2,7 @@ package com.sonnguyen.individual.nhs.Repository;
 
 import com.sonnguyen.individual.nhs.Model.Account;
 import com.sonnguyen.individual.nhs.Repository.IRepository.IAccountRepository;
+import com.sonnguyen.individual.nhs.Utils.AccountType;
 
 import javax.enterprise.inject.Model;
 import java.math.BigDecimal;
@@ -29,37 +30,6 @@ public class AccountRepository extends Repository<Account,Integer> implements IA
             return Optional.empty();
         }
     }
-
-    @Override
-    public String findPINByAccountId(int accountId) {
-        String query="Select PIN from account where id=?";
-        PreparedStatement statement=null;
-        ResultSet resultSet=null;
-        Connection connection=getConnection();
-        if(connection!=null){
-            try {
-                statement= connection.prepareStatement(query);
-                statement.setInt(1,accountId);
-               resultSet= statement.executeQuery();
-               if(resultSet.next()){
-                   return resultSet.getString("PIN");
-               }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }finally {
-                try {
-                    connection.close();
-                    statement.close();
-                    resultSet.close();
-                } catch (SQLException|NullPointerException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return "";
-    }
-
-
 
     @Override
     public BigDecimal findBalanceByAccountId(int accountId) {
@@ -90,15 +60,31 @@ public class AccountRepository extends Repository<Account,Integer> implements IA
             return Optional.empty();
         }
         return Optional.of(accounts.get(0));
+    }
 
-    }
-    public Account save(Account account) {
-        try {
-            account=insert(account);
-            return account;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+    @Override
+    public List<Account> findByCustomerIdAndType(Integer customerId, AccountType accountType) {
+        Connection connection=getConnection();
+        PreparedStatement preparedStatement=null;
+        ResultSet resultSet=null;
+        String query="select * from account where id in\n" +
+                "(select account_id from account_holder where account_type=? and customer_id=?)";
+        if(connection!=null){
+            try {
+                preparedStatement=connection.prepareStatement(query);
+                preparedStatement.setString(1,accountType.value);
+                preparedStatement.setInt(2,customerId);
+                resultSet=preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    System.out.println(resultSet.getInt(1));
+                }
+                return executeSelect(query,accountType.value,customerId);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
+        return null;
     }
+
 
 }

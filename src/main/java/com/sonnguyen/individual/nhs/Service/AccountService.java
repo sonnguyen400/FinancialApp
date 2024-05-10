@@ -7,6 +7,7 @@ import com.sonnguyen.individual.nhs.Repository.AccountHolderRepository;
 import com.sonnguyen.individual.nhs.Repository.IRepository.IAccountRepository;
 import com.sonnguyen.individual.nhs.Service.IService.IAccountService;
 import com.sonnguyen.individual.nhs.Service.IService.ICustomerService;
+import com.sonnguyen.individual.nhs.Utils.AccountType;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
@@ -20,22 +21,18 @@ import java.util.Optional;
 public class AccountService implements IAccountService {
     @Inject
     private IAccountRepository accountRepository;
-    @Inject
-    private AccountHolderRepository accountHolder;
-    @Inject
-    private ICustomerService customerService;
-    @Override
-    public Account createNewAccount(Account account,Customer customer) throws FailureTransaction {
-        account.setCustomers(List.of(customer));
-        return  accountRepository.save(account);
-    }
     public Optional<Account> findByUsername(String username) {
         return accountRepository.findByUsername(username);
     }
 
+
     @Override
-    public String findPINByAccountId(Integer id) {
-        return accountRepository.findPINByAccountId(id);
+    public Account findPrincipalAccountByCustomerId(Integer customerId) {
+        return accountRepository.findByCustomerIdAndType(customerId, AccountType.PRINCIPAL).get(0);
+    }
+    @Override
+    public List<Account> findSavingsAccountsByCustomerId(Integer customerId) {
+        return accountRepository.findByCustomerIdAndType(customerId, AccountType.SAVINGS);
     }
 
     @Override

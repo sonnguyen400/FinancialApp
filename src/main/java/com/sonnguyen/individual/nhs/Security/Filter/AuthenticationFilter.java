@@ -1,6 +1,7 @@
 package com.sonnguyen.individual.nhs.Security.Filter;
 
 import com.sonnguyen.individual.nhs.Model.Account;
+import com.sonnguyen.individual.nhs.Model.Login;
 import com.sonnguyen.individual.nhs.Service.IService.IAccountService;
 import com.sonnguyen.individual.nhs.Utils.SessionUtils;
 import org.jboss.logging.Logger;
@@ -35,8 +36,8 @@ public class AuthenticationFilter  implements Filter {
         if(ExclusiveFilter.isAllow(request)){
             filterChain.doFilter(servletRequest,response);
         }else{
-            Account account = (Account) (request.getSession().getAttribute(SessionUtils.LOGIN_SESSION));
-            if(account == null||accountService.findByUsername(account.getUsername()).isEmpty()){
+            Login account = SessionUtils.getPrincipal(request);
+            if(account == null){
                 response.setStatus(HttpStatus.UNAUTHORIZED.value());
                 request.setAttribute(ERROR_MESSAGE,"unauthorized");
                 request.getRequestDispatcher("/page/base/error.jsp").forward(request,response);

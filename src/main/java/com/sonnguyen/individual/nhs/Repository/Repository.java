@@ -67,13 +67,19 @@ public class Repository<T, ID> extends GeneralRepository<T, ID> implements Abstr
     }
 
     @Override
-    public T insert( T object) throws SQLException {
+    public T save( T object)  {
         Connection connection=getConnection();
         Integer id= null;
         try {
             id = executeInsert(connection,object, getEntityClass());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         } finally {
-            connection.close();
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         Field idField = EntityMapper.getId(getEntityClass());
         if(idField!=null){
@@ -120,4 +126,19 @@ public class Repository<T, ID> extends GeneralRepository<T, ID> implements Abstr
     public List<T> executeSelect(Connection connection, String query, Object... params) throws SQLException {
         return executeSelect(connection,query,getEntityClass(),params);
     }
+    public List<T> executeSelect(String query, Object... params) throws SQLException {
+        Connection connection=getConnection();
+        List<T> result = null;
+        if(connection!=null){
+            result=super.executeSelect(connection,query,getEntityClass(),params);
+            connection.close();
+        }
+        return result;
+    }
+    @Override
+    public Integer executeInsert(Connection connection,T object) throws SQLException {
+        return super.executeInsert(connection,object,getEntityClass());
+    }
+
+
 }

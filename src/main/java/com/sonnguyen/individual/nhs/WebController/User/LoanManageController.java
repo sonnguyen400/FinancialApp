@@ -7,10 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "loan-initialization",urlPatterns = "/app/loanI")
-public class LoanInitController extends HttpServlet {
+@WebServlet(name = "loan-manage",urlPatterns = "/app/loan")
+public class LoanManageController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
+        req.getRequestDispatcher("/page/user/LoanManage/page.jsp").forward(req, resp);
+    }
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
     }
 }

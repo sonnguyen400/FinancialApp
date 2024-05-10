@@ -5,10 +5,12 @@ import com.sonnguyen.individual.nhs.Model.Customer;
 import javax.ejb.Remote;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Optional;
 
 @Remote
 public interface ICustomerService {
-    Customer insert(Customer customer) throws SQLException ;
-    Collection<Customer> findAllByAccountId(Integer accountId) throws SQLException;
+    Collection<Customer> findAllByAccountId(Integer accountId) ;
+    Optional<Customer> findByAccountId(Integer accountId);
     Collection<Customer> findAllByAccountNumber(String accountNumber);
+    Customer findById(Integer customerId);
 }
