@@ -15,7 +15,8 @@ public class TransactionService implements ITransactionService {
     private ITransactionRepository transactionRepository;
     public Transaction createTransaction(Connection connection,Transaction transaction) throws SQLException {
         Integer id=transactionRepository.createTransaction(connection,transaction);
-        return transactionRepository.findById(id).get();
+        transaction.setId(id);
+        return transaction;
     }
     public Transaction findById(Integer id) throws SQLException {
         return transactionRepository.findById(id).get();

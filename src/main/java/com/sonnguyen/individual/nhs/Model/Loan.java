@@ -52,6 +52,7 @@ public class Loan {
     @Transient
     private Customer customer;
 
+
     public Customer getCustomer() {
         return customer;
     }

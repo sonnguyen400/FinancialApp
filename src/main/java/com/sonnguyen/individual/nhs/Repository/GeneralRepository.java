@@ -50,7 +50,6 @@ public class GeneralRepository<T,ID> {
             } catch (Exception e) {
                 e.printStackTrace();
                 try {
-                    System.out.println("Rolling back transaction");
                     connection.rollback();
                 } catch (SQLException ex) {
                     ex.printStackTrace();

@@ -41,8 +41,20 @@ public class Account implements Serializable {
     @Column(name = "overdraft_limit", precision = 2)
     private BigDecimal overdraftLimit;
 
-
-
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", branchID=" + branchID +
+                ", accountNumber='" + accountNumber + '\'' +
+                ", accountType='" + accountType + '\'' +
+                ", balance=" + balance +
+                ", openDate=" + openDate +
+                ", status='" + status + '\'' +
+                ", overdraftLimit=" + overdraftLimit +
+                ", customers=" + customers +
+                '}';
+    }
 
     @Transient
     private Collection<Customer> customers;

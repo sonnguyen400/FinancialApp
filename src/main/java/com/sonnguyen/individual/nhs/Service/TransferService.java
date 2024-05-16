@@ -34,7 +34,9 @@ public class TransferService implements ITransferService {
         accountService.updateBalanceByAccountId(connection,transfer.getTransaction().getAccountId(),transfer.getTransaction().getValue().negate());
         accountService.updateBalanceByAccountId(connection,transfer.getAccountId(),transfer.getTransaction().getValue());
         Transaction transaction=transactionService.createTransaction(connection,transfer.getTransaction());
-        return transferRepository.findById(transferRepository.startTransfer(connection,transfer).getId()).get();
+        transfer.setTransactionId(transaction.getId());
+        transfer=transferRepository.startTransfer(connection,transfer);
+        return transfer;
     }
 
 }

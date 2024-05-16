@@ -70,7 +70,9 @@ public class LoanService implements ILoanService {
             transfer.setAccountId(account.getId());
             transfer.setTransaction(transaction);
             loanRepository.updateStatusById(connection,id,LoanStatus.APPROVED.value);
-            return transferService.startTransfer(connection,transfer);
+            transferService.startTransfer(connection,transfer);
+            loan.setStatus(LoanStatus.APPROVED.value);
+            return loan;
         }));
     }
 }
