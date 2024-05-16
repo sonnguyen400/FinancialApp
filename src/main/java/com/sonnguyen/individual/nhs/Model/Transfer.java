@@ -1,7 +1,9 @@
 package com.sonnguyen.individual.nhs.Model;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.*;
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Transfer{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

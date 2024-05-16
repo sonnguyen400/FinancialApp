@@ -8,8 +8,8 @@
             $("input[name='disbursementAccountNumber']").val(value);
             $("#disbursement_account_ref").html(value);
         });
-        $("select[name='duration']").on("change",e=>{
-            let value=$("select[name='duration'] option:selected")[0].value;
+        $("select[name='term']").on("change",function(e){
+            let value=e.target.value;
             let interestRate=0;
             switch (value) {
                 case "12":
@@ -20,7 +20,6 @@
                     break;
             }
             $("input[name='interestRate']").val(interestRate);
-            $("input[name='term']").val(value);
             $("#interest_rate_ref").html(interestRate+`% per Year`);
         });
 

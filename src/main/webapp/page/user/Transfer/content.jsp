@@ -3,22 +3,28 @@
 <%@ page import="static com.sonnguyen.individual.nhs.Utils.Constants.PIN" %>
 <%@ page import="java.io.IOException" %>
 <%@ page import="static com.sonnguyen.individual.nhs.Utils.Constants.*" %>
+<%@ page import="com.sonnguyen.individual.nhs.Model.Account" %>
+<%@ page import="java.util.List" %>
 <%!String accountNumber;
 String amount;
 String message;
-Object receiver_name;%>
+Object receiver_name;
+List<Account> accounts;
+%>
 <%
-
     accountNumber=request.getParameter("account_number");
     amount=request.getParameter("amount");
     message=request.getParameter("message");
     receiver_name= request.getAttribute("receiver_name");
+    accounts= (List<Account>) request.getAttribute("accounts");
 %>
+
 <div class="row">
     <div class="col">
-        <div class="card">
-            <div class="card-body">
-                <form id="form1" method="POST" action="${pageContext.request.contextPath}/transfer">
+        <form id="form1" method="POST" class="row" action="${pageContext.request.contextPath}/app/transfer">
+            <div class="part card col">
+                <div class="card-body">
+                    <input type="hidden" name="transfer" value="transfer_information"/>
                     <div class="form-group col">
                         <label for="provider" class="col-form-label">
                             <span>Organize</span>
@@ -26,6 +32,19 @@ Object receiver_name;%>
                         </label>
                         <select data-rule="none" class="form-control input-default">
                             <option value="">Mb</option>
+                        </select>
+                    </div>
+                    <div class="form-group col">
+                        <label for="provider" class="col-form-label">
+                            <span>Source Account</span>
+                            <span class="text-danger">*</span>
+                        </label>
+                        <select name="accountId" data-rule="none" class="form-control input-default">
+                            <%
+                                for(Account account : accounts){
+                                    out.print("<option value='"+account.getId()+"'>"+account.getAccountNumber()+"</option>");
+                                }
+                            %>
                         </select>
                     </div>
                     <div class="form-group col">
@@ -53,108 +72,31 @@ Object receiver_name;%>
                         <input type="text" data-rule="none" name="message" class="form-control input-default"
                                value="<%=message==null?"":message%>">
                     </div>
-                    <button type="submit" class="d-none" id="form1submit"></button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- Transfer infor -->
-    <div class="col">
-        <div class="card">
-            <div class="card-body">
-                <div class="col">
-                    <div id="current-balance col-form-label">Current Balance</div>
-                    <h2 class="text-xxl blue mt-2">125.000.000</h2>
                 </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <form id="form2">
-                    <div class="form-group col">
-                        <label id="current-balance col-form-label">Receiver Information</label>
-                        <input data-rule="required" style="font-size: 18px;color: gray;text-transform: uppercase;letter-spacing: 2px" class="input-default form-control" data-rule="none"  disabled id="receiver_name"
-                        value="<%=receiver_name==null?"":String.valueOf(receiver_name)%>">
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="bootstrap-modal">
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#enterPINForm">Continue</button>
-        </div>
-    </div>
-</div>
 
-<%--//Enter PIN MODAL--%>
-<div class="modal fade" id="enterPINForm" data-backdrop="static">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Enter your PIN</h5>
-                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
-                </button>
             </div>
-            <form action="${pageContext.request.contextPath}/transfer"  method="post" id="form3">
-                <div class="modal-body">
-                    <div class="container-fluid">
-                        <div class="row">
-                                <div class="col form-group">
-                                    <input type="PIN" maxlength="6" name="<%=PIN%>" data-rule="none"
-                                           class="p-2 text-lg form-control input-default">
-                                </div>
-                                <input type="hidden" name="amount">
-                                <input type="hidden" name="message">
-                                <input type="hidden" name="account_number">
-                            <input type="hidden" name="<%=CONFIRM_PIN%>" value="true">
+            <!-- Transfer infor -->
+            <div class=" part col">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col">
+                            <div id="current-balance col-form-label">Current Balance</div>
+                            <h2 class="text-xxl blue mt-2">125.000.000</h2>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <div class="bootstrap-modal">
-                        <!-- Button trigger modal -->
-                        <button type="submit" class="btn btn-primary">Continue</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-
-<%-- //Enter OTP--%>
-<div class="modal fade" id="enterOTPForm" data-backdrop="static">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Enter your OTP</h5>
-                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
-                </button>
-            </div>
-            <form action="${pageContext.request.contextPath}/transfer"  method="post" id="form4">
-                <div class="modal-body">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col form-group">
-                                <input type="PIN" maxlength="6" name="<%=OTP%>" data-rule="none"
-                                       class="p-2 text-lg form-control input-default">
+                <div class="card">
+                    <div class="card-body">
+                        <form id="form2">
+                            <div class="form-group col">
+                                <label id="current-balance col-form-label">Receiver Information</label>
+                                <input data-rule="required" style="font-size: 18px;color: gray;text-transform: uppercase;letter-spacing: 2px" class="input-default form-control"   disabled id="receiver_name">
                             </div>
-                            <input type="hidden" name="amount">
-                            <input type="hidden" name="message">
-                            <input type="hidden" name="account_number">
-                            <input type="hidden" name="<%=OTP%>" value="true">
-                        </div>
+                        </form>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <div class="bootstrap-modal">
-                        <!-- Button trigger modal -->
-                        <button type="submit" class="btn btn-primary">Continue</button>
-                    </div>
-                </div>
-            </form>
-        </div>
+                <button type="submit" class="btn btn-primary" >Continue</button>
+            </div>
+        </form>
     </div>
 </div>

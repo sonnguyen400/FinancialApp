@@ -13314,3 +13314,24 @@ table.dataTable thead .sorting::after {
 .gradient-10{
   background-image: linear-gradient(230deg,#7FC7D9,#074173);
 }
+.bg-blue-100{
+  background-color: #A0DEFF;
+}
+.text-blue-700{
+  background-color: #2C4E80;
+}
+.border-blue-700{
+  border-color: #2C4E80;
+}
+.bg-red-100{
+  background-color: #ef5757;
+}
+.text-red-700{
+  color: #b61414;
+}
+.bg-green-100{
+  background-color: #aedc52;
+}
+.text-green-700{
+  color: #387038;
+}

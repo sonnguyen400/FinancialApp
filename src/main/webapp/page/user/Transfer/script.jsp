@@ -1,8 +1,9 @@
 <%@ page import="static com.sonnguyen.individual.nhs.Utils.RequestUtils.ERROR_MESSAGE" %>
 <%@ page import="static com.sonnguyen.individual.nhs.Utils.Constants.EXACT_PIN" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script src="<c:url value="/resources/js/FormValidator.js"/>"></script>
 <script type="module">
-    import Form from '<c:url value="/resources/js/formvalidator.js"/>';
+
     (function ($) {
         "use strict"
         new quixSettings({
@@ -17,39 +18,18 @@
             containerLayout: "wide",  //"boxed" and  "wide". If layout "vertical" and containerLayout "boxed", sidebarStyle will automatically turn into "overlay".
             direction: "ltr" //"ltr" = Left to Right; "rtl" = Right to Left
         });
-        var form1 = Form("#form1");
-        var form2 = Form("#form2");
-        var form3 = Form("#form3");
-        $("#receiver_account_number").on("blur", function (e) {
-            $("#preloader").fadeIn(500);
-            let payload={}
-            form1.formData().entries().forEach(value=>{
-                Object.assign(payload,{[value[0]]:value[1]})
+        $("#receiver_account_number").on("blur", function(e){
+            let data={
+                accountNumber:this.value
+            }
+            $.post("<%=request.getContextPath()%>/app/ajax/accountNumber",data).done(data=>{
+                let user=JSON.parse(data);
+                $("#receiver_name").val(user.firstname+" "+user.lastname);
+                return data;
+            }).fail(()=>{
+                sweetAlert("Invalid account number");
             })
-            $("#form1submit").click();
         })
-
-        $("#form3").on("submit",function (e) {
-            form1.formData().forEach((v,k)=>{
-                let input="input[name="+k+"]";
-                if(k.trim()!==""){
-                    let a=$(this).find(input);
-                    a.val(v);
-                }
-            })
-            return true;
-        })
-        $("#form4").on("submit",function (e) {
-            form1.formData().forEach((v,k)=>{
-                let input="input[name="+k+"]";
-                if(k.trim()!==""){
-                    let a=$(this).find(input);
-                    a.val(v);
-                }
-            })
-            return true;
-        })
-
         <%
             if(request.getAttribute(ERROR_MESSAGE)!=null){
                 out.print("sweetAlert(\"Oops...\", \" "+ request.getAttribute(ERROR_MESSAGE)+ " \", \"error\");");

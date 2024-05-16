@@ -17,6 +17,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
+
+import static com.sonnguyen.individual.nhs.Utils.RequestUtils.ERROR_MESSAGE;
 
 @WebServlet(name = "auth",urlPatterns = "/register")
 @Model
@@ -31,16 +34,18 @@ public class RegisterController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Login login= RequestUtils.parseEntity(req,Login.class);
         Customer customer=RequestUtils.parseEntity(req,Customer.class);
+        String accountNumber=req.getParameter("accountNumber");
+        Account account=new Account();
+        account.setAccountNumber(accountNumber);
+        customer.setAccounts(List.of(account));
         try{
             loginCustomerService.save(login,customer);
         }catch (Exception e){
             e.printStackTrace();
-            resp.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
-            resp.getWriter().println("Fail to create new account");
+            req.setAttribute(ERROR_MESSAGE,"You cannot register right now !");
             req.getRequestDispatcher("/page/user/register.jsp").forward(req,resp);
             return;
         }
         resp.sendRedirect(req.getContextPath()+"/login");
-
     }
 }

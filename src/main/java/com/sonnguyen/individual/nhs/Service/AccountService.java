@@ -1,19 +1,16 @@
 package com.sonnguyen.individual.nhs.Service;
 
-import com.sonnguyen.individual.nhs.Exception.FailureTransaction;
 import com.sonnguyen.individual.nhs.Model.Account;
-import com.sonnguyen.individual.nhs.Model.Customer;
-import com.sonnguyen.individual.nhs.Repository.AccountHolderRepository;
 import com.sonnguyen.individual.nhs.Repository.IRepository.IAccountRepository;
 import com.sonnguyen.individual.nhs.Service.IService.IAccountService;
-import com.sonnguyen.individual.nhs.Service.IService.ICustomerService;
-import com.sonnguyen.individual.nhs.Utils.AccountType;
+import com.sonnguyen.individual.nhs.Constant.AccountType;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,6 +40,11 @@ public class AccountService implements IAccountService {
     @Override
     public BigDecimal updateBalanceByAccountId(Connection connection,Integer accountId, BigDecimal value) throws SQLException {
         return accountRepository.updateBalanceByAccountId(connection,accountId, value);
+    }
+
+    @Override
+    public Collection<Account> findAllByCustomerId(Integer customerId) {
+        return accountRepository.findAllByCustomerId(customerId);
     }
 
 }

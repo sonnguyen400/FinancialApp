@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.time.Instant;
 
 @Entity
@@ -32,7 +33,9 @@ public class Loan {
     private Integer term;
 
     @Column(name = "approval_date")
-    private Instant approvalDate;
+    private Date approvalDate;
+    @Column(name = "create_at")
+    private Date createAt;
 
     @Size(max = 20)
     @Column(name = "status", length = 20)
@@ -41,14 +44,21 @@ public class Loan {
     @Size(max = 45)
     @Column(name = "repayment", length = 45)
     private String repayment;
-
-
-
     @Column(name = "branch_id")
     private int branchId;
 
     @Column(name = "disbursement_account_number")
     private String disbursementAccountNumber;
+    @Transient
+    private Customer customer;
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 
     public String getDisbursementAccountNumber() {
         return disbursementAccountNumber;
@@ -106,12 +116,20 @@ public class Loan {
         this.term = term;
     }
 
-    public Instant getApprovalDate() {
+    public Date getApprovalDate() {
         return approvalDate;
     }
 
-    public void setApprovalDate(Instant approvalDate) {
+    public void setApprovalDate(Date approvalDate) {
         this.approvalDate = approvalDate;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
     }
 
     public String getStatus() {

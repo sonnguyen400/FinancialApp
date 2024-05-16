@@ -24,20 +24,23 @@
             <p class="text-black-50 text-sm-center ">Register and receive all your desired treats</p>
             <!-- Form 1 -->
             <form action="${pageContext.request.contextPath}/login" style="display: block;" method="post" id="form1">
-                <div class=" form-group">
-                    <label class="pb-2" for="firstname">Username</label>
-                    <input id="firstname" name="username" class="form-control" data-rule="required" type="text"
-                           placeholder="Username" />
-                    <span class="invalid-feedback animated fadeInDown"></span>
-                </div>
-                <div class=" form-group">
-                    <label class="pb-2" for="lastname">Password</label>
-                    <input id="lastname" name="password" class="form-control" data-rule="required" type="password"
-                           placeholder="Password" />
-                    <span class="invalid-feedback animated fadeInDown"></span>
-                </div>
-                <div class="d-flex justify-content-end">
-                    <button class="btn btn-primary mx-2" id="submit" type="submit" >Login</button>
+                <div class="part">
+                    <div class=" form-group">
+                        <label class="pb-2" for="firstname">Username</label>
+                        <input id="firstname" name="username" class="form-control" data-rule="required" type="text"
+                               placeholder="Username" />
+                        <span class="invalid-feedback animated fadeInDown"></span>
+                    </div>
+                    <div class=" form-group">
+                        <label class="pb-2" for="lastname">Password</label>
+                        <input id="lastname" name="password" class="form-control" data-rule="required" type="password"
+                               placeholder="Password" />
+                        <span class="invalid-feedback animated fadeInDown"></span>
+                    </div>
+                    <div class="">Don't have an account? <a class="link" href="${pageContext.request.contextPath}/register">Register</a></div>
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-primary mx-2" id="submitBtn" type="submit" >Login</button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -45,16 +48,12 @@
 </div>
 <%@include file="/taglib/basescript.jsp" %>
 <%@include file="/tiles/base/plugin/Form.jsp"%>
-<%--<script>--%>
-<%--    $(function () {--%>
-<%--        let form1 = Form("#form1","Default");--%>
-<%--        $("#submit").click(function(e){--%>
-<%--            $.post("./login",form1.formData()).done(function (data){--%>
-<%--            })--%>
-<%--        })--%>
-
-<%--    })--%>
-<%--</script>--%>
+<script src='<c:url value="/resources/js/FormValidator.js"/>'></script>
+<script>
+    $(function(){
+        stepFormValidate($("#form1"))
+    })
+</script>
 </body>
 
 </html>

@@ -1,12 +1,9 @@
 package com.sonnguyen.individual.nhs.WebController;
 
-import com.sonnguyen.individual.nhs.Model.Customer;
 import com.sonnguyen.individual.nhs.Model.Loan;
-import com.sonnguyen.individual.nhs.Utils.LoanStatus;
+import com.sonnguyen.individual.nhs.Constant.LoanStatus;
 import com.sonnguyen.individual.nhs.Utils.RequestUtils;
-import com.sonnguyen.individual.nhs.Utils.SessionUtils;
 
-import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

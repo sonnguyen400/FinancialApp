@@ -16,7 +16,7 @@ public class Customer {
     private int id;
     private String firstname;
     private String lastname;
-    private Instant dateOfBirth;
+    private Date dateOfBirth;
     private int address_id;
     private String email;
     private String phone;
@@ -92,11 +92,11 @@ public class Customer {
         this.lastname = lastname;
     }
 
-    public Instant getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Instant dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

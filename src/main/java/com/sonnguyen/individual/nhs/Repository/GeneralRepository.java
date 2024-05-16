@@ -40,27 +40,29 @@ public class GeneralRepository<T,ID> {
 
     public static  <T> T createTransactional(Transactional transactional) throws FailureTransaction{
         Connection connection=getConnection();
-        T result;
-        try {
-            connection.setAutoCommit(false);
-            result= (T) transactional.startTransaction(connection);
-            connection.commit();
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        T result=null;
+        if(connection!=null){
             try {
-                connection.rollback();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
+                connection.setAutoCommit(false);
+                result= (T) transactional.startTransaction(connection);
+                connection.commit();
+            } catch (Exception e) {
+                e.printStackTrace();
+                try {
+                    System.out.println("Rolling back transaction");
+                    connection.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                    throw new FailureTransaction();
+                }
                 throw new FailureTransaction();
-            }
-            e.printStackTrace();
-            throw new FailureTransaction();
-        }finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+            }finally {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
         return result;
@@ -113,7 +115,6 @@ public class GeneralRepository<T,ID> {
         ResultSet resultSet=null;
         try{
             Map<String,Object> map=EntityMapper.objectMap(object,clazz);
-
             StringBuilder query=new StringBuilder("insert into ");
             query.append(EntityMapper.getTableName(clazz));
             query.append("(");query.append(String.join(",", map.keySet()));query.append(")");

@@ -12,6 +12,7 @@ import java.util.List;
 
 @Model
 public class LoginRepository extends Repository<Login,Integer> implements ILoginRepository  {
+
     @Override
     public Class<Login> getEntityClass() {
         return Login.class;
@@ -21,7 +22,7 @@ public class LoginRepository extends Repository<Login,Integer> implements ILogin
     public boolean validatePIN(Integer LoginId,String PIN) {
         Connection connection=getConnection();
         String query="select case \n" +
-                "\twhen PIN='?' then true\n" +
+                "\twhen PIN=? then true\n" +
                 "    else false\n" +
                 "    end as result\n" +
                 " from login where id=?;";
@@ -32,8 +33,10 @@ public class LoginRepository extends Repository<Login,Integer> implements ILogin
                 preparedStatement.setString(1,PIN);
                 preparedStatement.setInt(2,LoginId);
                 rs= preparedStatement.executeQuery();
+                rs.next();
                 result=rs.getBoolean(1);
             } catch (SQLException e) {
+                e.printStackTrace();
                 return false;
             }finally {
 
@@ -41,7 +44,7 @@ public class LoginRepository extends Repository<Login,Integer> implements ILogin
                     try {
                         rs.close();
                     } catch (SQLException e) {
-                        throw new RuntimeException(e);
+                        e.printStackTrace();
                     }
                 }
             }

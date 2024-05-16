@@ -5,7 +5,7 @@ import com.sonnguyen.individual.nhs.Model.AccountHolder;
 import com.sonnguyen.individual.nhs.Model.Customer;
 import com.sonnguyen.individual.nhs.Model.Login;
 import com.sonnguyen.individual.nhs.Repository.IRepository.*;
-import com.sonnguyen.individual.nhs.Utils.AccountType;
+import com.sonnguyen.individual.nhs.Constant.AccountType;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
@@ -24,7 +24,7 @@ public class LoginCustomerRepository extends Repository<Customer,Integer> implem
 
     @Override
     public Customer save(Login login, Customer customer, Account account) {
-        return  createTransactional((connection -> {
+        return  createTransactional(connection -> {
             Integer customerId=customerRepository.executeInsert(connection,customer);
             login.setCustomerId(customerId);
             Integer loginId=loginRepository.executeInsert(connection,login);
@@ -41,6 +41,6 @@ public class LoginCustomerRepository extends Repository<Customer,Integer> implem
             accountHolder.setAccountType(AccountType.PRINCIPAL.value);
             accountHolderRepository.executeInsert(connection,accountHolder);
             return customer;
-        }));
+        });
     }
 }

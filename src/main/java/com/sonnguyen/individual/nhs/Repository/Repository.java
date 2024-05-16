@@ -135,6 +135,15 @@ public class Repository<T, ID> extends GeneralRepository<T, ID> implements Abstr
         }
         return result;
     }
+    public Integer executeUpdate(String query, Object... params) throws SQLException {
+        Connection connection=getConnection();
+        Integer result = null;
+        if(connection!=null){
+            result=super.executeUpdate(connection,query,params);
+            connection.close();
+        }
+        return result;
+    }
     @Override
     public Integer executeInsert(Connection connection,T object) throws SQLException {
         return super.executeInsert(connection,object,getEntityClass());

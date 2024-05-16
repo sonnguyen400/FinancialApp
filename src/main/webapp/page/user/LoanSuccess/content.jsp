@@ -1,6 +1,4 @@
-<%@ page import="com.sonnguyen.individual.nhs.Model.Transfer" %>
 <%@ page import="com.sonnguyen.individual.nhs.Model.Loan" %>
-<%@ page import="com.sonnguyen.individual.nhs.Utils.Route" %>
 <%
     Loan loan= (Loan) request.getAttribute("loan");
 %>
@@ -33,7 +31,7 @@
                 </div>
                 <div class="px-5 py-4 ">
                     <div class="row">
-                        <a href="<%=Route.HOME.value%>" class="btn btn-outline-primary col mr-3"><i class="fi fi-rr-print mr-2"></i>Back To Home</a>
+                        <a href="<%=request.getContextPath()%>/app/home" class="btn btn-outline-primary col mr-3"><i class="fi fi-rr-print mr-2"></i>Back To Home</a>
                     </div>
 
                 </div>

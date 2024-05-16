@@ -13,7 +13,7 @@ public class Login {
     private Integer id;
     private String username;
     private String password;
-    private String PIN;
+    private String pin;
     @Column(name = "customer_id")
     private Integer CustomerId;
     @Transient
@@ -43,12 +43,12 @@ public class Login {
         this.password = password;
     }
 
-    public String getPIN() {
-        return PIN;
+    public String getPin() {
+        return pin;
     }
 
-    public void setPIN(String PIN) {
-        this.PIN = PIN;
+    public void setPin(String pin) {
+        this.pin = pin;
     }
 
     public Integer getCustomerId() {

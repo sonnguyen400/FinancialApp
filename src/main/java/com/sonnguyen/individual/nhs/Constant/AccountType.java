@@ -1,4 +1,4 @@
-package com.sonnguyen.individual.nhs.Utils;
+package com.sonnguyen.individual.nhs.Constant;
 
 public enum AccountType {
     PRINCIPAL("PRINCIPAL"),

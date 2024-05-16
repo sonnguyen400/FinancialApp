@@ -29,6 +29,7 @@ public class LoginController extends HttpServlet {
     IAccountService accountService;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getSession().removeAttribute(LOGIN_SESSION);
         req.getRequestDispatcher("/page/base/login.jsp").forward(req,resp);
     }
 

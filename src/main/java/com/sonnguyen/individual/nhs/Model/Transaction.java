@@ -1,4 +1,6 @@
 package com.sonnguyen.individual.nhs.Model;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
@@ -6,6 +8,7 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "transaction")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Transaction {
     @Id
     @GeneratedValue

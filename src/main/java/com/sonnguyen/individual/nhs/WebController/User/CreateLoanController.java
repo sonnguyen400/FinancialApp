@@ -1,14 +1,15 @@
 package com.sonnguyen.individual.nhs.WebController.User;
 
-import com.sonnguyen.individual.nhs.Model.Account;
 import com.sonnguyen.individual.nhs.Model.Customer;
 import com.sonnguyen.individual.nhs.Model.Loan;
 import com.sonnguyen.individual.nhs.Model.Login;
+import com.sonnguyen.individual.nhs.Service.IService.IAccountService;
 import com.sonnguyen.individual.nhs.Service.IService.ICustomerService;
 import com.sonnguyen.individual.nhs.Service.IService.ILoanService;
 import com.sonnguyen.individual.nhs.Service.IService.ILoginService;
-import com.sonnguyen.individual.nhs.Service.LoginService;
-import com.sonnguyen.individual.nhs.Utils.*;
+import com.sonnguyen.individual.nhs.Utils.OTPUtils;
+import com.sonnguyen.individual.nhs.Utils.RequestUtils;
+import com.sonnguyen.individual.nhs.Utils.SessionUtils;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -17,7 +18,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.math.BigDecimal;
 
 import static com.sonnguyen.individual.nhs.Utils.Constants.OTP;
 import static com.sonnguyen.individual.nhs.Utils.Constants.PIN;
@@ -30,12 +30,16 @@ public class CreateLoanController extends HttpServlet {
     @Inject
     ICustomerService customerService;
     @Inject
+    IAccountService accountService;
+    @Inject
     ILoanService loanService;
 
     @Inject
     ILoginService loginService;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Customer customer=SessionUtils.getPrincipal(req).getCustomer();
+
         req.getRequestDispatcher("/page/user/EnterPin/page.jsp").forward(req, resp);
     }
 
@@ -55,7 +59,7 @@ public class CreateLoanController extends HttpServlet {
         if(req.getParameter(OTP) != null){
             String otp= (String) SessionUtils.getSession(req,OTP);
             if(req.getParameter(OTP).equals(otp)){
-
+                req.setAttribute("accounts",accountService.findAllByCustomerId(account.getCustomer().getId()));
                 req.getRequestDispatcher("/page/user/LoanCreate/page.jsp").forward(req,resp);
             }else {
                 req.setAttribute(ERROR_MESSAGE,"Invalid OTP");
@@ -63,14 +67,11 @@ public class CreateLoanController extends HttpServlet {
             }
         }
         if(req.getParameter("LoanCreate")!=null){
-            req.getParameterMap().forEach((k,v)->{
-                System.out.println(k+":"+v);
-            });
-            Customer customer=customerService.findByAccountId(SessionUtils.getPrincipal(req).getId()).get();
             Loan loan=RequestUtils.parseEntity(req, Loan.class);
-            loan.setCustomerId(customer.getId());
-//            loan.setBranchId();
+            loan.setCustomerId(account.getCustomerId());
+            loan.setBranchId(1);
             loanService.save(loan);
+            req.setAttribute("loan",loan);
             req.getRequestDispatcher("/page/user/LoanSuccess/page.jsp").forward(req,resp);
         }
     }

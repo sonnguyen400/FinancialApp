@@ -76,7 +76,62 @@ public class EntityMapper<T> {
         }
         return map;
     }
-
+    public static <T> T map(ResultSet resultSet,Class<T> clazz){
+        List<Field> fields =getField(clazz);
+        try{
+            T object=clazz.getConstructor().newInstance();
+            for (Field field : fields) {
+                if(field.getAnnotation(Transient.class)!=null) continue;
+                field.setAccessible(true);
+                String type=field.getType().getSimpleName();
+                if(field.getType().isPrimitive()){
+                    switch (type){
+                        case INT:
+                            field.setInt(object,(int) resultSet.getInt(getColumnName(field)));
+                            break;
+                        case LONG:
+                            field.setLong(object,resultSet.getLong(getColumnName(field)));
+                            break;
+                        case BYTE:
+                            field.setByte(object,resultSet.getByte(getColumnName(field)));
+                            break;
+                        case SHORT:
+                            field.setShort(object,resultSet.getShort(getColumnName(field)));
+                            break;
+                        case FLOAT:
+                            field.setFloat(object,resultSet.getFloat(getColumnName(field)));
+                            break;
+                        case DOUBLE:
+                            field.setDouble(object,resultSet.getDouble(getColumnName(field)));
+                            break;
+                        case BOOLEAN:
+                            field.setBoolean(object,resultSet.getBoolean(getColumnName(field)));
+                            break;
+                    }
+                }
+                else{
+                    if(field.getType().getSimpleName().equals(Date.class.getSimpleName())){
+                        field.set(object,resultSet.getDate(getColumnName(field)));
+                        continue;
+                    }
+                    if(field.getType().getSimpleName().equals(Instant.class.getSimpleName())){
+                        field.set(object,Instant.ofEpochMilli(resultSet.getDate(getColumnName(field)).getTime()));
+                        continue;
+                    }
+                    field.set(object,resultSet.getObject(getColumnName(field)));
+                }
+            }
+            return object;
+        }catch (SQLException e){
+            Console.err("Error when mapping result");
+            e.printStackTrace();
+        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }catch (IllegalArgumentException e){
+            System.out.println("Ambiguous properties type - in "+clazz.getName());
+        }
+        return null;
+    }
     public static <T> List<T> mapEntity(ResultSet resultSet,Class<T> clazz){
         List<Field> fields =getField(clazz);
         List<T> results=new ArrayList<T>();

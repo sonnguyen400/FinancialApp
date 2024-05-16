@@ -6,5 +6,5 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public interface ITransactionRepository extends AbstractRepository<Transaction,Integer>{
-    public Integer createTransaction(Connection connection,Transaction transaction)  throws SQLException;
+     Integer createTransaction(Connection connection,Transaction transaction)  throws SQLException;
 }

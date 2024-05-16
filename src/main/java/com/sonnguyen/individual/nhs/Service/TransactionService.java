@@ -14,7 +14,10 @@ public class TransactionService implements ITransactionService {
     @Inject
     private ITransactionRepository transactionRepository;
     public Transaction createTransaction(Connection connection,Transaction transaction) throws SQLException {
-        transaction.setId(transactionRepository.createTransaction(connection,transaction));
-        return transaction;
+        Integer id=transactionRepository.createTransaction(connection,transaction);
+        return transactionRepository.findById(id).get();
+    }
+    public Transaction findById(Integer id) throws SQLException {
+        return transactionRepository.findById(id).get();
     }
 }
