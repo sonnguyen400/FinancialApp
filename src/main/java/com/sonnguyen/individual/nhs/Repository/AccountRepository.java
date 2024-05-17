@@ -79,6 +79,19 @@ public class AccountRepository extends Repository<Account,Integer> implements IA
         }
         return List.of();
     }
+    public Optional<Account> findSavingAccountByCustomerId(Integer customerId){
+        String query="Select * from account where id in (select account_id from account_holder where customer_id=? and account_type=?)";
+        List<Account> accounts=List.of();
+        try {
+            accounts=executeSelect(query,customerId,AccountType.SAVINGS);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if(accounts.size()>0){
+            return Optional.of(accounts.get(0));
+        }else{
+            return Optional.empty();
+        }
 
-
+    }
 }

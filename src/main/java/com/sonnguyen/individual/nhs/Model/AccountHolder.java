@@ -12,6 +12,15 @@ public class AccountHolder {
     @Column(name="account_type")
     private String accountType;
 
+    public AccountHolder(int accountID, int customerID, String accountType) {
+        this.accountID = accountID;
+        this.customerID = customerID;
+        this.accountType = accountType;
+    }
+
+    public AccountHolder() {
+    }
+
     public String getAccountType() {
         return accountType;
     }

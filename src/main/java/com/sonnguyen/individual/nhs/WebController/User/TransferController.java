@@ -1,5 +1,6 @@
 package com.sonnguyen.individual.nhs.WebController.User;
 
+import com.sonnguyen.individual.nhs.Constant.TransactionType;
 import com.sonnguyen.individual.nhs.Model.Customer;
 import com.sonnguyen.individual.nhs.Model.Login;
 import com.sonnguyen.individual.nhs.Model.Transaction;
@@ -51,6 +52,7 @@ public class TransferController extends HttpServlet {
             accountService.findAccountByAccountNumber(req.getParameter("account_number")).ifPresent(account_ -> {
                 transfer.setAccountId(account_.getId());
             });
+            transaction.setTransactionType(TransactionType.TRANSFER.value);
             transaction.setValue(BigDecimal.valueOf(Double.parseDouble(req.getParameter("amount"))));
             transfer.setTransaction(transaction);
             SessionUtils.setSession(req,"transfer",transfer);

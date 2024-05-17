@@ -18,7 +18,7 @@ public class LoginCustomerRepository extends Repository<Customer,Integer> implem
     @Inject
     private ICustomerRepository customerRepository;
     @Inject
-    private IAccountRepository repository;
+    private IAccountRepository accountRepository;
     @Inject
     private IAccountHolderRepository accountHolderRepository;
 
@@ -29,7 +29,7 @@ public class LoginCustomerRepository extends Repository<Customer,Integer> implem
             login.setCustomerId(customerId);
             Integer loginId=loginRepository.executeInsert(connection,login);
             account.setBranchID(1);
-            Integer accountId=repository.executeInsert(connection,account);
+            Integer accountId=accountRepository.executeInsert(connection,account);
             customer.setId(customerId);
             login.setId(loginId);
             account.setId(accountId);
@@ -43,4 +43,6 @@ public class LoginCustomerRepository extends Repository<Customer,Integer> implem
             return customer;
         });
     }
+
+
 }

@@ -2,7 +2,7 @@ package com.sonnguyen.individual.nhs.Constant;
 
 public enum AccountType {
     PRINCIPAL("PRINCIPAL"),
-    SAVINGS("SAVINGS"),
+    SAVINGS("SAVING"),
     GENERAL("GENERAL");
     public String value;
     AccountType(String value) {
