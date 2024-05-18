@@ -6,11 +6,12 @@ import com.sonnguyen.individual.nhs.Model.AccountHolder;
 import com.sonnguyen.individual.nhs.Model.SavingsInfor;
 import com.sonnguyen.individual.nhs.Repository.IRepository.ISavingRepository;
 
+import javax.enterprise.inject.Model;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
-
+@Model
 public class SavingsRepository extends Repository<SavingsInfor,Integer> implements ISavingRepository {
 
     @Override

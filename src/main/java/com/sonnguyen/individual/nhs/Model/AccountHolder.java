@@ -9,25 +9,15 @@ public class AccountHolder {
     private int accountID;
     @Column(name = "customer_id")
     private int customerID;
-    @Column(name="account_type")
-    private String accountType;
 
-    public AccountHolder(int accountID, int customerID, String accountType) {
+    public AccountHolder(int accountID, int customerID) {
         this.accountID = accountID;
         this.customerID = customerID;
-        this.accountType = accountType;
     }
 
     public AccountHolder() {
     }
 
-    public String getAccountType() {
-        return accountType;
-    }
-
-    public void setAccountType(String accountType) {
-        this.accountType = accountType;
-    }
 
     public int getAccountID() {
         return accountID;

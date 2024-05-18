@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 @Table(name = "savings_infor")
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -13,13 +14,36 @@ public class SavingsInfor {
     private Integer id;
     @Column(name = "type")
     private String type;
+    @Column(name = "rollover")
+    private Boolean rollover;
     @Column(name = "interest_rate")
     private BigDecimal interestRate;
+    @Column(name = "term")
+    private Integer term;
     @Column(name = "account_id")
     private Integer accountId;
-    @Column(name = "account_id")
     @Transient
     private Account account;
+    @Transient
+    private BigDecimal amount;
+    @Transient
+    private Integer sourceAccount;
+
+    public Integer getSourceAccount() {
+        return sourceAccount;
+    }
+
+    public void setSourceAccount(Integer sourceAccount) {
+        this.sourceAccount = sourceAccount;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
 
     public Integer getAccountId() {
         return accountId;

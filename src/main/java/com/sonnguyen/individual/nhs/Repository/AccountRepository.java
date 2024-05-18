@@ -94,4 +94,18 @@ public class AccountRepository extends Repository<Account,Integer> implements IA
         }
 
     }
+
+    @Override
+    public List<Account> findByStatusAndTypeAndCustomerId(String status, String type, Integer customerId) {
+        String query="select * from account where status=? and account_type=? and id in (Select account_id from account_holder where customer_id=?)";
+        try {
+            return executeSelect(query,status,type,customerId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return List.of();
+        }
+    }
+
+
+
 }

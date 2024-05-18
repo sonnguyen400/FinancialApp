@@ -39,7 +39,6 @@ public class CreateLoanController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Customer customer=SessionUtils.getPrincipal(req).getCustomer();
-
         req.getRequestDispatcher("/page/user/EnterPin/page.jsp").forward(req, resp);
     }
 

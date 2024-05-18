@@ -18,5 +18,6 @@ public interface IAccountService{
     BigDecimal updateBalanceByAccountId(Connection connection,Integer accountId, BigDecimal value) throws SQLException;
     Collection<Account> findAllByCustomerId(Integer customerId);
     Account createSavingsAccount(Integer customerId, SavingsInfor savingsInfor);
+    Optional<Account> findOpeningSavingByCustomerId(Integer customerId);
 
 }

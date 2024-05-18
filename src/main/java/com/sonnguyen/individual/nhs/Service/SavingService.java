@@ -22,7 +22,7 @@ public class SavingService {
     public SavingsInfor createSaving(Integer customer,SavingsInfor savingInfor) {
         return GeneralRepository.createTransactional((connection -> {
             Integer accountId =accountRepository.executeInsert(connection, savingInfor.getAccount());
-            AccountHolder accountHolder=new AccountHolder(accountId,customer, AccountType.SAVINGS.value);
+            AccountHolder accountHolder=new AccountHolder(accountId,customer);
             accountHolderRepository.executeInsert(connection,accountHolder);
             Integer savingId=savingRepository.executeInsert(connection,savingInfor);
             savingInfor.setId(savingId);

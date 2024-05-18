@@ -81,11 +81,11 @@
 <%--    loan management tool--%>
     <div class="col-lg-3">
         <div class="mx-0 row">
-            <a href="${pageContext.request.contextPath}/app/loan/create" class="col-ssm-6">
+            <a href="${pageContext.request.contextPath}/app/saving" class="col-ssm-6">
                 <div class="card react-widget gradient-3">
                     <div class="gutter-ssm-2">
                         <div class="col">
-                            <h4 class="text-white text-md-8">Create a loan</h4>
+                            <h4 class="text-white text-md-8">Create a saving</h4>
                             <span class="float-right text-ssm-11 opacity-5 "><i
                                     class="fi fi-sr-money-bill-transfer"></i></span>
                         </div>

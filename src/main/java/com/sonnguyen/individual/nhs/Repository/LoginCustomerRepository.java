@@ -25,10 +25,14 @@ public class LoginCustomerRepository extends Repository<Customer,Integer> implem
     @Override
     public Customer save(Login login, Customer customer, Account account) {
         return  createTransactional(connection -> {
+            //Create customer
             Integer customerId=customerRepository.executeInsert(connection,customer);
+            //Create login
             login.setCustomerId(customerId);
             Integer loginId=loginRepository.executeInsert(connection,login);
+            //Create account
             account.setBranchID(1);
+            account.setAccountType(AccountType.PRINCIPAL.value);
             Integer accountId=accountRepository.executeInsert(connection,account);
             customer.setId(customerId);
             login.setId(loginId);
@@ -38,7 +42,6 @@ public class LoginCustomerRepository extends Repository<Customer,Integer> implem
             AccountHolder accountHolder = new AccountHolder();
             accountHolder.setCustomerID(customerId);
             accountHolder.setAccountID(accountId);
-            accountHolder.setAccountType(AccountType.PRINCIPAL.value);
             accountHolderRepository.executeInsert(connection,accountHolder);
             return customer;
         });
