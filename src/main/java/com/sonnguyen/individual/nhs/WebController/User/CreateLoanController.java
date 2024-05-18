@@ -58,7 +58,7 @@ public class CreateLoanController extends HttpServlet {
         if(req.getParameter(OTP) != null){
             String otp= (String) SessionUtils.getSession(req,OTP);
             if(req.getParameter(OTP).equals(otp)){
-                req.setAttribute("accounts",accountService.findAllByCustomerId(account.getCustomer().getId()));
+                req.setAttribute("accounts",accountService.findAllByCustomerId(account.getCustomerId()));
                 req.getRequestDispatcher("/page/user/LoanCreate/page.jsp").forward(req,resp);
             }else {
                 req.setAttribute(ERROR_MESSAGE,"Invalid OTP");

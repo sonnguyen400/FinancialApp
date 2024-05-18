@@ -1,3 +1,5 @@
+<%@ page import="com.sonnguyen.individual.nhs.Constant.SavingType" %>
+<%@ page import="static com.sonnguyen.individual.nhs.Utils.RequestUtils.ERROR_MESSAGE" %>
 <script>
     $(function (){
         $("input[name='amount']").on("input",e=>{
@@ -8,8 +10,20 @@
             $("input[name='disbursementAccountNumber']").val(value);
             $("#disbursement_account_ref").html(value);
         });
-        $("select[name='duration']").on("change",e=>{
-            let value=$("select[name='duration'] option:selected")[0].value;
+        var Termselector=$("select[name='term']");
+        $("select[name='type']").on("change",function (e){
+            let value=e.target.value;
+            switch (value) {
+                case "<%=SavingType.TERM_DEPOSIT%>":
+                    Termselector.prop('disabled', false);
+                    break;
+                case "<%=SavingType.DEMAND_DEPOSIT%>":
+                    Termselector.prop('disabled', true);
+                    break;
+            }
+        })
+        Termselector.on("change",function(e){
+            let value=e.target.value;
             let interestRate=0;
             switch (value) {
                 case "12":
@@ -20,9 +34,12 @@
                     break;
             }
             $("input[name='interestRate']").val(interestRate);
-            $("input[name='term']").val(value);
             $("#interest_rate_ref").html(interestRate+`% per Year`);
         });
-
+        <%
+                  if(request.getAttribute(ERROR_MESSAGE)!=null){
+                      out.print("sweetAlert(\"Oops...\", \" "+ request.getAttribute(ERROR_MESSAGE)+ " \", \"error\");");
+                  }
+        %>
     })
 </script>

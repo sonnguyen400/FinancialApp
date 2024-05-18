@@ -9,6 +9,7 @@ import com.sonnguyen.individual.nhs.Repository.IRepository.IAccountRepository;
 import com.sonnguyen.individual.nhs.Repository.IRepository.ISavingRepository;
 import com.sonnguyen.individual.nhs.Service.IService.IAccountService;
 import com.sonnguyen.individual.nhs.Constant.AccountType;
+import com.sonnguyen.individual.nhs.Service.IService.ITransferService;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
@@ -28,6 +29,8 @@ public class AccountService implements IAccountService {
     private IAccountHolderRepository accountHolderRepository;
     @Inject
     private ISavingRepository savingRepository;
+    @Inject
+    private ITransferService transferService;
     public Optional<Account> findByUsername(String username) {
         return accountRepository.findByUsername(username);
     }
@@ -63,7 +66,8 @@ public class AccountService implements IAccountService {
     public Account createSavingsAccount(Integer customerId, SavingsInfor savingsInfor) {
         return GeneralRepository.createTransactional(connection -> {
             //Create saving account
-            Account account=savingsInfor.getAccount();
+            Account account=new Account();
+            account.setBalance(BigDecimal.ZERO);
             account.setAccountNumber(UUID.randomUUID().toString().substring(0,8));
             account.setAccountType(AccountType.SAVINGS.value);
             account.setBranchID(1);
@@ -73,8 +77,10 @@ public class AccountService implements IAccountService {
                 //Create account holder
             AccountHolder holder=new AccountHolder(accountId, customerId);
             accountHolderRepository.executeInsert(connection,holder);
+                // Create saving information
             savingsInfor.setAccountId(accountId);
             Integer savingAccId=savingRepository.executeInsert(connection,savingsInfor);
+            savingsInfor.setId(savingAccId);
 
             //Transfer from source to saving account
             Transaction transaction=new Transaction();
@@ -86,7 +92,8 @@ public class AccountService implements IAccountService {
             transfer.setTransaction(transaction);
             transfer.setAccountId(savingsInfor.getAccountId());
             transfer.setMessage("Transfer for saving account");
-            return accountRepository.executeInsert(connection,account);
+            transferService.startTransfer(connection,transfer);
+            return account;
         });
     }
 
@@ -96,6 +103,8 @@ public class AccountService implements IAccountService {
         if(accounts.size()==1) return Optional.of(accounts.get(0));
         else return Optional.empty();
     }
+
+
 
 
 }

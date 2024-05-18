@@ -15,7 +15,7 @@ public class SavingsInfor {
     @Column(name = "type")
     private String type;
     @Column(name = "rollover")
-    private Boolean rollover;
+    private String rollover;
     @Column(name = "interest_rate")
     private BigDecimal interestRate;
     @Column(name = "term")
@@ -28,6 +28,37 @@ public class SavingsInfor {
     private BigDecimal amount;
     @Transient
     private Integer sourceAccount;
+
+    @Override
+    public String toString() {
+        return "SavingsInfor{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", rollover='" + rollover + '\'' +
+                ", interestRate=" + interestRate +
+                ", term=" + term +
+                ", accountId=" + accountId +
+                ", account=" + account +
+                ", amount=" + amount +
+                ", sourceAccount=" + sourceAccount +
+                '}';
+    }
+
+    public String getRollover() {
+        return rollover;
+    }
+
+    public void setRollover(String rollover) {
+        this.rollover = rollover;
+    }
+
+    public Integer getTerm() {
+        return term;
+    }
+
+    public void setTerm(Integer term) {
+        this.term = term;
+    }
 
     public Integer getSourceAccount() {
         return sourceAccount;
