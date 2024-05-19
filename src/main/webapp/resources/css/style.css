@@ -13318,7 +13318,7 @@ table.dataTable thead .sorting::after {
   background-color: #A0DEFF;
 }
 .text-blue-700{
-  background-color: #2C4E80;
+  color: #2C4E80;
 }
 .border-blue-700{
   border-color: #2C4E80;

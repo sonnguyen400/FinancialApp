@@ -10,12 +10,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 @Model
-public class TransactionLogService implements ITransactionService {
+public class TransactionLogService {
     @Inject
     private ITransactionRepository transactionRepository;
 
-    @Override
-    public Transaction createTransaction(Connection connection, Transaction transaction) throws SQLException {
-        return null;
-    }
+
 }

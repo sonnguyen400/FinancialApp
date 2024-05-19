@@ -39,9 +39,8 @@ public class LoginCustomerRepository extends Repository<Customer,Integer> implem
             account.setId(accountId);
             customer.setAccounts(List.of(account));
             customer.setLogin(customer.getLogin());
-            AccountHolder accountHolder = new AccountHolder();
-            accountHolder.setCustomerID(customerId);
-            accountHolder.setAccountID(accountId);
+            AccountHolder accountHolder = new AccountHolder(accountId,customerId);
+            accountHolder.setDefault(true);
             accountHolderRepository.executeInsert(connection,accountHolder);
             return customer;
         });

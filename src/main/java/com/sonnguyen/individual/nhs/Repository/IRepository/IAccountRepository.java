@@ -20,5 +20,6 @@ public interface IAccountRepository extends AbstractRepository<Account,Integer> 
     List<Account> findAllByCustomerId(Integer customerId);
     Optional<Account> findSavingAccountByCustomerId(Integer customerId);
     List<Account> findByStatusAndTypeAndCustomerId(String status,String type,Integer customerId);
+    Account findDefaultAccountByCustomerId(Integer customerId);
 
 }

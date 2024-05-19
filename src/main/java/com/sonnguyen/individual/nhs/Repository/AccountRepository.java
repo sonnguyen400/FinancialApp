@@ -69,6 +69,7 @@ public class AccountRepository extends Repository<Account,Integer> implements IA
         }
     }
 
+
     @Override
     public List<Account> findAllByCustomerId(Integer customerId) {
         String query="Select * from account where id in (select account_id from account_holder where customer_id=?)";
@@ -106,6 +107,18 @@ public class AccountRepository extends Repository<Account,Integer> implements IA
         }
     }
 
+    @Override
+    public Account findDefaultAccountByCustomerId(Integer customerId) {
+        String query="Select * from account where id in (select account_id from account_holder where customer_id=? && is_default=true)";
+        List<Account> accounts=List.of();
+        try {
+            accounts=executeSelect(query,customerId);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        if(accounts==null||accounts.size()==0) return null;
+        return accounts.get(0);
+    }
 
 
 }

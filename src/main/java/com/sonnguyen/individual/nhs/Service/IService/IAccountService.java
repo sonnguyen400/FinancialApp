@@ -19,5 +19,6 @@ public interface IAccountService{
     Collection<Account> findAllByCustomerId(Integer customerId);
     Account createSavingsAccount(Integer customerId, SavingsInfor savingsInfor);
     Optional<Account> findOpeningSavingByCustomerId(Integer customerId);
+    Account findDefaultAccountByCustomerId(Integer customerId);
 
 }

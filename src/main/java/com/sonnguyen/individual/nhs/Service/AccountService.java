@@ -104,7 +104,10 @@ public class AccountService implements IAccountService {
         else return Optional.empty();
     }
 
-
+    @Override
+    public Account findDefaultAccountByCustomerId(Integer customerId) {
+        return accountRepository.findDefaultAccountByCustomerId(customerId);
+    }
 
 
 }

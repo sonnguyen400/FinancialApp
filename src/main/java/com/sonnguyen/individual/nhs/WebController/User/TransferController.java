@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
 
+import static com.sonnguyen.individual.nhs.Constant.RequestFlags.CREATE_TRANSFER;
 import static com.sonnguyen.individual.nhs.Utils.Constants.*;
 import static com.sonnguyen.individual.nhs.Utils.RequestUtils.ERROR_MESSAGE;
 
@@ -46,7 +47,7 @@ public class TransferController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Login login=SessionUtils.getPrincipal(req);
-        if(req.getParameter("transfer")!=null&&req.getParameter("receiver_name")!=""){
+        if(req.getParameter(CREATE_TRANSFER.value)!=null&&req.getParameter("receiver_name")!=""){
             Transfer transfer = RequestUtils.parseEntity(req,Transfer.class);
             Transaction transaction = RequestUtils.parseEntity(req,Transaction.class);
             accountService.findAccountByAccountNumber(req.getParameter("account_number")).ifPresent(account_ -> {
