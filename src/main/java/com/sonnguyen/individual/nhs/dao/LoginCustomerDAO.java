@@ -40,6 +40,7 @@ public class LoginCustomerDAO extends DAO<Customer,Integer> implements ILoginCus
             AccountHolder accountHolder = new AccountHolder();
             accountHolder.setCustomerID(customerId);
             accountHolder.setAccountID(accountId);
+            accountHolder.setDefault(true);
             accountHolderRepository.executeInsert(connection,accountHolder);
             return customer;
         });

@@ -1,12 +1,11 @@
 package com.sonnguyen.individual.nhs.Service;
 
-import com.sonnguyen.individual.nhs.Constant.AccountType;
 import com.sonnguyen.individual.nhs.Model.AccountHolder;
 import com.sonnguyen.individual.nhs.Model.SavingsInfor;
-import com.sonnguyen.individual.nhs.Repository.GeneralRepository;
-import com.sonnguyen.individual.nhs.Repository.IRepository.IAccountHolderRepository;
-import com.sonnguyen.individual.nhs.Repository.IRepository.IAccountRepository;
-import com.sonnguyen.individual.nhs.Repository.IRepository.ISavingRepository;
+import com.sonnguyen.individual.nhs.dao.GeneralDAO;
+import com.sonnguyen.individual.nhs.dao.Idao.IAccountDAO;
+import com.sonnguyen.individual.nhs.dao.Idao.IAccountHolderDAO;
+import com.sonnguyen.individual.nhs.dao.Idao.ISavingDAO;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
@@ -14,17 +13,17 @@ import javax.inject.Inject;
 @Model
 public class SavingService {
     @Inject
-    ISavingRepository savingRepository;
+    ISavingDAO savingDao;
     @Inject
-    IAccountRepository accountRepository;
+    IAccountDAO accountDAO;
     @Inject
-    IAccountHolderRepository accountHolderRepository;
+    IAccountHolderDAO accountHolderRepository;
     public SavingsInfor createSaving(Integer customer,SavingsInfor savingInfor) {
-        return GeneralRepository.createTransactional((connection -> {
-            Integer accountId =accountRepository.executeInsert(connection, savingInfor.getAccount());
+        return GeneralDAO.createTransactional((connection -> {
+            Integer accountId =accountDAO.executeInsert(connection, savingInfor.getAccount());
             AccountHolder accountHolder=new AccountHolder(accountId,customer);
             accountHolderRepository.executeInsert(connection,accountHolder);
-            Integer savingId=savingRepository.executeInsert(connection,savingInfor);
+            Integer savingId=savingDao.executeInsert(connection,savingInfor);
             savingInfor.setId(savingId);
             return savingInfor;
         }));

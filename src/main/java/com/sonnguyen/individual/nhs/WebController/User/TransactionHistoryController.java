@@ -3,10 +3,8 @@ package com.sonnguyen.individual.nhs.WebController.User;
 import com.sonnguyen.individual.nhs.Model.Account;
 import com.sonnguyen.individual.nhs.Model.Login;
 import com.sonnguyen.individual.nhs.Model.Transaction;
-import com.sonnguyen.individual.nhs.Repository.IRepository.IAccountRepository;
 import com.sonnguyen.individual.nhs.Service.IService.IAccountService;
 import com.sonnguyen.individual.nhs.Service.IService.ITransactionService;
-import com.sonnguyen.individual.nhs.Service.IService.ITransferService;
 import com.sonnguyen.individual.nhs.Utils.SessionUtils;
 
 import javax.inject.Inject;

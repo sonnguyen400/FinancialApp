@@ -1,18 +1,13 @@
-package com.sonnguyen.individual.nhs.Repository;
+package com.sonnguyen.individual.nhs.dao;
 
-import com.sonnguyen.individual.nhs.Constant.AccountType;
-import com.sonnguyen.individual.nhs.Model.Account;
-import com.sonnguyen.individual.nhs.Model.AccountHolder;
 import com.sonnguyen.individual.nhs.Model.SavingsInfor;
-import com.sonnguyen.individual.nhs.Repository.IRepository.ISavingRepository;
+import com.sonnguyen.individual.nhs.dao.Idao.ISavingDAO;
 
 import javax.enterprise.inject.Model;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 @Model
-public class SavingsRepository extends Repository<SavingsInfor,Integer> implements ISavingRepository {
+public class SavingsRepository extends DAO<SavingsInfor,Integer> implements ISavingDAO {
 
     @Override
     public Class<SavingsInfor> getEntityClass() {

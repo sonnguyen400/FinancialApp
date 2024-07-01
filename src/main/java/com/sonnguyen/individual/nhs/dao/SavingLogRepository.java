@@ -1,8 +1,8 @@
-package com.sonnguyen.individual.nhs.Repository;
+package com.sonnguyen.individual.nhs.dao;
 
 import com.sonnguyen.individual.nhs.Model.Savinglog;
-import com.sonnguyen.individual.nhs.Repository.IRepository.ISavingLogRepository;
+import com.sonnguyen.individual.nhs.dao.Idao.ISavingLogDAO;
 
-public class SavingLogRepository extends Repository<Savinglog,Integer> implements ISavingLogRepository {
+public class SavingLogRepository extends DAO<Savinglog,Integer> implements ISavingLogDAO {
 
 }

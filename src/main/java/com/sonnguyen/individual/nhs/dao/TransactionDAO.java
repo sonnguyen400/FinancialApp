@@ -1,18 +1,11 @@
-package com.sonnguyen.individual.nhs.Repository;
+package com.sonnguyen.individual.nhs.dao;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mysql.cj.jdbc.JdbcConnection;
-import com.mysql.cj.jdbc.StatementImpl;
-import com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping;
-import com.mysql.cj.jdbc.result.ResultSetFactory;
 import com.sonnguyen.individual.nhs.Model.Transaction;
 import com.sonnguyen.individual.nhs.Model.Transfer;
-import com.sonnguyen.individual.nhs.Repository.IRepository.ITransactionRepository;
 import com.sonnguyen.individual.nhs.Utils.EntityMapper;
+import com.sonnguyen.individual.nhs.dao.Idao.ITransactionDAO;
 
 import javax.enterprise.inject.Model;
-import javax.faces.model.ResultSetDataModel;
-import javax.persistence.SqlResultSetMapping;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,7 +15,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Model
-public final class TransactionRepository extends Repository<Transaction,Integer> implements ITransactionRepository {
+public final class TransactionDAO extends DAO<Transaction,Integer> implements ITransactionDAO {
     @Override
     public Class<Transaction> getEntityClass() {
         return Transaction.class;
