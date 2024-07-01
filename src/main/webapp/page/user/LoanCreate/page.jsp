@@ -1,8 +1,8 @@
 <%@ taglib prefix="title" uri="http://tiles.apache.org/tags-tiles" %>
 <%@include file="/taglib/taglib.jsp"%>
-<tiles:insertDefinition name="loan-create.page">
-    <tiles:definition name="loan-create.page" extends="page">
-        <tiles:putAttribute name="title" value="Home"/>
+<tiles:insertDefinition name="user.loan-create.page">
+    <tiles:definition name="user.loan-create.page" extends="page">
+        <tiles:putAttribute name="title" value="Loan"/>
         <tiles:putAttribute name="body">
             <tiles:definition extends="main-wrapper">
                 <tiles:putAttribute name="content" >

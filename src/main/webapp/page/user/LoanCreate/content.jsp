@@ -53,7 +53,7 @@
     <div class="col">
         <div class="card">
             <div class="card-body">
-                <form  method="post" action="${requestScope['javax.servlet.forward.request_uri']}">
+                <form  method="post" action="${pageContext.request.contextPath}/app/loan/create">
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">

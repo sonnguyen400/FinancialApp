@@ -2,6 +2,7 @@
 <%
     Transfer transfer= (Transfer) request.getAttribute("transfer");
 %>
+
 <div class="row justify-content-center">
     <div class="col-ssm col-sm-6 col-xl-3 align-self-center">
         <div class="invoice shadow-lg">

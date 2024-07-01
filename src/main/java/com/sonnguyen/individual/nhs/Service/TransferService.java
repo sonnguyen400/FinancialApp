@@ -2,8 +2,8 @@ package com.sonnguyen.individual.nhs.Service;
 
 import com.sonnguyen.individual.nhs.Model.Transaction;
 import com.sonnguyen.individual.nhs.Model.Transfer;
-import com.sonnguyen.individual.nhs.Repository.GeneralRepository;
-import com.sonnguyen.individual.nhs.Repository.IRepository.ITransferRepository;
+import com.sonnguyen.individual.nhs.dao.GeneralDAO;
+import com.sonnguyen.individual.nhs.dao.Idao.ITransferDAO;
 import com.sonnguyen.individual.nhs.Service.IService.IAccountService;
 import com.sonnguyen.individual.nhs.Service.IService.ITransferService;
 import org.jboss.logging.Logger;
@@ -16,7 +16,7 @@ import java.sql.SQLException;
 @Model
 public class TransferService implements ITransferService {
     @Inject
-    ITransferRepository transferRepository;
+    ITransferDAO transferRepository;
     @Inject
     TransactionService transactionService;
     @Inject
@@ -25,7 +25,7 @@ public class TransferService implements ITransferService {
 
     @Override
     public Transfer startTransfer(Transfer transfer) {
-        return GeneralRepository.createTransactional((connection)-> startTransfer(connection,transfer));
+        return GeneralDAO.createTransactional((connection)-> startTransfer(connection,transfer));
     }
 
     @Override

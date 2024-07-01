@@ -1,9 +1,7 @@
 package com.sonnguyen.individual.nhs.Service;
 
 import com.sonnguyen.individual.nhs.Model.Customer;
-import com.sonnguyen.individual.nhs.Repository.GeneralRepository;
-import com.sonnguyen.individual.nhs.Repository.IRepository.ICustomerRepository;
-import com.sonnguyen.individual.nhs.Repository.Repository;
+import com.sonnguyen.individual.nhs.dao.Idao.ICustomerDAO;
 import com.sonnguyen.individual.nhs.Service.IService.IAccountService;
 import com.sonnguyen.individual.nhs.Service.IService.ICustomerService;
 import com.sonnguyen.individual.nhs.Service.IService.ILoginService;
@@ -20,7 +18,7 @@ import java.util.Optional;
 @EJB
 public class CustomerService implements ICustomerService {
     @Inject
-    private ICustomerRepository customerRepository;
+    private ICustomerDAO customerRepository;
     @Inject
     private IAccountService accountService;
     @Inject

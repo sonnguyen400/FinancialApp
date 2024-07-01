@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.sonnguyen.individual.nhs.Model.Customer;
 import com.sonnguyen.individual.nhs.Service.IService.ICustomerService;
+import org.springframework.http.HttpStatus;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -22,6 +23,10 @@ public class AccountNumberController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Customer> customers= (List<Customer>) customerService.findAllByAccountNumber(req.getParameter("accountNumber"));
         ObjectWriter ow=new ObjectMapper().writer().withDefaultPrettyPrinter();
-        resp.getWriter().print(ow.writeValueAsString(customers.get(0)));
+        if(customers.isEmpty())  resp.setStatus(HttpStatus.NOT_FOUND.value());
+        else{
+            resp.getWriter().print(ow.writeValueAsString(customers.get(0)));
+        }
+
     }
 }

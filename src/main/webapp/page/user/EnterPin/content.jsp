@@ -3,7 +3,7 @@
     <div class="col-lg-3 mx-auto" >
         <div class="card">
             <div class="card-body">
-                <form method="post" class="" action="${requestScope['javax.servlet.forward.request_uri']}">
+                <form method="post" class="" action="<%=request.getContextPath()%>/pin">
                     <div class="form-group">
                         <label>Enter your PIN</label>
                         <input id="PIN" name="<%=PIN%>" class="form-control">

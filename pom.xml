@@ -186,7 +186,13 @@
             <version>6.3.2.RELEASE</version> <!-- Check for the latest version on Maven Central -->
         </dependency>
 
+        <dependency>
+            <groupId>com.sendgrid</groupId>
+            <artifactId>sendgrid-java</artifactId>
+            <version>4.10.1</version>
+        </dependency>
     </dependencies>
+
 
     <build>
         <plugins>

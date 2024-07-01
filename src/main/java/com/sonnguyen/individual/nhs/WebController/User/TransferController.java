@@ -54,38 +54,19 @@ public class TransferController extends HttpServlet {
             transaction.setValue(BigDecimal.valueOf(Double.parseDouble(req.getParameter("amount"))));
             transfer.setTransaction(transaction);
             SessionUtils.setSession(req,"transfer",transfer);
-            req.getRequestDispatcher("/page/user/EnterPin/page.jsp").forward(req,resp);
+            SessionUtils.setSession(req,"endpoint","/app/transfer");
+            req.getRequestDispatcher("/pin").forward(req,resp);
             return;
         }
-        //Nhập pin và chuyển sang bước nhập otp
-        if(req.getParameter(PIN)!=null){
-
-            if(loginService.validatePIN(login.getId(),req.getParameter(PIN))){
-                req.setAttribute(EXACT_PIN,true);
-                otpUtils.generateOTP().sendToEmail("hellohoangson@gmail.com").sessionSave(req);
-                req.getRequestDispatcher("/page/user/EnterOTP/page.jsp").forward(req,resp);
-            }else{
-                req.setAttribute(ERROR_MESSAGE,"Invalid entered PIN");
-                req.getRequestDispatcher("/page/user/EnterPin/page.jsp").forward(req,resp);
+        if((boolean)req.getAttribute("validOTP")){
+            Transfer transfer=transferService.startTransfer((Transfer) SessionUtils.getSession(req,"transfer"));
+            if (transfer == null) {
+                req.setAttribute(ERROR_MESSAGE,"Error");
+                req.getRequestDispatcher("/page/user/Transfer/page.jsp").forward(req,resp);
+                return;
             }
-        }
-
-
-        if(req.getParameter(OTP)!=null){
-            String otp= (String) SessionUtils.getSession(req,OTP);
-            if(req.getParameter(OTP).equals(otp)){
-                Transfer transfer=transferService.startTransfer((Transfer) SessionUtils.getSession(req,"transfer"));
-                if (transfer == null) {
-                    req.setAttribute(ERROR_MESSAGE,"Error");
-                    req.getRequestDispatcher("/page/user/Transfer/page.jsp").forward(req,resp);
-                    return;
-                }
-                req.setAttribute("transfer", transfer);
-                req.getRequestDispatcher("/page/user/Bill/page.jsp").forward(req,resp);
-            }else{
-                req.setAttribute(ERROR_MESSAGE,"Invalid entered OTP");
-                req.getRequestDispatcher("/page/user/EnterOTP/page.jsp").forward(req,resp);
-            }
+            req.setAttribute("transfer", transfer);
+            req.getRequestDispatcher("/page/user/Bill/page.jsp").forward(req,resp);
         }
     }
 

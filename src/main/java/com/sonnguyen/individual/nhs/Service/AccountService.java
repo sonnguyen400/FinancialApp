@@ -1,7 +1,7 @@
 package com.sonnguyen.individual.nhs.Service;
 
 import com.sonnguyen.individual.nhs.Model.Account;
-import com.sonnguyen.individual.nhs.Repository.IRepository.IAccountRepository;
+import com.sonnguyen.individual.nhs.dao.Idao.IAccountDAO;
 import com.sonnguyen.individual.nhs.Service.IService.IAccountService;
 import com.sonnguyen.individual.nhs.Constant.AccountType;
 
@@ -17,7 +17,7 @@ import java.util.Optional;
 @Model
 public class AccountService implements IAccountService {
     @Inject
-    private IAccountRepository accountRepository;
+    private IAccountDAO accountRepository;
     public Optional<Account> findByUsername(String username) {
         return accountRepository.findByUsername(username);
     }

@@ -1,6 +1,7 @@
 package com.sonnguyen.individual.nhs.Utils;
 
 import com.sonnguyen.individual.nhs.Service.EmailService;
+import com.sonnguyen.individual.nhs.Service.IService.IEmailService;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
@@ -13,6 +14,8 @@ import static com.sonnguyen.individual.nhs.Utils.Constants.OTP;
 public class OTPUtils {
     @Inject
     EmailService emailService;
+    @Inject
+    IEmailService iEmailService;
     String otp;
     public OTPUtils generateOTP() {
         otp= UUID.randomUUID().toString().substring(0,6);
@@ -27,11 +30,9 @@ public class OTPUtils {
         return otp;
     }
     public OTPUtils sendToEmail(String dest){
-        try {
-            emailService.sendEmail(dest,otp,otp);
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
+        iEmailService.sendEmail(dest,otp,otp).thenRun(()->{
+            System.out.println("Email sent");
+        });
         return this;
     }
 }
