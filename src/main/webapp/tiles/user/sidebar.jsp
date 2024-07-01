@@ -2,7 +2,7 @@
     <div class="nk-nav-scroll">
         <ul class="metismenu" id="menu">
             <li>
-                <a class="has-arrow" href="./home" aria-expanded="false">
+                <a class="has-arrow" href="<%=request.getContextPath()%>/app/home" aria-expanded="false">
                     <i class="fi fi-sr-house-chimney"></i><span class="nav-text">Home</span>
                 </a>
             </li>

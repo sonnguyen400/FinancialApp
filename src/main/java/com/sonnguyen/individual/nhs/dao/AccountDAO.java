@@ -69,6 +69,7 @@ public class AccountDAO extends DAO<Account,Integer> implements IAccountDAO {
         }
     }
 
+
     @Override
     public List<Account> findAllByCustomerId(Integer customerId) {
         String query="Select * from account where id in (select account_id from account_holder where customer_id=?)";
@@ -78,6 +79,45 @@ public class AccountDAO extends DAO<Account,Integer> implements IAccountDAO {
             e.printStackTrace();
         }
         return List.of();
+    }
+    public Optional<Account> findSavingAccountByCustomerId(Integer customerId){
+        String query="Select * from account where id in (select account_id from account_holder where customer_id=? and account_type=?)";
+        List<Account> accounts=List.of();
+        try {
+            accounts=executeSelect(query,customerId,AccountType.SAVINGS);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if(accounts.size()>0){
+            return Optional.of(accounts.get(0));
+        }else{
+            return Optional.empty();
+        }
+
+    }
+
+    @Override
+    public List<Account> findByStatusAndTypeAndCustomerId(String status, String type, Integer customerId) {
+        String query="select * from account where status=? and account_type=? and id in (Select account_id from account_holder where customer_id=?)";
+        try {
+            return executeSelect(query,status,type,customerId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return List.of();
+        }
+    }
+
+    @Override
+    public Account findDefaultAccountByCustomerId(Integer customerId) {
+        String query="Select * from account where id in (select account_id from account_holder where customer_id=? && is_default=true)";
+        List<Account> accounts=List.of();
+        try {
+            accounts=executeSelect(query,customerId);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        if(accounts==null||accounts.size()==0) return null;
+        return accounts.get(0);
     }
 
 

@@ -39,7 +39,6 @@ public class GeneralDAO<T> {
 
     public static  <T> T createTransactional(Transactional transactional) throws FailureTransaction{
         Connection connection=getConnection();
-
         T result=null;
         if(connection!=null){
             try {

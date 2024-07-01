@@ -4,7 +4,7 @@
 <html lang="en">
 
 <head>
-    <title>Register</title>
+    <title>Login</title>
     <link rel='stylesheet'
           href='<c:url value="https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css"/>'>
     <%@include file="/taglib/header.jsp" %>

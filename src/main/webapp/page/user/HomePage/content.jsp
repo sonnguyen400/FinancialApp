@@ -25,7 +25,7 @@
         </div>
     </div>
     <div class="col-xl-3">
-        <div class="card gradient-6">
+        <a href="<%=request.getContextPath()%>/app/saving" class="card gradient-6">
             <div class="card-body">
                 <div class="text-center">
                     <span class="text-md-11 opacity-5 text-white"><i class="fi fi-sr-piggy-bank"></i></span>
@@ -38,7 +38,7 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </a>
     </div>
     <%--    Carousel--%>
     <div class="col-xl-6">

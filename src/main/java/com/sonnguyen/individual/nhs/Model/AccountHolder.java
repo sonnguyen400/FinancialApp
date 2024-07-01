@@ -11,6 +11,24 @@ public class AccountHolder {
     private int customerID;
     @Column(name = "is_default")
     private boolean isDefault;
+    @Column(name = "is_default")
+    private boolean isDefault;
+
+    public AccountHolder(int accountID, int customerID) {
+        this.accountID = accountID;
+        this.customerID = customerID;
+    }
+
+    public boolean isDefault() {
+        return isDefault;
+    }
+
+    public void setDefault(boolean aDefault) {
+        isDefault = aDefault;
+    }
+
+    public AccountHolder() {
+    }
 
 
     public int getAccountID() {

@@ -38,6 +38,18 @@ public class Transaction {
     @Column(name = "status", length = 45)
     private String status;
 
+    @Transient
+    private Transfer transfer;
+
+    public Transfer getTransfer() {
+        return transfer;
+    }
+
+
+    public void setTransfer(Transfer transfer) {
+        this.transfer = transfer;
+    }
+
     public Integer getId() {
         return id;
     }

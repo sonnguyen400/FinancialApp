@@ -17,5 +17,8 @@ public interface IAccountDAO extends AbstractDAO<Account,Integer> {
     Optional<Account> findAccountByAccountNumber(String accountNumber);
     List<Account> findByCustomerIdAndType(Integer customerId, AccountType accountType);
     List<Account> findAllByCustomerId(Integer customerId);
+    Optional<Account> findSavingAccountByCustomerId(Integer customerId);
+    List<Account> findByStatusAndTypeAndCustomerId(String status,String type,Integer customerId);
+    Account findDefaultAccountByCustomerId(Integer customerId);
 
 }

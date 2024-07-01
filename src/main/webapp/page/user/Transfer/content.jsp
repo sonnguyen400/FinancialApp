@@ -5,6 +5,7 @@
 <%@ page import="static com.sonnguyen.individual.nhs.Utils.Constants.*" %>
 <%@ page import="com.sonnguyen.individual.nhs.Model.Account" %>
 <%@ page import="java.util.List" %>
+<%@ page import="static com.sonnguyen.individual.nhs.Constant.RequestFlags.CREATE_TRANSFER" %>
 <%!String accountNumber;
 String amount;
 String message;
@@ -24,7 +25,7 @@ List<Account> accounts;
         <form id="form1" method="POST" class="row" action="${pageContext.request.contextPath}/app/transfer">
             <div class="part card col">
                 <div class="card-body">
-                    <input type="hidden" name="transfer" value="transfer_information"/>
+                    <input type="hidden" name="<%=CREATE_TRANSFER.value%>" value="transfer_information"/>
                     <div class="form-group col">
                         <label for="provider" class="col-form-label">
                             <span>Organize</span>

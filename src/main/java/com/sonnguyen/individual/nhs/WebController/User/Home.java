@@ -26,8 +26,8 @@ public class Home extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Login login=SessionUtils.getPrincipal(req);
-        Account principalAccount=accountService.findPrincipalAccountByCustomerId(login.getCustomerId());
-        req.setAttribute("account", principalAccount);
+        Account defaultAccount=accountService.findDefaultAccountByCustomerId(login.getCustomerId());
+        req.setAttribute("account", defaultAccount);
         req.getRequestDispatcher("/page/user/HomePage/page.jsp").forward(req,resp);
     }
 }
