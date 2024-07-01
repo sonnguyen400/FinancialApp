@@ -1,6 +1,6 @@
 package com.sonnguyen.individual.nhs.dao.Idao;
 
-import com.sonnguyen.individual.nhs.Model.Login;
+import com.sonnguyen.individual.nhs.model.Login;
 
 public interface ILoginDAO extends AbstractDAO<Login,Integer> {
     boolean validatePIN(Integer loginId,String PIN);

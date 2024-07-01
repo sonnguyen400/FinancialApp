@@ -1,4 +1,4 @@
-<%@ page import="com.sonnguyen.individual.nhs.Model.Transfer" %>
+<%@ page import="com.sonnguyen.individual.nhs.model.Transfer" %>
 <%
     Transfer transfer= (Transfer) request.getAttribute("transfer");
 %>

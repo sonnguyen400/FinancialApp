@@ -8,7 +8,7 @@
 
     <filter>
         <filter-name>AuthFilter</filter-name>
-        <filter-class>com.sonnguyen.individual.nhs.Security.Filter.AuthenticationFilter</filter-class>
+        <filter-class>com.sonnguyen.individual.nhs.security.Filter.AuthenticationFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>

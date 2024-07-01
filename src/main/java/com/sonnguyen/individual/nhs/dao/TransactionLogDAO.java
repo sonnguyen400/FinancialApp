@@ -1,6 +1,6 @@
 package com.sonnguyen.individual.nhs.dao;
 
-import com.sonnguyen.individual.nhs.Model.TransactionLog;
+import com.sonnguyen.individual.nhs.model.TransactionLog;
 import com.sonnguyen.individual.nhs.dao.Idao.ITransactionLogDAO;
 
 import javax.enterprise.inject.Model;

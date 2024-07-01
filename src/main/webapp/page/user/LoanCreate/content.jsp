@@ -1,4 +1,4 @@
-<%@ page import="com.sonnguyen.individual.nhs.Model.Account" %>
+<%@ page import="com.sonnguyen.individual.nhs.model.Account" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Collection" %>
 <%!

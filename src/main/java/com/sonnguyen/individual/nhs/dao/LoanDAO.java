@@ -1,7 +1,7 @@
 package com.sonnguyen.individual.nhs.dao;
 
-import com.sonnguyen.individual.nhs.Model.Customer;
-import com.sonnguyen.individual.nhs.Model.Loan;
+import com.sonnguyen.individual.nhs.model.Customer;
+import com.sonnguyen.individual.nhs.model.Loan;
 import com.sonnguyen.individual.nhs.dao.Idao.ILoanDAO;
 import com.sonnguyen.individual.nhs.Utils.EntityMapper;
 

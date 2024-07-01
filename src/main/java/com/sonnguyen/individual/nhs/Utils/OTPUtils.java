@@ -1,11 +1,10 @@
 package com.sonnguyen.individual.nhs.Utils;
 
-import com.sonnguyen.individual.nhs.Service.EmailService;
-import com.sonnguyen.individual.nhs.Service.IService.IEmailService;
+import com.sonnguyen.individual.nhs.service.EmailService;
+import com.sonnguyen.individual.nhs.service.iService.IEmailService;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
-import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
 

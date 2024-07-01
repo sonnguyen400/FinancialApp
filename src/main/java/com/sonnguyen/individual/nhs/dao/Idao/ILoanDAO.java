@@ -1,6 +1,6 @@
 package com.sonnguyen.individual.nhs.dao.Idao;
 
-import com.sonnguyen.individual.nhs.Model.Loan;
+import com.sonnguyen.individual.nhs.model.Loan;
 
 import java.sql.Connection;
 import java.sql.SQLException;

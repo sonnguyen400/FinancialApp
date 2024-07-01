@@ -1,11 +1,11 @@
 package com.sonnguyen.individual.nhs.dao;
 
-import com.sonnguyen.individual.nhs.Model.Account;
-import com.sonnguyen.individual.nhs.Model.AccountHolder;
-import com.sonnguyen.individual.nhs.Model.Customer;
-import com.sonnguyen.individual.nhs.Model.Login;
+import com.sonnguyen.individual.nhs.model.Account;
+import com.sonnguyen.individual.nhs.model.AccountHolder;
+import com.sonnguyen.individual.nhs.model.Customer;
+import com.sonnguyen.individual.nhs.model.Login;
 import com.sonnguyen.individual.nhs.dao.Idao.*;
-import com.sonnguyen.individual.nhs.Constant.AccountType;
+import com.sonnguyen.individual.nhs.constant.AccountType;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;

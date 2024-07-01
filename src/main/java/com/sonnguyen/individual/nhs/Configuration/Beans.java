@@ -1,6 +1,6 @@
 package com.sonnguyen.individual.nhs.Configuration;
 
-import com.sonnguyen.individual.nhs.Service.AccountService;
+import com.sonnguyen.individual.nhs.service.AccountService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

@@ -1,6 +1,6 @@
 package com.sonnguyen.individual.nhs.dao;
 
-import com.sonnguyen.individual.nhs.Model.SavingsInfor;
+import com.sonnguyen.individual.nhs.model.SavingsInfor;
 import com.sonnguyen.individual.nhs.dao.Idao.ISavingDAO;
 
 import javax.enterprise.inject.Model;

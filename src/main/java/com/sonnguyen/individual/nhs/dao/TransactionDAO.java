@@ -1,7 +1,7 @@
 package com.sonnguyen.individual.nhs.dao;
 
-import com.sonnguyen.individual.nhs.Model.Transaction;
-import com.sonnguyen.individual.nhs.Model.Transfer;
+import com.sonnguyen.individual.nhs.model.Transaction;
+import com.sonnguyen.individual.nhs.model.Transfer;
 import com.sonnguyen.individual.nhs.Utils.EntityMapper;
 import com.sonnguyen.individual.nhs.dao.Idao.ITransactionDAO;
 

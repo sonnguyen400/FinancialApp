@@ -1,8 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="com.sonnguyen.individual.nhs.Model.Loan" %>
+<%@ page import="com.sonnguyen.individual.nhs.model.Loan" %>
 <%@ page import="java.util.Collection" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.sonnguyen.individual.nhs.Constant.LoanStatus" %>
+<%@ page import="com.sonnguyen.individual.nhs.constant.LoanStatus" %>
 <div class="row">
     <%!
         List<Loan> loan;

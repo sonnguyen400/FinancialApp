@@ -1,5 +1,5 @@
 <%@ page import="com.sonnguyen.individual.nhs.Utils.SessionUtils" %>
-<%@ page import="com.sonnguyen.individual.nhs.Model.Login" %>
+<%@ page import="com.sonnguyen.individual.nhs.model.Login" %>
 <%
     Login account= SessionUtils.getPrincipal(request);
 %>

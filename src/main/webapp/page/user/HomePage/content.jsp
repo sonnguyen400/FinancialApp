@@ -1,6 +1,6 @@
-<%@ page import="com.sonnguyen.individual.nhs.Model.Account" %>
+<%@ page import="com.sonnguyen.individual.nhs.model.Account" %>
 <%@ page import="com.sonnguyen.individual.nhs.Utils.SessionUtils" %>
-<%@ page import="com.sonnguyen.individual.nhs.Model.Login" %>
+<%@ page import="com.sonnguyen.individual.nhs.model.Login" %>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
 <%
     Login account = SessionUtils.getPrincipal(request);

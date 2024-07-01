@@ -1,7 +1,7 @@
-<%@ page import="com.sonnguyen.individual.nhs.Model.Account" %>
+<%@ page import="com.sonnguyen.individual.nhs.model.Account" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.sonnguyen.individual.nhs.Constant.SavingType" %>
-<%@ page import="com.sonnguyen.individual.nhs.Constant.Rollover" %>
+<%@ page import="com.sonnguyen.individual.nhs.constant.SavingType" %>
+<%@ page import="com.sonnguyen.individual.nhs.constant.Rollover" %>
 <%@ page import="com.sonnguyen.individual.nhs.Utils.RequestUtils" %>
 <%!
     List<Account> accounts;

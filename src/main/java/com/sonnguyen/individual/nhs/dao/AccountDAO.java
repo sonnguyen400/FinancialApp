@@ -1,8 +1,8 @@
 package com.sonnguyen.individual.nhs.dao;
 
-import com.sonnguyen.individual.nhs.Model.Account;
+import com.sonnguyen.individual.nhs.model.Account;
 import com.sonnguyen.individual.nhs.dao.Idao.IAccountDAO;
-import com.sonnguyen.individual.nhs.Constant.AccountType;
+import com.sonnguyen.individual.nhs.constant.AccountType;
 
 import javax.enterprise.inject.Model;
 import java.math.BigDecimal;

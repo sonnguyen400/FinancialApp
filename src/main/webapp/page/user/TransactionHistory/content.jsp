@@ -1,8 +1,8 @@
 <%@ taglib prefix="tilesx" uri="http://tiles.apache.org/tags-tiles-extras" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="com.sonnguyen.individual.nhs.Model.Transaction" %>
+<%@ page import="com.sonnguyen.individual.nhs.model.Transaction" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.sonnguyen.individual.nhs.Model.Account" %>
+<%@ page import="com.sonnguyen.individual.nhs.model.Account" %>
 
 <div class="form-group">
     <div class="input-group-prepend">
@@ -19,7 +19,7 @@
 <div class="card">
     <ul class="list-group">
         <jsp:useBean id="transactions" scope="request" type="java.util.List"/>
-        <jsp:useBean id="defaultAccount" scope="request" type="com.sonnguyen.individual.nhs.Model.Account"/>
+        <jsp:useBean id="defaultAccount" scope="request" type="com.sonnguyen.individual.nhs.model.Account"/>
         <c:set var="defaultAccount" value="${defaultAccount}"/>
         <c:forEach items="${transactions}" var="transaction">
             <c:if test="${transaction.getAccountId()==defaultAccount.getId()}">

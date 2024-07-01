@@ -89,7 +89,7 @@ public class EntityMapper<T> {
                 if(field.getType().isPrimitive()){
                     switch (type){
                         case INT:
-                            field.setInt(object,(int) resultSet.getInt(getColumnName(field)));
+                            field.setInt(object,resultSet.getInt(getColumnName(field)));
                             break;
                         case LONG:
                             field.setLong(object,resultSet.getLong(getColumnName(field)));
@@ -130,6 +130,7 @@ public class EntityMapper<T> {
         } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }catch (IllegalArgumentException e){
+            e.printStackTrace();
             System.out.println("Ambiguous properties type - in "+clazz.getName());
         }
         return null;

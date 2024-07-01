@@ -1,11 +1,11 @@
-<%@ page import="com.sonnguyen.individual.nhs.Service.AccountService" %>
+<%@ page import="com.sonnguyen.individual.nhs.service.AccountService" %>
 <%@ page import="static com.sonnguyen.individual.nhs.Utils.Constants.CONFIRM_PIN" %>
 <%@ page import="static com.sonnguyen.individual.nhs.Utils.Constants.PIN" %>
 <%@ page import="java.io.IOException" %>
 <%@ page import="static com.sonnguyen.individual.nhs.Utils.Constants.*" %>
-<%@ page import="com.sonnguyen.individual.nhs.Model.Account" %>
+<%@ page import="com.sonnguyen.individual.nhs.model.Account" %>
 <%@ page import="java.util.List" %>
-<%@ page import="static com.sonnguyen.individual.nhs.Constant.RequestFlags.CREATE_TRANSFER" %>
+<%@ page import="static com.sonnguyen.individual.nhs.constant.RequestFlags.CREATE_TRANSFER" %>
 <%!String accountNumber;
 String amount;
 String message;

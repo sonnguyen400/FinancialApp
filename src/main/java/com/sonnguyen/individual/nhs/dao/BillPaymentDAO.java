@@ -1,6 +1,6 @@
 package com.sonnguyen.individual.nhs.dao;
 
-import com.sonnguyen.individual.nhs.Model.BillPayment;
+import com.sonnguyen.individual.nhs.model.BillPayment;
 import com.sonnguyen.individual.nhs.dao.Idao.IBillPaymentDAO;
 
 import javax.enterprise.inject.Model;
