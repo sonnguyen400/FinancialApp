@@ -25,21 +25,7 @@ List<Account> accounts;
         <form id="form1" method="POST" class="row" action="${pageContext.request.contextPath}/app/transfer">
             <div class="part card col">
                 <div class="card-body">
-                    <input type="hidden" name="<%=CREATE_TRANSFER.value%>" value="transfer_information"/>
                     <div class="form-group col">
-                        <label for="provider" class="col-form-label">
-                            <span>Organize</span>
-                            <span class="text-danger">*</span>
-                        </label>
-                        <select data-rule="none" class="form-control input-default">
-                            <option value="">Mb</option>
-                        </select>
-                    </div>
-                    <div class="form-group col">
-                        <label for="provider" class="col-form-label">
-                            <span>Source Account</span>
-                            <span class="text-danger">*</span>
-                        </label>
                         <select name="accountId" data-rule="none" class="form-control input-default">
                             <%
                                 for(Account account : accounts){

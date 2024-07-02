@@ -1,14 +1,12 @@
-package com.sonnguyen.individual.nhs.WebController.User;
+package com.sonnguyen.individual.nhs.controller.User;
 
 
 import com.sonnguyen.individual.nhs.Constant.MemberShip;
 import com.sonnguyen.individual.nhs.Model.Account;
 import com.sonnguyen.individual.nhs.Model.Customer;
 import com.sonnguyen.individual.nhs.Model.Login;
-import com.sonnguyen.individual.nhs.Service.IService.IAccountService;
 import com.sonnguyen.individual.nhs.Service.IService.ILoginCustomerService;
 import com.sonnguyen.individual.nhs.Utils.RequestUtils;
-import org.springframework.http.HttpStatus;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;

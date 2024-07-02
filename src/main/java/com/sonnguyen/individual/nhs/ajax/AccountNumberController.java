@@ -1,4 +1,4 @@
-package com.sonnguyen.individual.nhs.AjaxController;
+package com.sonnguyen.individual.nhs.ajax;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;

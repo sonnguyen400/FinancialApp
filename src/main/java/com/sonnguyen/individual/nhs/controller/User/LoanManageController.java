@@ -1,4 +1,4 @@
-package com.sonnguyen.individual.nhs.WebController.User;
+package com.sonnguyen.individual.nhs.controller.User;
 
 import com.sonnguyen.individual.nhs.Constant.LoanStatus;
 import com.sonnguyen.individual.nhs.Model.Login;

@@ -1,12 +1,16 @@
 package com.sonnguyen.individual.nhs.Service;
 
-import com.sonnguyen.individual.nhs.Model.*;
-import com.sonnguyen.individual.nhs.dao.GeneralDAO;
-import com.sonnguyen.individual.nhs.dao.Idao.ILoanDAO;
+import com.sonnguyen.individual.nhs.Constant.LoanStatus;
+import com.sonnguyen.individual.nhs.Constant.TransactionType;
+import com.sonnguyen.individual.nhs.Model.Account;
+import com.sonnguyen.individual.nhs.Model.Loan;
+import com.sonnguyen.individual.nhs.Model.Transaction;
+import com.sonnguyen.individual.nhs.Model.Transfer;
 import com.sonnguyen.individual.nhs.Service.IService.IAccountService;
 import com.sonnguyen.individual.nhs.Service.IService.ILoanService;
-import com.sonnguyen.individual.nhs.Constant.LoanStatus;
 import com.sonnguyen.individual.nhs.Service.IService.ITransferService;
+import com.sonnguyen.individual.nhs.dao.GeneralDAO;
+import com.sonnguyen.individual.nhs.dao.Idao.ILoanDAO;
 import javassist.NotFoundException;
 import org.jboss.logging.Logger;
 
@@ -58,10 +62,10 @@ public class LoanService implements ILoanService {
         Account account=accountService.findAccountByAccountNumber(loan.getDisbursementAccountNumber()).orElseThrow(()->new NotFoundException("Could not find"));
         return GeneralDAO.createTransactional((connection -> {
             Transaction transaction=new Transaction();
-            transaction.setValue(loan.getAmount());
+            transaction.setAmount(loan.getAmount());
             transaction.setAccountId(1);
             transaction.setDescription("Disburse for loan");
-            transaction.setTransactionType("Disbursement");
+            transaction.setTransactionType(TransactionType.DISBURSEMENT.value);
             Transfer transfer = new Transfer();
             transfer.setMessage("Disburse for loan");
             transfer.setAccountId(account.getId());

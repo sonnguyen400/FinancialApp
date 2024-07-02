@@ -3,7 +3,6 @@ package com.sonnguyen.individual.nhs.Service.IService;
 import com.sonnguyen.individual.nhs.Model.Customer;
 
 import javax.ejb.Remote;
-import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Optional;
 

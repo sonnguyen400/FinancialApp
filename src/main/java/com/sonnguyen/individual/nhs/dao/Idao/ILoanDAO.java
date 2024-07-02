@@ -8,8 +8,8 @@ import java.util.Collection;
 
 public interface ILoanDAO extends AbstractDAO<Loan,Integer> {
     Collection<Loan> findAllByCustomerId(Integer customerId);
-    Collection<Loan> findAllByStatus(String status);
-    Integer updateStatusById(Integer id,String status) throws SQLException;
+    Collection<Loan> findAllByStatus(Integer status);
+    Integer updateStatusById(Integer id,Integer status) throws SQLException;
 
-    Integer updateStatusById(Connection connection,Integer id, String status) throws SQLException;
+    Integer updateStatusById(Connection connection,Integer id, Integer status) throws SQLException;
 }

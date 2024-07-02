@@ -3,28 +3,36 @@ package com.sonnguyen.individual.nhs.Model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 
 @Table(name = "savings_infor")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SavingsInfor {
+public class SavingsInfo {
     @Id
     @GeneratedValue
     private Integer id;
+    @NotNull
     @Column(name = "type")
-    private String type;
+    private Integer type;
     @Column(name = "rollover")
     private String rollover;
     @Column(name = "interest_rate")
+    @NotNull
     private BigDecimal interestRate;
     @Column(name = "term")
+    @NotNull
     private Integer term;
     @Column(name = "account_id")
     private Integer accountId;
+
+
     @Transient
     private Account account;
     @Transient
+    @NotNull
+    @Min(100000)
     private BigDecimal amount;
     @Transient
     private Integer sourceAccount;
@@ -38,7 +46,6 @@ public class SavingsInfor {
                 ", interestRate=" + interestRate +
                 ", term=" + term +
                 ", accountId=" + accountId +
-                ", account=" + account +
                 ", amount=" + amount +
                 ", sourceAccount=" + sourceAccount +
                 '}';
@@ -100,11 +107,11 @@ public class SavingsInfor {
         this.id = id;
     }
 
-    public String getType() {
+    public @NotNull Integer getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(@NotNull Integer type) {
         this.type = type;
     }
 

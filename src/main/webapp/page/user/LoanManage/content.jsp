@@ -31,7 +31,7 @@
                </div>
                <div class="d-flex justify-content-end">
                    <%
-                       String status=loan.get(0).getStatus();
+                       Integer status=loan.get(0).getStatus();
                        if(status.equals(LoanStatus.PENDING.value)) out.print(" <div class=\"rounded text-ssm-2 bg-blue-100 text-blue-700 border-blue-700 px-1\">Pending</div>");
                        else if(status.equals(LoanStatus.APPROVED.value)) out.print(" <div class=\"rounded text-ssm-2 bg-green-100 text-green-700 border-blue-700 px-1\">Approved</div>");
                        if(status.equals(LoanStatus.REJECTED.value)) out.print(" <div class=\"rounded text-ssm-2 bg-red-100 text-red-700 border-red-700 px-1\">Rejected</div>");
@@ -81,11 +81,11 @@
 <%--    loan management tool--%>
     <div class="col-lg-3">
         <div class="mx-0 row">
-            <a href="${pageContext.request.contextPath}/app/saving" class="col-ssm-6">
+            <a href="${pageContext.request.contextPath}/app/loan/create" class="col-ssm-6">
                 <div class="card react-widget gradient-3">
                     <div class="gutter-ssm-2">
                         <div class="col">
-                            <h4 class="text-white text-md-8">Create a saving</h4>
+                            <h4 class="text-white text-md-8">Create a Loan</h4>
                             <span class="float-right text-ssm-11 opacity-5 "><i
                                     class="fi fi-sr-money-bill-transfer"></i></span>
                         </div>

@@ -1,6 +1,9 @@
 package com.sonnguyen.individual.nhs.Model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
 import java.util.UUID;
 

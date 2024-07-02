@@ -5,7 +5,6 @@ import com.sonnguyen.individual.nhs.Service.IService.IEmailService;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
-import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
 
@@ -31,7 +30,6 @@ public class OTPUtils {
     }
     public OTPUtils sendToEmail(String dest){
         iEmailService.sendEmail(dest,otp,otp).thenRun(()->{
-            System.out.println("Email sent");
         });
         return this;
     }

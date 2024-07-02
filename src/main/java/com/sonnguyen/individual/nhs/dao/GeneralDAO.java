@@ -5,6 +5,8 @@ import com.sonnguyen.individual.nhs.Utils.Console;
 import com.sonnguyen.individual.nhs.Utils.EntityMapper;
 import com.sonnguyen.individual.nhs.Utils.Transactional;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
@@ -18,11 +20,14 @@ public class GeneralDAO<T> {
     private static final String PASSWORD="Jscs5fU+AFuEnDyOqcE1XA==";
     private static final String ENCYPTOR="HoangBao2003";
     private static final String dbURL="jdbc:mysql://localhost:3306/nhsbank";
+    private static final Logger log = LoggerFactory.getLogger(GeneralDAO.class);
+
     private static String decrypt(String encryptor){
         StandardPBEStringEncryptor standardPBEStringEncryptor=new StandardPBEStringEncryptor();
         standardPBEStringEncryptor.setPassword(ENCYPTOR);
         return standardPBEStringEncryptor.decrypt(encryptor);
     }
+
     public static Connection getConnection(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -66,6 +71,7 @@ public class GeneralDAO<T> {
     }
 
     public List<T> executeSelect(Connection connection,String query, Class<T> clazz,Object ...params) throws SQLException {
+        log.debug(query);
         ResultSet resultSet=null;
         List<T> list = null;
         PreparedStatement statement = null;
@@ -81,6 +87,7 @@ public class GeneralDAO<T> {
         return list;
     }
     public <S> S executeSelect(String query,Class<S> tClass,Object ...params) {
+        log.debug(query);
         Connection connection=getConnection();
         ResultSet resultSet=null;
         List<T> list = null;
@@ -107,6 +114,7 @@ public class GeneralDAO<T> {
 
 
     public Integer executeInsert(Connection connection,T object, Class<T> clazz) throws SQLException {
+
         PreparedStatement statement=null;
         List<Field> fields=EntityMapper.getField(clazz);
         ResultSet resultSet=null;
@@ -118,6 +126,7 @@ public class GeneralDAO<T> {
             query.append(" value(");
             query.append(String.join(",", Collections.nCopies(map.keySet().size(),"?")));
             query.append(")");
+            log.debug(query.toString());
             // Liệu có chống lại SQL Injection
             if(EntityMapper.isGenerated(EntityMapper.getId(clazz))){
                 statement=connection.prepareStatement(query.toString(),Statement.RETURN_GENERATED_KEYS);
@@ -137,10 +146,10 @@ public class GeneralDAO<T> {
         return null;
     }
     public int executeUpdate(Connection connection,String query,Object ...params) throws SQLException {
+        log.debug(query);
         PreparedStatement statement = connection.prepareStatement(query);
         setPreparedStatement(statement,List.of(params));
         return statement.executeUpdate();
-
     }
 
     public static void setPreparedStatement(PreparedStatement preparedStatement, Collection<Object> objects){

@@ -1,6 +1,5 @@
 package com.sonnguyen.individual.nhs.DTO;
 
-import com.sonnguyen.individual.nhs.Model.Customer;
 import com.sonnguyen.individual.nhs.Model.Login;
 
 public class LoginDTO{

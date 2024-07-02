@@ -6,7 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 import java.sql.Date;
-import java.time.Instant;
 import java.util.Collection;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -22,17 +21,17 @@ public class Customer {
     private String phone;
     private String social_security_number;
     private String occupation;
-    private String membership;
+    private Integer membership;
     @Transient
     private Collection<Account> accounts;
     @Transient
     private Login login;
 
-    public String getMembership() {
+    public Integer getMembership() {
         return membership;
     }
 
-    public void setMembership(String membership) {
+    public void setMembership(Integer membership) {
         this.membership = membership;
     }
 

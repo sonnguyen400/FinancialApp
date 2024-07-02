@@ -6,7 +6,6 @@ import javassist.NotFoundException;
 
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.List;
 
 public interface ILoanService{
     Loan updateStatusById(Integer id, LoanStatus status) throws SQLException, NotFoundException;

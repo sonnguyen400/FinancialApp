@@ -20,4 +20,9 @@ public class TransferDAO extends DAO<Transfer,Integer> implements ITransferDAO {
             return transfer;
     }
 
+    @Override
+    public Transfer findByTransactionId(Connection connection, Integer transactionId) throws SQLException {
+        return executeSelect(connection,"select * from transfer where transaction_id=?",transactionId).get(0);
+    }
+
 }

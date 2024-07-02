@@ -1,9 +1,9 @@
 package com.sonnguyen.individual.nhs.Constant;
 
 public enum MemberShip {
-    STANDARD("STANDARD"),GOLD("GOLD"),DIAMOND("DIAMOND"),VIP("VIP");
-    public final String value;
-    MemberShip(String value) {
+    STANDARD(1),GOLD(2),DIAMOND(3),VIP(4);
+    public final int value;
+    MemberShip(int value) {
         this.value = value;
     }
 }

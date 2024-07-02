@@ -1,7 +1,7 @@
 package com.sonnguyen.individual.nhs.Service;
 
 import com.sonnguyen.individual.nhs.Model.AccountHolder;
-import com.sonnguyen.individual.nhs.Model.SavingsInfor;
+import com.sonnguyen.individual.nhs.Model.SavingsInfo;
 import com.sonnguyen.individual.nhs.dao.GeneralDAO;
 import com.sonnguyen.individual.nhs.dao.Idao.IAccountDAO;
 import com.sonnguyen.individual.nhs.dao.Idao.IAccountHolderDAO;
@@ -18,7 +18,7 @@ public class SavingService {
     IAccountDAO accountDAO;
     @Inject
     IAccountHolderDAO accountHolderRepository;
-    public SavingsInfor createSaving(Integer customer,SavingsInfor savingInfor) {
+    public SavingsInfo createSaving(Integer customer, SavingsInfo savingInfor) {
         return GeneralDAO.createTransactional((connection -> {
             Integer accountId =accountDAO.executeInsert(connection, savingInfor.getAccount());
             AccountHolder accountHolder=new AccountHolder(accountId,customer);

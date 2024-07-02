@@ -1,4 +1,4 @@
-package com.sonnguyen.individual.nhs.WebController.User;
+package com.sonnguyen.individual.nhs.controller.User;
 
 import com.sonnguyen.individual.nhs.Model.Account;
 import com.sonnguyen.individual.nhs.Model.Login;
@@ -14,10 +14,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
+
 
 @WebServlet(name = "user-home",urlPatterns = "/app/home")
 public class Home extends HttpServlet {
+
+
     private final Logger logger= Logger.getLogger(this.getClass().getName());
     @Inject
     ICustomerService customerService;
@@ -26,7 +28,6 @@ public class Home extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Login login=SessionUtils.getPrincipal(req);
-        System.out.println(login.getCustomerId());
         Account defaultAccount=accountService.findDefaultAccountByCustomerId(login.getCustomerId());
         req.setAttribute("account", defaultAccount);
         req.getRequestDispatcher("/page/user/HomePage/page.jsp").forward(req,resp);

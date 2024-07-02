@@ -1,13 +1,14 @@
 package com.sonnguyen.individual.nhs.Constant;
 
 public enum TransactionType {
-    DEPOSIT("DEPOSIT"),
-    WITHDRAWAL("WITHDRAWAL"),
-    TRANSFER("TRANSFER"),
-    DISBURSEMENT("DISBURSEMENT"),
-    PAYOFF("PAYOFF");
-    public final String value;
-    TransactionType(String value) {
+    DEPOSIT(1),
+    WITHDRAWAL(2),
+    TRANSFER(3),
+    RECEIVE(4),
+    DISBURSEMENT(5),
+    PAYOFF(6);
+    public final int value;
+    TransactionType(int value) {
         this.value = value;
     }
 }

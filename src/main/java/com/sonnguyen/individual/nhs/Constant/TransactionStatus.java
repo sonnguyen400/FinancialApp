@@ -1,11 +1,11 @@
 package com.sonnguyen.individual.nhs.Constant;
 
 public enum TransactionStatus {
-    SUCCESS("SUCCESS"),
-    FAILURE("FAILURE"),
-    PENDING("PENDING");
-    private String value;
-    TransactionStatus(String value) {
+    SUCCESS(1),
+    PENDING(2),
+    FAILURE(0);
+    public final int value;
+    TransactionStatus(int value) {
         this.value = value;
     }
 }

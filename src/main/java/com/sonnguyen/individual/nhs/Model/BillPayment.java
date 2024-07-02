@@ -2,7 +2,7 @@ package com.sonnguyen.individual.nhs.Model;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.time.Instant;
+import java.sql.Date;
 
 @Entity
 @Table(name = "bill_payment")
@@ -19,7 +19,7 @@ public class BillPayment {
     private Double amount;
 
     @Column(name = "payment_date")
-    private Instant paymentDate;
+    private Date paymentDate;
 
     @Size(max = 45)
     @Column(name = "payment_status", length = 45)

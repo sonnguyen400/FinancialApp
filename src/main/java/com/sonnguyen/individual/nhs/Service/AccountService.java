@@ -2,6 +2,7 @@ package com.sonnguyen.individual.nhs.Service;
 
 import com.sonnguyen.individual.nhs.Constant.AccountStatus;
 import com.sonnguyen.individual.nhs.Constant.AccountType;
+import com.sonnguyen.individual.nhs.Constant.DefaultBrand;
 import com.sonnguyen.individual.nhs.Constant.TransactionType;
 import com.sonnguyen.individual.nhs.Model.*;
 import com.sonnguyen.individual.nhs.Service.IService.IAccountService;
@@ -37,6 +38,15 @@ public class AccountService implements IAccountService {
 
 
     @Override
+    public Optional<Account> findById(int id) {
+        try {
+            return accountDao.findById(id);
+        } catch (SQLException e) {
+            return Optional.empty();
+        }
+    }
+
+    @Override
     public Optional<Account> findSavingsAccountsByCustomerId(Integer customerId) {
         return accountDao.findSavingAccountByCustomerId(customerId);
     }
@@ -63,16 +73,15 @@ public class AccountService implements IAccountService {
 
 
     @Override
-    public Account createSavingsAccount(Integer customerId, SavingsInfor savingsInfor) {
-        return GeneralDAO.createTransactional(connection -> {
+    public Account createSavingsAccount(Integer customerId, SavingsInfo savingsInfor) {
+        Account newSavingAccount=GeneralDAO.createTransactional(connection -> {
             //Create saving account
             Account account=new Account();
             account.setBalance(BigDecimal.ZERO);
             account.setAccountNumber(UUID.randomUUID().toString().substring(0,8));
             account.setAccountType(AccountType.SAVINGS.value);
-            account.setBranchID(1);
-            account.setAccountType(AccountType.SAVINGS.value);
-            account.setStatus(AccountStatus.OPEN.value);
+            account.setBranchID(DefaultBrand.ID.value);
+            account.setStatus(AccountStatus.PENDING.value);
             Integer accountId=accountDao.executeInsert(connection,account);
                 //Create account holder
             AccountHolder holder=new AccountHolder(accountId, customerId);
@@ -80,26 +89,33 @@ public class AccountService implements IAccountService {
                 // Create saving information
             savingsInfor.setAccountId(accountId);
             Integer savingAccId=savingDao.executeInsert(connection,savingsInfor);
-            savingsInfor.setId(savingAccId);
 
             //Transfer from source to saving account
             Transaction transaction=new Transaction();
             transaction.setTransactionType(TransactionType.TRANSFER.value);
-            transaction.setDescription("Transfer for saving account");
-            transaction.setValue(savingsInfor.getAmount());
+            transaction.setDescription("Transfer amount into saving account");
+            transaction.setAmount(savingsInfor.getAmount());
             transaction.setAccountId(savingsInfor.getSourceAccount());
+
             Transfer transfer=new Transfer();
             transfer.setTransaction(transaction);
             transfer.setAccountId(savingsInfor.getAccountId());
-            transfer.setMessage("Transfer for saving account");
-            transferService.startTransfer(connection,transfer);
+            transfer.setMessage("Transfer into for saving account");
+            transfer.setTransaction(transaction);
+
+            String refNumber=transferService.init(connection,transfer);
+            transferService.transferCommit(connection,refNumber);
+            accountDao.updateAccountStatusByAccountId(connection,account.getId(),AccountStatus.OPEN);
             return account;
         });
+        return newSavingAccount;
     }
+
+
 
     @Override
     public Optional<Account> findOpeningSavingByCustomerId(Integer customerId) {
-        List<Account> accounts=accountDao.findByStatusAndTypeAndCustomerId(AccountStatus.OPEN.value, AccountType.SAVINGS.value,customerId );
+        List<Account> accounts=accountDao.findByStatusAndTypeAndCustomerId(AccountStatus.OPEN, AccountType.SAVINGS,customerId );
         if(accounts.size()==1) return Optional.of(accounts.get(0));
         else return Optional.empty();
     }
@@ -108,6 +124,8 @@ public class AccountService implements IAccountService {
     public Account findDefaultAccountByCustomerId(Integer customerId) {
         return accountDao.findDefaultAccountByCustomerId(customerId);
     }
+
+
 
 
 }

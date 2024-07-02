@@ -6,6 +6,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public interface ITransferService {
-    Transfer startTransfer(Transfer transfer);
     Transfer startTransfer(Connection connection,Transfer transfer) throws SQLException;
+    String init(Connection connection,Transfer transfer) throws SQLException;
+    String init(Transfer transfer);
+    Transfer transferCommit(Connection connection,String transactionRefNumber) throws SQLException;
+    Transfer transferCommit(String transactionRefNumber);
 }

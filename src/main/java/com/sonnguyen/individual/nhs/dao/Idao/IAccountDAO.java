@@ -1,7 +1,8 @@
 package com.sonnguyen.individual.nhs.dao.Idao;
 
-import com.sonnguyen.individual.nhs.Model.Account;
+import com.sonnguyen.individual.nhs.Constant.AccountStatus;
 import com.sonnguyen.individual.nhs.Constant.AccountType;
+import com.sonnguyen.individual.nhs.Model.Account;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -18,7 +19,7 @@ public interface IAccountDAO extends AbstractDAO<Account,Integer> {
     List<Account> findByCustomerIdAndType(Integer customerId, AccountType accountType);
     List<Account> findAllByCustomerId(Integer customerId);
     Optional<Account> findSavingAccountByCustomerId(Integer customerId);
-    List<Account> findByStatusAndTypeAndCustomerId(String status,String type,Integer customerId);
+    List<Account> findByStatusAndTypeAndCustomerId(AccountStatus status, AccountType type, Integer customerId);
     Account findDefaultAccountByCustomerId(Integer customerId);
-
+    Integer updateAccountStatusByAccountId(Connection connection,Integer accountId, AccountStatus status) throws SQLException;
 }

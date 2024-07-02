@@ -1,10 +1,10 @@
 package com.sonnguyen.individual.nhs.Service;
 
 import com.sonnguyen.individual.nhs.Model.Customer;
-import com.sonnguyen.individual.nhs.dao.Idao.ICustomerDAO;
 import com.sonnguyen.individual.nhs.Service.IService.IAccountService;
 import com.sonnguyen.individual.nhs.Service.IService.ICustomerService;
 import com.sonnguyen.individual.nhs.Service.IService.ILoginService;
+import com.sonnguyen.individual.nhs.dao.Idao.ICustomerDAO;
 
 import javax.ejb.EJB;
 import javax.enterprise.inject.Model;

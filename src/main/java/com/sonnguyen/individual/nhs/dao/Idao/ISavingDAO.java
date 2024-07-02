@@ -1,12 +1,9 @@
 package com.sonnguyen.individual.nhs.dao.Idao;
 
-import com.sonnguyen.individual.nhs.Model.Account;
-import com.sonnguyen.individual.nhs.Model.SavingsInfor;
-import com.sonnguyen.individual.nhs.dao.Idao.AbstractDAO;
+import com.sonnguyen.individual.nhs.Model.SavingsInfo;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
-public interface ISavingDAO extends AbstractDAO<SavingsInfor, Integer> {
-    SavingsInfor findByAccountId(Integer accountId) throws SQLException;
+public interface ISavingDAO extends AbstractDAO<SavingsInfo, Integer> {
+    SavingsInfo findByAccountId(Integer accountId) throws SQLException;
 }

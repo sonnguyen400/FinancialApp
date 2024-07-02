@@ -1,8 +1,8 @@
 package com.sonnguyen.individual.nhs.dao;
 
-import com.sonnguyen.individual.nhs.dao.Idao.AbstractDAO;
 import com.sonnguyen.individual.nhs.Utils.Console;
 import com.sonnguyen.individual.nhs.Utils.EntityMapper;
+import com.sonnguyen.individual.nhs.dao.Idao.AbstractDAO;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;
@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
 
 public class DAO<T, ID> extends GeneralDAO<T> implements AbstractDAO<T, ID> {
 
+
+
     @Override
     public Class<T> getEntityClass() {
         return (Class<T>) Object.class;
@@ -22,6 +24,7 @@ public class DAO<T, ID> extends GeneralDAO<T> implements AbstractDAO<T, ID> {
     public List<T> findAll() throws SQLException {
         Connection connection=getConnection();
         String query = "Select * from " + EntityMapper.getTableName(getEntityClass());
+
         List<T> results=executeSelect(connection,query, getEntityClass());
         connection.close();
         return results;
@@ -39,6 +42,7 @@ public class DAO<T, ID> extends GeneralDAO<T> implements AbstractDAO<T, ID> {
                 .append(" where ")
                 .append(idField.getName())
                 .append("=?");
+
         List<T> results = executeSelect(connection,query.toString(),getEntityClass(),id);
         connection.close();
         if(results.isEmpty()) {

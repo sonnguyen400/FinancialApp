@@ -1,4 +1,4 @@
-package com.sonnguyen.individual.nhs.WebController.ExceptionPage;
+package com.sonnguyen.individual.nhs.controller.ExceptionPage;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

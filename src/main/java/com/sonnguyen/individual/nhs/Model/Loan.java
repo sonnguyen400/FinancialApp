@@ -6,7 +6,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.time.Instant;
 
 @Entity
 @Table(name = "loan")
@@ -21,7 +20,7 @@ public class Loan {
 
     @Size(max = 20)
     @Column(name = "type", length = 20)
-    private String type;
+    private Integer type;
 
     @Column(name = "amount", precision = 2)
     private BigDecimal amount;
@@ -39,7 +38,7 @@ public class Loan {
 
     @Size(max = 20)
     @Column(name = "status", length = 20)
-    private String status;
+    private Integer status;
 
     @Size(max = 45)
     @Column(name = "repayment", length = 45)
@@ -69,6 +68,10 @@ public class Loan {
         this.disbursementAccountNumber = disbursementAccountNumber;
     }
 
+    public void setStatus(@Size(max = 20) Integer status) {
+        this.status = status;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -85,11 +88,11 @@ public class Loan {
         this.customerId = customerId;
     }
 
-    public String getType() {
+    public @Size(max = 20) Integer getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(@Size(max = 20) Integer type) {
         this.type = type;
     }
 
@@ -133,12 +136,8 @@ public class Loan {
         this.createAt = createAt;
     }
 
-    public String getStatus() {
+    public @Size(max = 20) Integer getStatus() {
         return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String getRepayment() {

@@ -1,9 +1,7 @@
-package com.sonnguyen.individual.nhs.WebController;
+package com.sonnguyen.individual.nhs.controller;
 
-import com.sonnguyen.individual.nhs.Service.IService.IAccountService;
 import com.sonnguyen.individual.nhs.Utils.SessionUtils;
 
-import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +12,7 @@ import java.io.IOException;
 import static com.sonnguyen.individual.nhs.Utils.Constants.OTP;
 import static com.sonnguyen.individual.nhs.Utils.RequestUtils.ERROR_MESSAGE;
 
-@WebServlet(name = "otp-validate",urlPatterns = "/otp")
+@WebServlet(name = "otp-validate",urlPatterns = "/app/otp")
 public class OTPController extends HttpServlet {
 
     @Override
@@ -23,17 +21,18 @@ public class OTPController extends HttpServlet {
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(!req.getRequestURI().equalsIgnoreCase("/otp")){
+        if(req.getRequestURI().equalsIgnoreCase("/app/pin")){
             doGet(req,resp);
+            return;
         }
         if(req.getParameter(OTP) != null){
             String otp= (String) SessionUtils.getSession(req,OTP);
+            System.out.println(otp);
             if(req.getParameter(OTP).equals(otp)){
-                req.setAttribute("validOTP",true);
-                req.getRequestDispatcher((String) SessionUtils.getSession(req,"endpoint")).forward(req,resp);
+                req.getRequestDispatcher((String) SessionUtils.getSession(req,"endpoint")).include(req,resp);
             }else {
                 req.setAttribute(ERROR_MESSAGE,"Invalid OTP");
-                req.getRequestDispatcher("/page/user/EnterOTP/page.jsp").forward(req,resp);
+                doGet(req,resp);
             }
         }
     }

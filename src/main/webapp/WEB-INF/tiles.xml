@@ -7,7 +7,6 @@
         <put-attribute name="error_code"/>
     </definition>
 
-
     <definition name="script" template="/definition/javascript.jsp">
         <put-list-attribute name="script">
             <add-attribute value="/resources/plugins/common/common.min.js"/>

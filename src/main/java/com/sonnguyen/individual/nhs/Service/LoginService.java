@@ -1,8 +1,8 @@
 package com.sonnguyen.individual.nhs.Service;
 
 import com.sonnguyen.individual.nhs.Model.Login;
-import com.sonnguyen.individual.nhs.dao.Idao.ILoginDAO;
 import com.sonnguyen.individual.nhs.Service.IService.ILoginService;
+import com.sonnguyen.individual.nhs.dao.Idao.ILoginDAO;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;

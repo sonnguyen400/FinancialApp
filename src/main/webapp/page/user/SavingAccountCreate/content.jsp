@@ -68,8 +68,8 @@
                             <div class="form-group">
                                 <label for="savingType">Type</label>
                                 <select name="type" id="savingType" class="form-control input-default">
-                                    <option value="<%=SavingType.TERM_DEPOSIT%>">Term deposit</option>
-                                    <option value="<%=SavingType.DEMAND_DEPOSIT%>">Demand deposit</option>
+                                    <option value="<%=SavingType.TERM_DEPOSIT.value%>">Term deposit</option>
+                                    <option value="<%=SavingType.DEMAND_DEPOSIT.value%>">Demand deposit</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -85,9 +85,9 @@
                             <div class="form-group">
                                 <label for="rollover">Roll over</label>
                                 <select name="rollover" id="rollover" class="form-control input-default">
-                                    <option value="<%=Rollover.WITHDRAW_ENTIRE%>">Withdraw Entire</option>
-                                    <option value="<%=Rollover.ROLLOVER_ALL%>">Rollover all</option>
-                                    <option value="<%=Rollover.ROLLOVER_PRINCIPAL%>">Demand deposit</option>
+                                    <option value="<%=Rollover.WITHDRAW_ENTIRE.value%>">Withdraw Entire</option>
+                                    <option value="<%=Rollover.ROLLOVER_ALL.value%>">Rollover all</option>
+                                    <option value="<%=Rollover.ROLLOVER_PRINCIPAL.value%>">Demand deposit</option>
                                 </select>
                             </div>
                             <div class="form-group">

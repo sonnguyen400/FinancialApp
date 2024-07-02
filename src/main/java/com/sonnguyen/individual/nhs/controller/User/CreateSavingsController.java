@@ -1,9 +1,7 @@
-package com.sonnguyen.individual.nhs.WebController.User;
+package com.sonnguyen.individual.nhs.controller.User;
 
-import com.sonnguyen.individual.nhs.Model.Account;
-import com.sonnguyen.individual.nhs.Model.Customer;
 import com.sonnguyen.individual.nhs.Model.Login;
-import com.sonnguyen.individual.nhs.Model.SavingsInfor;
+import com.sonnguyen.individual.nhs.Model.SavingsInfo;
 import com.sonnguyen.individual.nhs.Service.IService.IAccountService;
 import com.sonnguyen.individual.nhs.Utils.RequestUtils;
 import com.sonnguyen.individual.nhs.Utils.SessionUtils;
@@ -15,7 +13,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static com.sonnguyen.individual.nhs.Utils.RequestUtils.ERROR_MESSAGE;
 
 @WebServlet(name = "create-savings",urlPatterns = "/app/saving/create")
 @Model
@@ -31,20 +38,33 @@ public class CreateSavingsController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(req.getParameter(RequestUtils.Flags.CREATE_SAVINGS.value)!=null){
+        if(!req.getRequestURI().equalsIgnoreCase("/app/otp")){
+            SavingsInfo savingsInfo=RequestUtils.parseEntity(req,SavingsInfo.class);
+            try(ValidatorFactory factory= Validation.buildDefaultValidatorFactory();) {
+                Validator validator=factory.getValidator();
+                Set<ConstraintViolation<SavingsInfo>> constraintViolationSet=validator.validate(savingsInfo);
+                if(!constraintViolationSet.isEmpty()){
+                    constraintViolationSet.forEach(System.out::println);
+                    req.setAttribute(ERROR_MESSAGE, new ArrayList<>(constraintViolationSet).get(0).getMessage());
+                    doGet(req,resp);
+                    return;
+                }
+            }
+            SessionUtils.setSession(req,"savingsInfo",savingsInfo);
+            SessionUtils.setSession(req,"endpoint","/app/saving/create");
+            req.getRequestDispatcher("/app/pin").include(req,resp);
+        }else{
             Login login= SessionUtils.getPrincipal(req);
-            SavingsInfor savingsInfor=RequestUtils.parseEntity(req,SavingsInfor.class);
             try{
-                accountService.createSavingsAccount(login.getCustomerId(), savingsInfor);
+                SavingsInfo savingsInfo= (SavingsInfo) SessionUtils.getSession(req,"savingsInfo");
+                accountService.createSavingsAccount(login.getCustomerId(), savingsInfo);
                 resp.sendRedirect(req.getContextPath() + "/app/saving");
             }catch (Exception e){
                 req.setAttribute("accounts",accountService.findAllByCustomerId(login.getCustomerId()));
                 e.printStackTrace();
-                req.setAttribute(RequestUtils.ERROR_MESSAGE,"Error while create saving");
+                req.setAttribute(ERROR_MESSAGE,"Error while create saving");
                 req.getRequestDispatcher("/page/user/SavingAccountCreate/page.jsp").forward(req,resp);
-
             }
-
         }
     }
 }

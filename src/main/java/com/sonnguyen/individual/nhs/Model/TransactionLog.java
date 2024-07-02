@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
-import java.time.Instant;
+import java.sql.Date;
 
 @Entity
 @Table(name = "transaction_log")
@@ -22,7 +22,7 @@ public class TransactionLog {
     private String detail;
 
     @Column(name = "log_date")
-    private Instant logDate;
+    private Date logDate;
 
 
 

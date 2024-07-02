@@ -1,11 +1,11 @@
 package com.sonnguyen.individual.nhs.Constant;
 
 public enum Rollover {
-    WITHDRAW_ENTIRE("WITHDRAW_ENTIRE"),
-    ROLLOVER_PRINCIPAL("ROLLOVER_PRINCIPAL"),
-    ROLLOVER_ALL("ROLLOVER_ALL");
-    public final String value;
-    Rollover(String value) {
+    WITHDRAW_ENTIRE(1),
+    ROLLOVER_PRINCIPAL(2),
+    ROLLOVER_ALL(3);
+    public final int value;
+    Rollover(int value) {
         this.value = value;
     }
 }

@@ -8,5 +8,7 @@ import java.util.List;
 
 public interface ITransactionDAO extends AbstractDAO<Transaction,Integer> {
      Integer createTransaction(Connection connection,Transaction transaction)  throws SQLException;
-     List<Transaction> getHistoryByAccountId(Integer accountId) throws SQLException;
+     List<Transaction> findAllByAccountId(Integer accountId);
+     List<Transaction> findAllByRefNumber(String refNumber);
+     int updateStatus(Connection connection,Integer transactionId, int status) throws SQLException;
 }

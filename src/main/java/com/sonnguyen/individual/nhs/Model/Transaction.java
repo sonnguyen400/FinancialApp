@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.sql.Date;
 
 @Entity
 @Table(name = "transaction")
@@ -17,15 +17,12 @@ public class Transaction {
     @Column(name = "account_id")
     private Integer accountId;
 
-    @Size(max = 20)
-    @Column(name = "transaction_type", length = 20)
-    private String transactionType;
+    @Column(name = "transaction_type")
+    private int transactionType;
 
-    @Column(name = "value",scale = 9,precision = 2)
-    private BigDecimal value;
+    @Column(name = "amount",scale = 9,precision = 2)
+    private BigDecimal amount;
 
-    @Column(name = "transaction_date")
-    private Instant transactionDate;
     @Size(max = 255)
     @Column(name = "description")
     private String description;
@@ -34,12 +31,38 @@ public class Transaction {
     @Column(name = "reference_number", length = 45)
     private String referenceNumber;
 
-    @Size(max = 45)
-    @Column(name = "status", length = 45)
-    private String status;
+    @Column(name = "status")
+    private Integer status;
+
+    @Column(name = "transaction_at")
+    private Date transactionAt;
+
+    public Date getTransactionAt() {
+        return transactionAt;
+    }
+
+    public void setTransactionAt(Date transactionAt) {
+        this.transactionAt = transactionAt;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
     @Transient
     private Transfer transfer;
+
+    public int getTransactionType() {
+        return transactionType;
+    }
+
+    public void setTransactionType(int transactionType) {
+        this.transactionType = transactionType;
+    }
 
     public Transfer getTransfer() {
         return transfer;
@@ -66,28 +89,14 @@ public class Transaction {
         this.accountId = accountId;
     }
 
-    public String getTransactionType() {
-        return transactionType;
+
+
+    public BigDecimal getAmount() {
+        return amount;
     }
 
-    public void setTransactionType(String transactionType) {
-        this.transactionType = transactionType;
-    }
-
-    public BigDecimal getValue() {
-        return value;
-    }
-
-    public void setValue(BigDecimal value) {
-        this.value = value;
-    }
-
-    public Instant getTransactionDate() {
-        return transactionDate;
-    }
-
-    public void setTransactionDate(Instant transactionDate) {
-        this.transactionDate = transactionDate;
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
     }
 
     public String getDescription() {
@@ -106,13 +115,8 @@ public class Transaction {
         this.referenceNumber = referenceNumber;
     }
 
-    public String getStatus() {
-        return status;
-    }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+
 
     @Override
     public String toString() {
@@ -120,11 +124,10 @@ public class Transaction {
                 "id=" + id +
                 ", accountId=" + accountId +
                 ", transactionType='" + transactionType + '\'' +
-                ", value=" + value +
-                ", transactionDate=" + transactionDate +
+                ", value=" + amount +
                 ", description='" + description + '\'' +
                 ", referenceNumber='" + referenceNumber + '\'' +
-                ", status='" + status + '\'' +
+                ", status='"  + '\'' +
                 '}';
     }
 }
