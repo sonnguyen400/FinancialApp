@@ -36,6 +36,8 @@ public class AccountDAO extends DAO<Account,Integer> implements IAccountDAO {
         return executeSelect(query, BigDecimal.class,accountId);
     }
 
+
+
     @Override
     public BigDecimal updateBalanceByAccountId(Connection connection,Integer accountId,BigDecimal disparity) throws SQLException,NullPointerException {
         String query="update account set balance=balance+? where id=?";

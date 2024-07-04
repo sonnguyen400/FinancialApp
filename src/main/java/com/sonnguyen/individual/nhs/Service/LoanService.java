@@ -59,7 +59,7 @@ public class LoanService implements ILoanService {
     @Override
     public Loan approveLoan(Integer id) throws SQLException, NotFoundException {
         Loan loan=loanRepository.findById(id).orElseThrow(()->new NotFoundException("Could not find"));
-        Account account=accountService.findAccountByAccountNumber(loan.getDisbursementAccountNumber()).orElseThrow(()->new NotFoundException("Could not find"));
+        Account account=accountService.findByAccountNumber(loan.getDisbursementAccountNumber()).orElseThrow(()->new NotFoundException("Could not find"));
         return GeneralDAO.createTransactional((connection -> {
             Transaction transaction=new Transaction();
             transaction.setAmount(loan.getAmount());

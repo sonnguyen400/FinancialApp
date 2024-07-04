@@ -20,7 +20,7 @@ public final class TransactionDAO extends DAO<Transaction,Integer> implements IT
     }
     @Override
     public List<Transaction> findAllByAccountId(Integer accountId)  {
-        String query="select * from transaction where account_id=? or transaction.id in (Select transfer.transaction_id from transfer where account_id=?)";
+        String query="select * from transaction where account_id=? order by transaction_at desc";
         try {
             return executeSelect(query,accountId,accountId);
         } catch (SQLException e) {

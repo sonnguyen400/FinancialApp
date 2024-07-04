@@ -27,7 +27,6 @@ public class Test extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("test");
-        logger.info("test");
+        req.getRequestDispatcher("/page/user/Result/page.jsp").forward(req,resp);
     }
 }

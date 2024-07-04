@@ -5,7 +5,6 @@ import com.sonnguyen.individual.nhs.Model.SavingsInfo;
 import com.sonnguyen.individual.nhs.Service.IService.IAccountService;
 import com.sonnguyen.individual.nhs.Utils.RequestUtils;
 import com.sonnguyen.individual.nhs.Utils.SessionUtils;
-
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -20,7 +19,6 @@ import javax.validation.ValidatorFactory;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static com.sonnguyen.individual.nhs.Utils.RequestUtils.ERROR_MESSAGE;
 
@@ -58,12 +56,13 @@ public class CreateSavingsController extends HttpServlet {
             try{
                 SavingsInfo savingsInfo= (SavingsInfo) SessionUtils.getSession(req,"savingsInfo");
                 accountService.createSavingsAccount(login.getCustomerId(), savingsInfo);
-                resp.sendRedirect(req.getContextPath() + "/app/saving");
+                req.setAttribute("status",1);
+                req.setAttribute("message","Saving account created successfully");
+                req.getRequestDispatcher("/page/user/Result/page.jsp").forward(req,resp);
             }catch (Exception e){
                 req.setAttribute("accounts",accountService.findAllByCustomerId(login.getCustomerId()));
-                e.printStackTrace();
                 req.setAttribute(ERROR_MESSAGE,"Error while create saving");
-                req.getRequestDispatcher("/page/user/SavingAccountCreate/page.jsp").forward(req,resp);
+                doGet(req,resp);
             }
         }
     }

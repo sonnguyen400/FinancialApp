@@ -21,8 +21,7 @@ public class TransactionService implements ITransactionService {
     }
     @Override
     public List<Transaction> findHistoryByAccountId(Integer accountId){
-        List<Transaction> transactions=transactionDAO.findAllByAccountId(accountId);
-        return transactions;
+        return transactionDAO.findAllByAccountId(accountId);
     }
 
     @Override

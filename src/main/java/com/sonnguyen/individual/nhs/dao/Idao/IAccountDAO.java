@@ -14,7 +14,6 @@ public interface IAccountDAO extends AbstractDAO<Account,Integer> {
     Optional<Account> findByUsername(String username);
     BigDecimal updateBalanceByAccountId(Connection connection,Integer accountId, BigDecimal bigDecimal) throws SQLException;
     BigDecimal findBalanceByAccountId(int accountId);
-
     Optional<Account> findAccountByAccountNumber(String accountNumber);
     List<Account> findByCustomerIdAndType(Integer customerId, AccountType accountType);
     List<Account> findAllByCustomerId(Integer customerId);
@@ -22,4 +21,5 @@ public interface IAccountDAO extends AbstractDAO<Account,Integer> {
     List<Account> findByStatusAndTypeAndCustomerId(AccountStatus status, AccountType type, Integer customerId);
     Account findDefaultAccountByCustomerId(Integer customerId);
     Integer updateAccountStatusByAccountId(Connection connection,Integer accountId, AccountStatus status) throws SQLException;
+
 }

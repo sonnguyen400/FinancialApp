@@ -6,8 +6,12 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 
-@Table(name = "savings_infor")
+@Table(name = "savings_info")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SavingsInfo {
     @Id
@@ -17,7 +21,7 @@ public class SavingsInfo {
     @Column(name = "type")
     private Integer type;
     @Column(name = "rollover")
-    private String rollover;
+    private Integer rollover;
     @Column(name = "interest_rate")
     @NotNull
     private BigDecimal interestRate;
@@ -30,12 +34,12 @@ public class SavingsInfo {
 
     @Transient
     private Account account;
-    @Transient
     @NotNull
     @Min(100000)
     private BigDecimal amount;
     @Transient
     private Integer sourceAccount;
+
 
     @Override
     public String toString() {
@@ -51,11 +55,12 @@ public class SavingsInfo {
                 '}';
     }
 
-    public String getRollover() {
+
+    public Integer getRollover() {
         return rollover;
     }
 
-    public void setRollover(String rollover) {
+    public void setRollover(Integer rollover) {
         this.rollover = rollover;
     }
 
@@ -121,5 +126,16 @@ public class SavingsInfo {
 
     public void setInterestRate(BigDecimal interestRate) {
         this.interestRate = interestRate;
+    }
+    public double getProcess(){
+        try{
+            LocalDateTime localDateTime=LocalDateTime.ofInstant(Instant.ofEpochMilli(account.getOpenDate().getTime()), ZoneId.of("GMT+7"));
+            long currentDays=ChronoUnit.DAYS.between(localDateTime,LocalDateTime.now(ZoneId.of("GMT+7")));
+            long  maturityDays= ChronoUnit.DAYS.between(localDateTime,localDateTime.plusMonths(term));
+            return currentDays*100.0/maturityDays;
+        }catch (Exception e){
+            return 0;
+        }
+
     }
 }

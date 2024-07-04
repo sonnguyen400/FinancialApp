@@ -2,7 +2,7 @@
 <tiles:insertAttribute name="navheader"/>
 <tiles:insertAttribute name="header"/>
 <div class="content-body">
-    <div id="content" class="container-fluid mt-3">
+    <div id="content" class="container-fluid mt-3 h-100">
         <tiles:insertAttribute name="content"/>
     </div>
 </div>

@@ -42,29 +42,15 @@ public class AccountService implements IAccountService {
         try {
             return accountDao.findById(id);
         } catch (SQLException e) {
-            return Optional.empty();
+            throw new RuntimeException(e);
         }
     }
 
     @Override
-    public Optional<Account> findSavingsAccountsByCustomerId(Integer customerId) {
-        return accountDao.findSavingAccountByCustomerId(customerId);
-    }
-
-    @Override
-    public Account findPrincipalAccountByCustomerId(Integer customerId) {
-        return accountDao.findByCustomerIdAndType(customerId, AccountType.PRINCIPAL).get(0);
-    }
-
-    @Override
-    public Optional<Account> findAccountByAccountNumber(String username) {
+    public Optional<Account> findByAccountNumber(String username) {
         return accountDao.findAccountByAccountNumber(username);
     }
 
-    @Override
-    public BigDecimal updateBalanceByAccountId(Connection connection,Integer accountId, BigDecimal value) throws SQLException {
-        return accountDao.updateBalanceByAccountId(connection,accountId, value);
-    }
 
     @Override
     public Collection<Account> findAllByCustomerId(Integer customerId) {
@@ -73,8 +59,8 @@ public class AccountService implements IAccountService {
 
 
     @Override
-    public Account createSavingsAccount(Integer customerId, SavingsInfo savingsInfor) {
-        Account newSavingAccount=GeneralDAO.createTransactional(connection -> {
+    public void createSavingsAccount(Integer customerId, SavingsInfo savingsInfor) {
+        Account savingAccount=GeneralDAO.createTransactional(connection -> {
             //Create saving account
             Account account=new Account();
             account.setBalance(BigDecimal.ZERO);
@@ -89,35 +75,34 @@ public class AccountService implements IAccountService {
                 // Create saving information
             savingsInfor.setAccountId(accountId);
             Integer savingAccId=savingDao.executeInsert(connection,savingsInfor);
-
-            //Transfer from source to saving account
-            Transaction transaction=new Transaction();
-            transaction.setTransactionType(TransactionType.TRANSFER.value);
-            transaction.setDescription("Transfer amount into saving account");
-            transaction.setAmount(savingsInfor.getAmount());
-            transaction.setAccountId(savingsInfor.getSourceAccount());
-
-            Transfer transfer=new Transfer();
-            transfer.setTransaction(transaction);
-            transfer.setAccountId(savingsInfor.getAccountId());
-            transfer.setMessage("Transfer into for saving account");
-            transfer.setTransaction(transaction);
-
-            String refNumber=transferService.init(connection,transfer);
-            transferService.transferCommit(connection,refNumber);
-            accountDao.updateAccountStatusByAccountId(connection,account.getId(),AccountStatus.OPEN);
+            account.setId(accountId);
             return account;
         });
-        return newSavingAccount;
+        //Transfer from source to saving account
+        Transaction transaction=new Transaction();
+        transaction.setTransactionType(TransactionType.TRANSFER.value);
+        transaction.setDescription("Transfer amount into saving account");
+        transaction.setAmount(savingsInfor.getAmount());
+        transaction.setAccountId(savingsInfor.getSourceAccount());
+
+        Transfer transfer=new Transfer();
+        transfer.setTransaction(transaction);
+        transfer.setAccountId(savingsInfor.getAccountId());
+        transfer.setMessage("Transfer into for saving account");
+        transfer.setTransaction(transaction);
+
+        String refNumber=transferService.init(transfer);
+        GeneralDAO.createTransactional(connection -> {
+            transferService.transferCommit(connection,refNumber);
+            return accountDao.updateAccountStatusByAccountId(connection,savingAccount.getId(),AccountStatus.OPEN);
+        });
     }
 
 
 
     @Override
-    public Optional<Account> findOpeningSavingByCustomerId(Integer customerId) {
-        List<Account> accounts=accountDao.findByStatusAndTypeAndCustomerId(AccountStatus.OPEN, AccountType.SAVINGS,customerId );
-        if(accounts.size()==1) return Optional.of(accounts.get(0));
-        else return Optional.empty();
+    public List<Account> findByStatusAndTypeAndCustomerId(AccountStatus accountStatus,AccountType type,Integer customerId) {
+        return accountDao.findByStatusAndTypeAndCustomerId(AccountStatus.OPEN, AccountType.SAVINGS,customerId );
     }
 
     @Override
@@ -125,7 +110,10 @@ public class AccountService implements IAccountService {
         return accountDao.findDefaultAccountByCustomerId(customerId);
     }
 
-
+    @Override
+    public List<Account> findPrincipleByCustomerId(Integer customerId) {
+        return accountDao.findByCustomerIdAndType(customerId,AccountType.PRINCIPAL);
+    }
 
 
 }

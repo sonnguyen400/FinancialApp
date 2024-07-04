@@ -38,7 +38,7 @@ public class TransferController extends HttpServlet {
         Transfer transfer = RequestUtils.parseEntity(req,Transfer.class);
         Transaction transaction = RequestUtils.parseEntity(req,Transaction.class);
 
-        accountService.findAccountByAccountNumber(req.getParameter("account_number")).ifPresent(account_ -> {
+        accountService.findByAccountNumber(req.getParameter("account_number")).ifPresent(account_ -> {
             transfer.setAccountId(account_.getId());
         });
         transaction.setTransactionType(TransactionType.TRANSFER.value);
