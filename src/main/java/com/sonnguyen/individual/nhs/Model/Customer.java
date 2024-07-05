@@ -2,6 +2,7 @@ package com.sonnguyen.individual.nhs.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Transient;
@@ -22,6 +23,8 @@ public class Customer {
     private String social_security_number;
     private String occupation;
     private Integer membership;
+    @Column(name = "membership_id")
+    private int membershipID;
     @Transient
     private Collection<Account> accounts;
     @Transient
@@ -29,6 +32,14 @@ public class Customer {
 
     public Integer getMembership() {
         return membership;
+    }
+
+    public int getMembershipID() {
+        return membershipID;
+    }
+
+    public void setMembershipID(int membershipID) {
+        this.membershipID = membershipID;
     }
 
     public void setMembership(Integer membership) {

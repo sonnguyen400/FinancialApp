@@ -25,6 +25,8 @@ import java.util.UUID;
 @Model
 public class AccountService implements IAccountService {
     @Inject
+    private IAccountHolderDAO accountHolderDAO;
+    @Inject
     private IAccountDAO accountDao;
     @Inject
     private IAccountHolderDAO accountHolderDao;
@@ -40,7 +42,11 @@ public class AccountService implements IAccountService {
     @Override
     public Optional<Account> findById(int id) {
         try {
-            return accountDao.findById(id);
+             return accountDao.findById(id).map(account -> {
+                 List<AccountHolder> accountHolders=GeneralDAO.createTransactional(connection -> accountHolderDAO.findAllByAccountId(connection,account.getId()));
+                 account.setAccountHolders(accountHolders);
+                 return account;
+             });
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -51,12 +57,10 @@ public class AccountService implements IAccountService {
         return accountDao.findAccountByAccountNumber(username);
     }
 
-
     @Override
     public Collection<Account> findAllByCustomerId(Integer customerId) {
         return accountDao.findAllByCustomerId(customerId);
     }
-
 
     @Override
     public void createSavingsAccount(Integer customerId, SavingsInfo savingsInfor) {

@@ -37,9 +37,15 @@ public class Account implements Serializable {
     @Size(max = 45)
     @Column(name = "status", length = 45)
     private Integer status;
-
     @Column(name = "overdraft_limit", precision = 2)
     private BigDecimal overdraftLimit;
+    @Column(name = "tier_id")
+    private int tierID;
+
+    @Transient
+    private Collection<Customer> customers;
+    @Transient
+    private Collection<AccountHolder> accountHolders;
 
     @Override
     public String toString() {
@@ -56,8 +62,24 @@ public class Account implements Serializable {
                 '}';
     }
 
-    @Transient
-    private Collection<Customer> customers;
+
+    public int getTierID() {
+        return tierID;
+    }
+
+    public void setTierID(int tierID) {
+        this.tierID = tierID;
+    }
+
+    public Collection<AccountHolder> getAccountHolders() {
+        return accountHolders;
+    }
+
+    public void setAccountHolders(Collection<AccountHolder> accountHolders) {
+        this.accountHolders = accountHolders;
+    }
+
+
 
     public @Size(max = 45) Integer getAccountType() {
         return accountType;

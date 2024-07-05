@@ -25,7 +25,7 @@ public class SavingDetailController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Optional<SavingsInfo> savingsInfo= Optional.ofNullable(req.getParameter("id"))
-                .map(Integer::parseInt).flatMap(id -> accountService.findById(id))
+                .map(Integer::parseInt).flatMap(accountService::findById)
                 .map(account ->
                         savingsInfoService.findByAccountId(account.getId()).map(savingsInfo1 -> {
                             savingsInfo1.setAccount(account);

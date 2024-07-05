@@ -1,5 +1,6 @@
 package com.sonnguyen.individual.nhs.dao;
 
+import com.sonnguyen.individual.nhs.Model.Customer;
 import com.sonnguyen.individual.nhs.Utils.Console;
 import com.sonnguyen.individual.nhs.Utils.EntityMapper;
 import com.sonnguyen.individual.nhs.dao.Idao.AbstractDAO;
@@ -42,7 +43,6 @@ public class DAO<T, ID> extends GeneralDAO<T> implements AbstractDAO<T, ID> {
                 .append(" where ")
                 .append(idField.getName())
                 .append("=?");
-
         List<T> results = executeSelect(connection,query.toString(),getEntityClass(),id);
         connection.close();
         if(results.isEmpty()) {
@@ -55,6 +55,7 @@ public class DAO<T, ID> extends GeneralDAO<T> implements AbstractDAO<T, ID> {
             return Optional.of(results.get(0));
         }
     }
+
 
     @Override
     public void deleteById(ID id) throws SQLException {
@@ -130,6 +131,9 @@ public class DAO<T, ID> extends GeneralDAO<T> implements AbstractDAO<T, ID> {
     public List<T> executeSelect(Connection connection, String query, Object... params) throws SQLException {
         return executeSelect(connection,query,getEntityClass(),params);
     }
+
+
+
     public List<T> executeSelect(String query, Object... params) throws SQLException {
         Connection connection=getConnection();
         List<T> result = null;
@@ -152,6 +156,7 @@ public class DAO<T, ID> extends GeneralDAO<T> implements AbstractDAO<T, ID> {
     public Integer executeInsert(Connection connection,T object) throws SQLException {
         return super.executeInsert(connection,object,getEntityClass());
     }
+
 
 
 }
