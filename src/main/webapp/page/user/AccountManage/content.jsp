@@ -23,9 +23,9 @@
                 <div class="row">
                     <c:forEach var="account" items="${requestScope.accounts}">
                         <div class="col-lg-6 col-sm-12">
-                            <div class="border-1 border-solid border-white-gray radius">
-                                <div class="card-body">
-                                    <h4 class="card-subtitle">Principle Account</h4>
+                            <div class="border-solid border-white-gray pt-3 pb-2 px-2 radius">
+                                <div class="p-2">
+                                    <h4 class="card-subtitle text-secondary">Principle Account</h4>
                                     <h5 class="text-blue-700 py-3">${account.accountNumber}</h5>
                                     <div class="divider"></div>
                                     <div class="d-flex justify-content-between">

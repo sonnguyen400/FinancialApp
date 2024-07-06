@@ -1,5 +1,6 @@
 package com.sonnguyen.individual.nhs.dao;
 
+import com.sonnguyen.individual.nhs.Constant.TransactionStatus;
 import com.sonnguyen.individual.nhs.Model.Transaction;
 import com.sonnguyen.individual.nhs.dao.Idao.ITransactionDAO;
 
@@ -22,7 +23,7 @@ public final class TransactionDAO extends DAO<Transaction,Integer> implements IT
     public List<Transaction> findAllByAccountId(Integer accountId)  {
         String query="select * from transaction where account_id=? order by transaction_at desc";
         try {
-            return executeSelect(query,accountId,accountId);
+            return executeSelect(query,accountId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -43,5 +44,11 @@ public final class TransactionDAO extends DAO<Transaction,Integer> implements IT
         String query="Update transaction set transaction.status=? where transaction.id=?";
         return executeUpdate(connection,query,status,transactionId);
     }
+
+    @Override
+    public void updateStatusByRefNumber(Connection connection, TransactionStatus transactionStatus, String refNumber) throws SQLException {
+        executeUpdate(connection,"update transaction set transaction.status=? where transaction.reference_number=?",transactionStatus.value,refNumber);
+    }
+
 
 }

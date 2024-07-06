@@ -52,25 +52,58 @@ public class GeneralDAO<T> {
                 result= (T) transactional.startTransaction(connection);
                 connection.commit();
             } catch (Exception e) {
-                e.printStackTrace();
                 try {
                     connection.rollback();
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
-                    throw new FailureTransaction();
+                    throw new FailureTransaction(ex);
                 }
-                throw new FailureTransaction();
+                throw new FailureTransaction(e);
             }finally {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                    throw new FailureTransaction(e);
                 }
             }
         }
         return result;
     }
-
+    public static  <T> T createTransactional(Transactional transactional,Transactional handleException) throws FailureTransaction {
+        Connection connection=getConnection();
+        T result=null;
+        if(connection!=null){
+            try {
+                connection.setAutoCommit(false);
+                result= (T) transactional.startTransaction(connection);
+                connection.commit();
+            } catch (Exception e) {
+                try {
+                    connection.rollback();
+                } catch (SQLException ex) {
+                    throw new FailureTransaction(ex);
+                }
+                try{
+                    handleException.startTransaction(connection);
+                    connection.commit();
+                }catch (Exception exception){
+                    try {
+                        connection.rollback();
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    throw new FailureTransaction(e);
+                }
+                throw new FailureTransaction(e);
+            }finally {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    throw new FailureTransaction(e);
+                }
+            }
+        }
+        return result;
+    }
     public List<T> executeSelect(Connection connection,String query, Class<T> clazz,Object ...params) throws SQLException {
         logger.log(Level.INFO,query);
         ResultSet resultSet=null;

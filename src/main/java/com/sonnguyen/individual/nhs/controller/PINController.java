@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Objects;
 
 import static com.sonnguyen.individual.nhs.Utils.Constants.PIN;
 import static com.sonnguyen.individual.nhs.Utils.RequestUtils.ERROR_MESSAGE;

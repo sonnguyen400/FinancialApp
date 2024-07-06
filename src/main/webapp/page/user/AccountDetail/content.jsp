@@ -1,4 +1,5 @@
 <%@ page import="org.springframework.http.HttpStatus" %>
+<%@ page import="com.sonnguyen.individual.nhs.Constant.AccountTier" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean id="account" scope="request" type="com.sonnguyen.individual.nhs.Model.Account"/>
@@ -6,9 +7,20 @@
     <div class="row  justify-content-center">
         <div class="col-ssm-12 col-md-8 col-lg-5">
             <div class="card">
-                <div class="card-body">
-                    <div class="sub-title">Balance</div>
-                    <div class="card-title"><h3 class="text-primary"><fmt:formatNumber value="${account.balance}"/></h3></div>
+                <div class="pt-3 pb-2 px-3 d-flex flex-row justify-content-between align-top align-top">
+                    <div >
+                        <div class="sub-title">Balance</div>
+                        <div class="card-title"><h3 class="text-primary"><fmt:formatNumber value="${account.balance}"/></h3></div>
+                    </div>
+                    <c:if test="${account.tier.id==AccountTier.SILVER.id}">
+                        <div><span class="badge badge-light">${account.tier.name}</span></div>
+                    </c:if>
+                    <c:if test="${account.tier.id==AccountTier.GOLD.id}">
+                        <div><span class="badge badge-warning text-white">${account.tier.name}</span></div>
+                    </c:if>
+                    <c:if test="${account.tier.id==AccountTier.DIAMOND.id}">
+                        <div><span class="badge badge-light">${account.tier.name}</span></div>
+                    </c:if>
                 </div>
             </div>
         </div>
@@ -34,7 +46,11 @@
                     </div>
                     <div class="d-flex py-2 flex-row justify-content-between">
                         <span >Overdraft Limit</span>
-                        <span>${account.overdraftLimit}</span>
+                        <span>${account.tier.overdraftLimit}</span>
+                    </div>
+                    <div class="d-flex py-2 flex-row justify-content-between">
+                        <span >Limit Transaction</span>
+                        <span>${account.tier.limitTransaction}</span>
                     </div>
                     <div class="d-flex py-2 flex-row justify-content-between">
                         <span>Type</span>

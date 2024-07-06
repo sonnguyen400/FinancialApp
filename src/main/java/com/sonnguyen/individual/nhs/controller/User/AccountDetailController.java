@@ -1,7 +1,9 @@
 package com.sonnguyen.individual.nhs.controller.User;
 
 import com.sonnguyen.individual.nhs.Model.Account;
+import com.sonnguyen.individual.nhs.Model.Tier;
 import com.sonnguyen.individual.nhs.Service.IService.IAccountService;
+import com.sonnguyen.individual.nhs.Service.IService.ITierService;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -15,20 +17,23 @@ import java.util.Optional;
 public class AccountDetailController extends HttpServlet {
     @Inject
     IAccountService accountService;
+    @Inject
+    ITierService tierService;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("id nè");
-        System.out.println(req.getParameter("id"));
         Optional<Account> account=Optional.ofNullable(req.getParameter("id"))
                 .map(Integer::parseInt)
                 .map(id->{
                     System.out.println(id);
                     return id;
                 })
-
                 .map(id->accountService.findById(id))
                 .orElseThrow(() -> new IllegalArgumentException("Account not found"));
-        account.ifPresent(value -> req.setAttribute("account", value));
+
+        account.ifPresent(value -> {
+            value.setTier(tierService.findById(value.getTierID()).orElse(new Tier()));
+            req.setAttribute("account", value);
+        });
         account.orElseThrow(()->new IllegalArgumentException("Can't find relevant content"));
         req.getRequestDispatcher("/page/user/AccountDetail/page.jsp").forward(req, resp);
     }

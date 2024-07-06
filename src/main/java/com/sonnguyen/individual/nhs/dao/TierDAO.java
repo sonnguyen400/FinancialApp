@@ -12,6 +12,10 @@ import java.util.Optional;
 
 @Model
 public class TierDAO extends DAO<Tier,Integer> implements ITierDAO {
+    @Override
+    public Class<Tier> getEntityClass() {
+        return Tier.class;
+    }
 
     @Override
     public Optional<Tier> findById(Connection connection, int id) throws SQLException {

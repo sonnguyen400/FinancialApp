@@ -28,8 +28,8 @@ public class TransferCommitController extends HttpServlet {
         try{
             req.setAttribute("transfer",transferService.transferCommit(refNumber));
         }catch (Exception e){
-            req.setAttribute(ERROR_MESSAGE,"ERROR transfer");
-            resp.sendRedirect("/app/transfer");
+            req.setAttribute(ERROR_MESSAGE,e.getMessage());
+            req.getRequestDispatcher("/app/transfer").include(req,resp);
             return;
         }
         req.getRequestDispatcher("/page/user/Bill/page.jsp").forward(req,resp);

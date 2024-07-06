@@ -1,5 +1,6 @@
 package com.sonnguyen.individual.nhs.dao.Idao;
 
+import com.sonnguyen.individual.nhs.Constant.TransactionStatus;
 import com.sonnguyen.individual.nhs.Model.Transaction;
 
 import java.sql.Connection;
@@ -11,4 +12,5 @@ public interface ITransactionDAO extends AbstractDAO<Transaction,Integer> {
      List<Transaction> findAllByAccountId(Integer accountId);
      List<Transaction> findAllByRefNumber(String refNumber);
      int updateStatus(Connection connection,Integer transactionId, int status) throws SQLException;
+     void updateStatusByRefNumber(Connection connection, TransactionStatus transactionStatus, String refNumber) throws SQLException;
 }

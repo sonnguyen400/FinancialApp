@@ -1,11 +1,14 @@
 package com.sonnguyen.individual.nhs.controller.User;
 
 import com.sonnguyen.individual.nhs.Constant.DefaultBrand;
+import com.sonnguyen.individual.nhs.Model.Customer;
 import com.sonnguyen.individual.nhs.Model.Loan;
 import com.sonnguyen.individual.nhs.Model.Login;
+import com.sonnguyen.individual.nhs.Model.Membership;
 import com.sonnguyen.individual.nhs.Service.IService.IAccountService;
 import com.sonnguyen.individual.nhs.Service.IService.ICustomerService;
 import com.sonnguyen.individual.nhs.Service.IService.ILoanService;
+import com.sonnguyen.individual.nhs.Service.IService.IMembershipService;
 import com.sonnguyen.individual.nhs.Utils.RequestUtils;
 import com.sonnguyen.individual.nhs.Utils.SessionUtils;
 
@@ -26,12 +29,16 @@ public class CreateLoanController extends HttpServlet {
     IAccountService accountService;
     @Inject
     ILoanService loanService;
+    @Inject
+    IMembershipService membershipService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if(req.getRequestURI().equalsIgnoreCase("/app/otp")){
             Login account= SessionUtils.getPrincipal(req);
-            req.setAttribute("accounts",accountService.findAllByCustomerId(account.getCustomer().getId()));
+            req.setAttribute("accounts",accountService.findPrincipleByCustomerId(account.getCustomer().getId()));
+            Customer customer=customerService.findById(account.getCustomerId());
+            req.setAttribute("membership",membershipService.findById(customer.getMembershipID()).orElse(new Membership()));
             req.getRequestDispatcher("/page/user/LoanCreate/page.jsp").forward(req, resp);
             return;
         }

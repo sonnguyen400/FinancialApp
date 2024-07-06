@@ -3,7 +3,6 @@ package com.sonnguyen.individual.nhs.dao;
 import com.sonnguyen.individual.nhs.Constant.AccountStatus;
 import com.sonnguyen.individual.nhs.Constant.AccountType;
 import com.sonnguyen.individual.nhs.Model.Account;
-import com.sonnguyen.individual.nhs.Model.AccountHolder;
 import com.sonnguyen.individual.nhs.dao.Idao.IAccountDAO;
 
 import javax.enterprise.inject.Model;

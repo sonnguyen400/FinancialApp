@@ -37,10 +37,11 @@ public class Account implements Serializable {
     @Size(max = 45)
     @Column(name = "status", length = 45)
     private Integer status;
-    @Column(name = "overdraft_limit", precision = 2)
-    private BigDecimal overdraftLimit;
     @Column(name = "tier_id")
     private int tierID;
+
+    @Transient
+    private Tier tier;
 
     @Transient
     private Collection<Customer> customers;
@@ -57,11 +58,18 @@ public class Account implements Serializable {
                 ", balance=" + balance +
                 ", openDate=" + openDate +
                 ", status='" + status + '\'' +
-                ", overdraftLimit=" + overdraftLimit +
+                ", overdraftLimit="  +
                 ", customers=" + customers +
                 '}';
     }
 
+    public Tier getTier() {
+        return tier;
+    }
+
+    public void setTier(Tier tier) {
+        this.tier = tier;
+    }
 
     public int getTierID() {
         return tierID;
@@ -149,14 +157,6 @@ public class Account implements Serializable {
     }
 
 
-
-    public BigDecimal getOverdraftLimit() {
-        return overdraftLimit;
-    }
-
-    public void setOverdraftLimit(BigDecimal overdraftLimit) {
-        this.overdraftLimit = overdraftLimit;
-    }
 
 
 

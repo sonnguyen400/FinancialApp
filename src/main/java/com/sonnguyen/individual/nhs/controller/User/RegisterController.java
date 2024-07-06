@@ -1,6 +1,7 @@
 package com.sonnguyen.individual.nhs.controller.User;
 
 
+import com.sonnguyen.individual.nhs.Constant.AccountTier;
 import com.sonnguyen.individual.nhs.Constant.MemberShip;
 import com.sonnguyen.individual.nhs.Model.Account;
 import com.sonnguyen.individual.nhs.Model.Customer;
@@ -33,11 +34,12 @@ public class RegisterController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Login login= RequestUtils.parseEntity(req,Login.class);
         Customer customer=RequestUtils.parseEntity(req,Customer.class);
-        customer.setMembership(MemberShip.STANDARD.value);
+        customer.setMembershipID(MemberShip.STANDARD.value);
         String accountNumber=req.getParameter("accountNumber");
         Account account=new Account();
         account.setAccountNumber(accountNumber);
         customer.setAccounts(List.of(account));
+        account.setTierID(AccountTier.SILVER.id);
         try{
             loginCustomerService.save(login,customer);
         }catch (Exception e){

@@ -1,8 +1,12 @@
 package com.sonnguyen.individual.nhs.controller.User;
 
+import com.sonnguyen.individual.nhs.Model.Customer;
 import com.sonnguyen.individual.nhs.Model.Login;
+import com.sonnguyen.individual.nhs.Model.Membership;
 import com.sonnguyen.individual.nhs.Model.SavingsInfo;
 import com.sonnguyen.individual.nhs.Service.IService.IAccountService;
+import com.sonnguyen.individual.nhs.Service.IService.ICustomerService;
+import com.sonnguyen.individual.nhs.Service.IService.IMembershipService;
 import com.sonnguyen.individual.nhs.Utils.RequestUtils;
 import com.sonnguyen.individual.nhs.Utils.SessionUtils;
 import javax.enterprise.inject.Model;
@@ -27,10 +31,16 @@ import static com.sonnguyen.individual.nhs.Utils.RequestUtils.ERROR_MESSAGE;
 public class CreateSavingsController extends HttpServlet {
     @Inject
     IAccountService accountService;
+    @Inject
+    ICustomerService customerService;
+    @Inject
+    IMembershipService membershipService;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Login login= SessionUtils.getPrincipal(req);
         req.setAttribute("accounts",accountService.findAllByCustomerId(login.getCustomerId()));
+        Customer customer=customerService.findById(login.getCustomerId());
+        req.setAttribute("membership",membershipService.findById(customer.getMembershipID()).orElse(new Membership()));
         req.getRequestDispatcher("/page/user/SavingAccountCreate/page.jsp").forward(req,resp);
     }
 

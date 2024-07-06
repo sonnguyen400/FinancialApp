@@ -1,9 +1,8 @@
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.Collection" %>
+<%@ page import="com.sonnguyen.individual.nhs.Constant.MemberShip" %>
 <%@ taglib prefix="tilex" uri="http://tiles.apache.org/tags-tiles-extras" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<jsp:useBean id="membership" scope="request" type="com.sonnguyen.individual.nhs.Model.Membership"/>
 <div class="row">
     <div class="col-lg-4">
         <c:forEach var="account" items="${requestScope.accounts}">
@@ -35,16 +34,26 @@
                     <div class="card-body">
                         <div class="col mb-3">
                             <p class="mb-1 opacity-5">Membership</p>
-                            <h5 class="text-white font-weight-semi-bold">Standard</h5>
+                            <h5 class="text-white font-weight-semi-bold">
+                                <c:if test="${membership.id==MemberShip.STANDARD.value}">
+                                    <div><span class="badge badge-light">${membership.name}</span></div>
+                                </c:if>
+                                <c:if test="${membership.id==MemberShip.DIAMOND.value}">
+                                    <div><span class="badge badge-light">${membership.name}</span></div>
+                                </c:if>
+                                <c:if test="${membership.id==MemberShip.GOLD.value}">
+                                    <div><span class="badge badge-light">${membership.name}</span></div>
+                                </c:if>
+                            </h5>
                         </div>
                         <div class="row align-items-center">
                             <div class="col align-items-center text-center">
 
                                 <div class="d-flex justify-content-center">
                                     <span class="text-lg-10 pr-3 opacity-5 pb-2"><i class="fi fi-sr-usd-circle"></i></span>
-                                    <h3 class="text-white text-xl-10">Credit Limit</h3>
+                                    <h3 class="text-white text-xl-10">Savings upto</h3>
                                 </div>
-                                <h3 class="text-white font-weight-semi-bold">142.363.351</h3>
+                                <h3 class="text-white font-weight-semi-bold"><fmt:formatNumber value="${membership.saving_limit}" currencyCode="vnd" currencySymbol="vnd"/></h3>
                             </div>
 
                         </div>

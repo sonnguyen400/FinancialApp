@@ -1,7 +1,6 @@
 package com.sonnguyen.individual.nhs.dao;
 
 import com.sonnguyen.individual.nhs.Model.AccountHolder;
-import com.sonnguyen.individual.nhs.Model.Customer;
 import com.sonnguyen.individual.nhs.dao.Idao.IAccountHolderDAO;
 
 import javax.enterprise.inject.Model;

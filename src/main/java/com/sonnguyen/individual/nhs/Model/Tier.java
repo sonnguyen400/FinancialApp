@@ -23,7 +23,7 @@ public class Tier {
 
     @Size(max = 45)
     @Column(name = "limit_transaction", length = 45)
-    private String limitTransaction;
+    private BigDecimal limitTransaction;
 
     public Integer getId() {
         return id;
@@ -49,12 +49,11 @@ public class Tier {
         this.overdraftLimit = overdraftLimit;
     }
 
-    public String getLimitTransaction() {
+    public @Size(max = 45) BigDecimal getLimitTransaction() {
         return limitTransaction;
     }
 
-    public void setLimitTransaction(String limitTransaction) {
+    public void setLimitTransaction(@Size(max = 45) BigDecimal limitTransaction) {
         this.limitTransaction = limitTransaction;
     }
-
 }

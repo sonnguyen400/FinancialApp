@@ -15,7 +15,6 @@ import com.sonnguyen.individual.nhs.dao.Idao.ISavingDAO;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import java.math.BigDecimal;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;

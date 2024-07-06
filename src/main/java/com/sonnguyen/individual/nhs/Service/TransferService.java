@@ -1,8 +1,13 @@
 package com.sonnguyen.individual.nhs.Service;
 
+import com.sonnguyen.individual.nhs.Constant.AccountStatus;
 import com.sonnguyen.individual.nhs.Constant.TransactionStatus;
 import com.sonnguyen.individual.nhs.Constant.TransactionType;
 import com.sonnguyen.individual.nhs.Exception.CommitTransactionException;
+import com.sonnguyen.individual.nhs.Exception.FailureTransaction;
+import com.sonnguyen.individual.nhs.dao.Idao.ITierDAO;
+import com.sonnguyen.individual.nhs.Model.Account;
+import com.sonnguyen.individual.nhs.Model.Tier;
 import com.sonnguyen.individual.nhs.Model.Transaction;
 import com.sonnguyen.individual.nhs.Model.Transfer;
 import com.sonnguyen.individual.nhs.Service.IService.ITransferService;
@@ -28,7 +33,8 @@ public class TransferService implements ITransferService {
     @Inject
     IAccountDAO accountDAO;
     Logger logger=Logger.getLogger(this.getClass());
-
+    @Inject
+    ITierDAO tierDAO;
 
 
     @Override
@@ -52,12 +58,16 @@ public class TransferService implements ITransferService {
 
 
     @Override
-    public Transfer transferCommit(String transactionRefNumber) {
-        return GeneralDAO.createTransactional(connection -> transferCommit(connection,transactionRefNumber));
+    public Transfer transferCommit(String transactionRefNumber) throws FailureTransaction {
+        return GeneralDAO.createTransactional(connection -> transferCommit(connection,transactionRefNumber),connection -> {
+            transactionDAO.updateStatusByRefNumber(connection,TransactionStatus.FAILURE,transactionRefNumber);
+            return new Transfer();
+        });
     }
 
     @Override
-    public Transfer transferCommit(Connection connection, String transactionRefNumber) throws SQLException {
+    public Transfer transferCommit(Connection connection, String transactionRefNumber) throws SQLException,CommitTransactionException {
+        //Get equivalent transaction
         List<Transaction> transactions=transactionDAO.findAllByRefNumber(transactionRefNumber);
         Transaction transferTransaction=null;
         for(Transaction transaction:transactions){
@@ -67,7 +77,18 @@ public class TransferService implements ITransferService {
             }
         }
         if(transferTransaction==null) throw new CommitTransactionException("Unable to commit transaction! Transference transaction could not be found");
+        Account transferAccount=accountDAO.findById(transferTransaction.getAccountId()).orElseThrow(()->new CommitTransactionException("Account not found"));
+        if(transferAccount.getStatus()!=AccountStatus.OPEN.value) throw new CommitTransactionException("Account isn't opening");
+        Tier tier=tierDAO.findById(connection,transferAccount.getTierID()).orElseThrow(()->new CommitTransactionException("Tier not found"));
+        double amountAfterTransfer=transferAccount.getBalance().subtract(transferTransaction.getAmount()).doubleValue();
+        if(amountAfterTransfer<=0 && amountAfterTransfer*(-1)>tier.getOverdraftLimit().doubleValue()){
+            throw new CommitTransactionException("Over balance");
+        }
+
+        //Update balance
         Transfer transfer=transferDAO.findByTransactionId(connection,transferTransaction.getId());
+        Account receiveAccount=accountDAO.findById(transfer.getAccountId()).orElseThrow(()->new CommitTransactionException("Account not found"));
+        if(receiveAccount.getStatus()!=AccountStatus.OPEN.value) throw new CommitTransactionException("Account isn't opening");
         transfer.setTransaction(transferTransaction);
         accountDAO.updateBalanceByAccountId(connection,transfer.getTransaction().getAccountId(),transfer.getTransaction().getAmount().negate());
         accountDAO.updateBalanceByAccountId(connection,transfer.getAccountId(),transfer.getTransaction().getAmount());

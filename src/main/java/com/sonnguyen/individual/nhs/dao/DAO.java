@@ -1,6 +1,5 @@
 package com.sonnguyen.individual.nhs.dao;
 
-import com.sonnguyen.individual.nhs.Model.Customer;
 import com.sonnguyen.individual.nhs.Utils.Console;
 import com.sonnguyen.individual.nhs.Utils.EntityMapper;
 import com.sonnguyen.individual.nhs.dao.Idao.AbstractDAO;

@@ -33,7 +33,10 @@ public class TransferController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Login login=SessionUtils.getPrincipal(req);
+        if(!req.getRequestURI().equalsIgnoreCase("/app/transfer")){
+            doGet(req,resp);
+            return;
+        }
 
         Transfer transfer = RequestUtils.parseEntity(req,Transfer.class);
         Transaction transaction = RequestUtils.parseEntity(req,Transaction.class);
