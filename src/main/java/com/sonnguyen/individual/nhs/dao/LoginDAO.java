@@ -1,6 +1,6 @@
 package com.sonnguyen.individual.nhs.dao;
 
-import com.sonnguyen.individual.nhs.model.Login;
+import com.sonnguyen.individual.nhs.Model.Login;
 import com.sonnguyen.individual.nhs.dao.Idao.ILoginDAO;
 
 import javax.enterprise.inject.Model;
@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 @Model
 public class LoginDAO extends DAO<Login,Integer> implements ILoginDAO {
@@ -65,5 +66,18 @@ public class LoginDAO extends DAO<Login,Integer> implements ILoginDAO {
             return null;
         }
         return login.get(0);
+    }
+
+    @Override
+    public Optional<Login> findByUsername(String username) {
+        String query="select * from login where username=?";
+        try {
+            List<Login> logins=executeSelect(query,username);
+            if(logins.isEmpty()) return Optional.empty();
+            return Optional.of(logins.get(0));
+        } catch (SQLException e) {
+            return Optional.empty();
+        }
+
     }
 }

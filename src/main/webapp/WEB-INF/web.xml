@@ -5,10 +5,13 @@
          version="4.0">
 
 
-
+    <context-param>
+        <param-name>log4jConfiguration</param-name>
+        <param-value>WEB-INF/log4j.properties</param-value>
+    </context-param>
     <filter>
         <filter-name>AuthFilter</filter-name>
-        <filter-class>com.sonnguyen.individual.nhs.security.Filter.AuthenticationFilter</filter-class>
+        <filter-class>com.sonnguyen.individual.nhs.Security.Filter.AuthenticationFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
@@ -18,12 +21,14 @@
     <session-config>
         <tracking-mode>COOKIE</tracking-mode>
     </session-config>
+
     <listener>
         <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
     </listener>
     <listener>
         <listener-class>org.apache.tiles.extras.complete.CompleteAutoloadTilesListener</listener-class>
     </listener>
+
     <servlet>
         <servlet-name>Tiles Dispatch Servlet</servlet-name>
         <servlet-class>org.apache.tiles.web.util.TilesDispatchServlet</servlet-class>
@@ -61,7 +66,4 @@
         <exception-type>java.lang.Throwable</exception-type>
         <location>/page/base/error.jsp</location>
     </error-page>
-    <default-context-path>
-        /
-    </default-context-path>
 </web-app>

@@ -1,4 +1,5 @@
 <%@ taglib prefix="tilesx" uri="http://tiles.apache.org/tags-tiles-extras" %>
+<%@ taglib prefix="ex" uri="/WEB-INF/custom.tld" %>
 <%@include file="/taglib/taglib.jsp"%>
 <!DOCTYPE html>
 <html>
@@ -21,6 +22,10 @@
         </svg>
     </div>
 </div>
+<jsp:useBean id="message" scope="request" class="com.sonnguyen.individual.nhs.type.Message"/>
+<c:if test="${message!=null}">
+    <ex:alert type="${message.type.name()}" link="${message.link}" href="${message.href}">${message.message}</ex:alert>
+</c:if>
 <tiles:insertAttribute name="body"/>
 <tiles:insertAttribute name="script"/>
 <tiles:insertAttribute name="inline-script"/>

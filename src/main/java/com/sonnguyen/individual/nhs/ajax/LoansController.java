@@ -2,8 +2,8 @@ package com.sonnguyen.individual.nhs.ajax;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.sonnguyen.individual.nhs.constant.LoanStatus;
-import com.sonnguyen.individual.nhs.service.iService.ILoanService;
+import com.sonnguyen.individual.nhs.Constant.LoanStatus;
+import com.sonnguyen.individual.nhs.Service.IService.ILoanService;
 import com.sonnguyen.individual.nhs.Utils.RequestUtils;
 import javassist.NotFoundException;
 

@@ -1,15 +1,15 @@
-package com.sonnguyen.individual.nhs.constant;
+package com.sonnguyen.individual.nhs.Constant;
 
 public enum AccountStatus {
-    OPEN("OPEN"),
-    INACTIVE("INACTIVE"),
-    CLOSED("CLOSED"),
-    OVERDRAWN("OVERDRAWN"),
-    FROZEN("FROZEN"),
-    PENDING("PENDING");
+    OPEN(1),
+    INACTIVE(2),
+    CLOSED(3),
+    OVERDRAWN(4),
+    FROZEN(5),
+    PENDING(6);
 
-    public final String value;
-    AccountStatus(String value) {
+    public final int value;
+    AccountStatus(int value) {
         this.value=value;
     }
 }

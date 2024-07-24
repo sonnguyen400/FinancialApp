@@ -1,10 +1,13 @@
-package com.sonnguyen.individual.nhs.model;
+package com.sonnguyen.individual.nhs.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Transient;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
 import java.sql.Date;
 import java.util.Collection;
 
@@ -17,23 +20,28 @@ public class Customer {
     private String lastname;
     private Date dateOfBirth;
     private int address_id;
+    @Email
     private String email;
     private String phone;
+    @Min(9)
     private String social_security_number;
     private String occupation;
-    private String membership;
+    @Column(name = "membership_id")
+    private int membershipID;
     @Transient
     private Collection<Account> accounts;
     @Transient
     private Login login;
 
-    public String getMembership() {
-        return membership;
+
+    public int getMembershipID() {
+        return membershipID;
     }
 
-    public void setMembership(String membership) {
-        this.membership = membership;
+    public void setMembershipID(int membershipID) {
+        this.membershipID = membershipID;
     }
+
 
     public Login getLogin() {
         return login;

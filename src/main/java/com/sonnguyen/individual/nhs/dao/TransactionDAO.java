@@ -1,18 +1,13 @@
 package com.sonnguyen.individual.nhs.dao;
 
-import com.sonnguyen.individual.nhs.model.Transaction;
-import com.sonnguyen.individual.nhs.model.Transfer;
-import com.sonnguyen.individual.nhs.Utils.EntityMapper;
+import com.sonnguyen.individual.nhs.Constant.TransactionStatus;
+import com.sonnguyen.individual.nhs.Model.Transaction;
 import com.sonnguyen.individual.nhs.dao.Idao.ITransactionDAO;
 
 import javax.enterprise.inject.Model;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Model
 public final class TransactionDAO extends DAO<Transaction,Integer> implements ITransactionDAO {
@@ -25,32 +20,35 @@ public final class TransactionDAO extends DAO<Transaction,Integer> implements IT
         return executeInsert(connection, transaction,getEntityClass());
     }
     @Override
-    public List<Transaction> getHistoryByAccountId(Integer accountId) throws SQLException {
-        List<Transaction> transactions = new ArrayList<Transaction>();
-        ResultSet rs =null;
-        String query="select * from transaction\n" +
-                "join transfer\n" +
-                "on transfer.transaction_id=transaction.id\n" +
-                "where transaction.account_id=? or transfer.account_id=?";
-        try( Connection connection=getConnection();
-             PreparedStatement preparedStatement= Objects.requireNonNull(connection).prepareStatement(query)){
-            preparedStatement.setInt(1,accountId);
-            preparedStatement.setInt(2,accountId);
-            rs=preparedStatement.executeQuery();
-            List<Object[]> list=EntityMapper.mapList(rs,Transaction.class,Transfer.class);
-            list.forEach(item->{
-                Transaction transaction= (Transaction) item[0];
-                Transfer transfer= (Transfer) item[1];
-                transaction.setTransfer(transfer);
-                transactions.add(transaction);
-            });
-
-        }catch (Exception e){
-            e.printStackTrace();
+    public List<Transaction> findAllByAccountId(Integer accountId)  {
+        String query="select * from transaction where account_id=? order by transaction_at desc";
+        try {
+            return executeSelect(query,accountId);
+        } catch (SQLException e) {
             throw new RuntimeException(e);
-        }finally {
-            if(rs!=null) rs.close();
         }
-        return transactions;
     }
+
+    @Override
+    public List<Transaction> findAllByRefNumber(String refNumber) {
+        String query="select * from transaction where reference_number=?";
+        try {
+            return executeSelect(query,refNumber);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public int updateStatus(Connection connection, Integer transactionId, int status) throws SQLException {
+        String query="Update transaction set transaction.status=? where transaction.id=?";
+        return executeUpdate(connection,query,status,transactionId);
+    }
+
+    @Override
+    public void updateStatusByRefNumber(Connection connection, TransactionStatus transactionStatus, String refNumber) throws SQLException {
+        executeUpdate(connection,"update transaction set transaction.status=? where transaction.reference_number=?",transactionStatus.value,refNumber);
+    }
+
+
 }

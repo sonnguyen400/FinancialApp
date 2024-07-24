@@ -1,7 +1,7 @@
 package com.sonnguyen.individual.nhs.controller;
 
-import com.sonnguyen.individual.nhs.model.Loan;
-import com.sonnguyen.individual.nhs.constant.LoanStatus;
+import com.sonnguyen.individual.nhs.Constant.LoanStatus;
+import com.sonnguyen.individual.nhs.Model.Loan;
 import com.sonnguyen.individual.nhs.Utils.RequestUtils;
 
 import javax.servlet.ServletException;
@@ -23,7 +23,7 @@ public class BaseController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if(req.getParameter("LoanCreate")!=null){
             Loan loan= RequestUtils.parseEntity(req, Loan.class);
-            loan.setStatus(LoanStatus.PENDING.name());
+            loan.setStatus(LoanStatus.PENDING.value);
             System.out.println(loan);
         }
     }

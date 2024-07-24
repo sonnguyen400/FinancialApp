@@ -1,4 +1,4 @@
-<%@ page import="com.sonnguyen.individual.nhs.model.Loan" %>
+<%@ page import="com.sonnguyen.individual.nhs.Model.Loan" %>
 <%
     Loan loan= (Loan) request.getAttribute("loan");
 %>

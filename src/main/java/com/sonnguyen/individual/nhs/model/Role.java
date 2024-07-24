@@ -1,4 +1,4 @@
-package com.sonnguyen.individual.nhs.model;
+package com.sonnguyen.individual.nhs.Model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

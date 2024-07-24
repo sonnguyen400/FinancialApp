@@ -1,8 +1,9 @@
 package com.sonnguyen.individual.nhs.dao;
 
-import com.sonnguyen.individual.nhs.model.Account;
+import com.sonnguyen.individual.nhs.Constant.AccountStatus;
+import com.sonnguyen.individual.nhs.Constant.AccountType;
+import com.sonnguyen.individual.nhs.Model.Account;
 import com.sonnguyen.individual.nhs.dao.Idao.IAccountDAO;
-import com.sonnguyen.individual.nhs.constant.AccountType;
 
 import javax.enterprise.inject.Model;
 import java.math.BigDecimal;
@@ -34,6 +35,8 @@ public class AccountDAO extends DAO<Account,Integer> implements IAccountDAO {
         String query="Select balance from account where id=?";
         return executeSelect(query, BigDecimal.class,accountId);
     }
+
+
 
     @Override
     public BigDecimal updateBalanceByAccountId(Connection connection,Integer accountId,BigDecimal disparity) throws SQLException,NullPointerException {
@@ -97,10 +100,10 @@ public class AccountDAO extends DAO<Account,Integer> implements IAccountDAO {
     }
 
     @Override
-    public List<Account> findByStatusAndTypeAndCustomerId(String status, String type, Integer customerId) {
+    public List<Account> findByStatusAndTypeAndCustomerId(AccountStatus status, AccountType type, Integer customerId) {
         String query="select * from account where status=? and account_type=? and id in (Select account_id from account_holder where customer_id=?)";
         try {
-            return executeSelect(query,status,type,customerId);
+            return executeSelect(query,status.value,type.value,customerId);
         } catch (SQLException e) {
             e.printStackTrace();
             return List.of();
@@ -118,6 +121,12 @@ public class AccountDAO extends DAO<Account,Integer> implements IAccountDAO {
         }
         if(accounts==null||accounts.size()==0) return null;
         return accounts.get(0);
+    }
+
+    @Override
+    public Integer updateAccountStatusByAccountId(Connection connection,Integer accountId, AccountStatus status) throws SQLException {
+        String query="update account set status=? where id=?";
+        return executeUpdate(connection,query,status.value,accountId);
     }
 
 

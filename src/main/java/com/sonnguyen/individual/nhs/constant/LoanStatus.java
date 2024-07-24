@@ -1,11 +1,11 @@
-package com.sonnguyen.individual.nhs.constant;
+package com.sonnguyen.individual.nhs.Constant;
 
 public enum LoanStatus {
-    PENDING("PENDING"),
-    APPROVED("APPROVED"),
-    REJECTED("REJECTED");
-    public final String value;
-    LoanStatus(String value) {
+    PENDING(2),
+    APPROVED(1),
+    REJECTED(0);
+    public final int value;
+    LoanStatus(int value) {
         this.value = value;
     }
 }

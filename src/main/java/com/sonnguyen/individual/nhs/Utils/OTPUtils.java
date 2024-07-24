@@ -1,12 +1,12 @@
 package com.sonnguyen.individual.nhs.Utils;
 
-import com.sonnguyen.individual.nhs.service.EmailService;
-import com.sonnguyen.individual.nhs.service.iService.IEmailService;
+import com.sonnguyen.individual.nhs.type.Otp;
+import com.sonnguyen.individual.nhs.Service.EmailService;
+import com.sonnguyen.individual.nhs.Service.IService.IEmailService;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import java.util.UUID;
 
 import static com.sonnguyen.individual.nhs.Utils.Constants.OTP;
 @Model
@@ -15,9 +15,10 @@ public class OTPUtils {
     EmailService emailService;
     @Inject
     IEmailService iEmailService;
-    String otp;
+    Otp otp;
     public OTPUtils generateOTP() {
-        otp= UUID.randomUUID().toString().substring(0,6);
+        otp= Otp.generator(6,15);
+        System.out.println("Debug: OTP="+otp);
         return this;
     }
     public OTPUtils sessionSave(HttpServletRequest request){
@@ -29,9 +30,13 @@ public class OTPUtils {
         return otp;
     }
     public OTPUtils sendToEmail(String dest){
-        iEmailService.sendEmail(dest,otp,otp).thenRun(()->{
-            System.out.println("Email sent");
+        iEmailService.sendEmail(dest,otp.getCode(),"This is verification code sent from System! Please don't share this email with anyone").thenRun(()->{
+
         });
         return this;
+    }
+    public static boolean isValid(HttpServletRequest request){
+        Otp otp1= (Otp) SessionUtils.getSession(request,OTP);
+        return otp1 != null && otp1.getCode().equals(request.getParameter(OTP)) && Otp.isExpired(otp1);
     }
 }

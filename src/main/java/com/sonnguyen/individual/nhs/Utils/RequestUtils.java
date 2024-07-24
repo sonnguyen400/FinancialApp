@@ -39,6 +39,28 @@ public class RequestUtils {
         objectMapper.registerModule(new JavaTimeModule()) ;
         return objectMapper.convertValue(param, clazz);
     }
+
+    public static <T> T parseEntity(Map<String,String[]> params, Class<T> clazz) {
+        Map<String,Object> param=params.entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, object->{
+                    if(object.getValue().length==1) return object.getValue()[0];
+                    else if(object.getValue().length==0) return null;
+                    return object.getValue();
+                }));
+        ObjectMapper objectMapper=new ObjectMapper();
+        objectMapper.enable(JsonGenerator.Feature.IGNORE_UNKNOWN);
+        DateTimeFormatterBuilder builder = new DateTimeFormatterBuilder()
+                .parseCaseInsensitive().parseLenient()
+                .parseDefaulting(ChronoField.YEAR_OF_ERA, 2016L)
+                .appendPattern("[yyyy-MM-dd]")
+                .appendPattern("[M/dd/yyyy]")
+                .appendPattern("[M/d/yyyy]")
+                .appendPattern("[MM/dd/yyyy]")
+                .appendPattern("[MMM dd yyyy]");
+        objectMapper.registerModule(new JavaTimeModule()) ;
+        return objectMapper.convertValue(param, clazz);
+    }
+
     public static Map<String, String> getParameterMap(HttpServletRequest request) {
         BufferedReader br = null;
         Map<String, String> dataMap = null;

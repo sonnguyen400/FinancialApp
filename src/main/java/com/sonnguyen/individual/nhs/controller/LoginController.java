@@ -1,9 +1,9 @@
 package com.sonnguyen.individual.nhs.controller;
 
-import com.sonnguyen.individual.nhs.model.Login;
-import com.sonnguyen.individual.nhs.service.iService.IAccountService;
-import com.sonnguyen.individual.nhs.service.iService.ICustomerService;
-import com.sonnguyen.individual.nhs.service.iService.ILoginService;
+import com.sonnguyen.individual.nhs.Model.Login;
+import com.sonnguyen.individual.nhs.Service.IService.IAccountService;
+import com.sonnguyen.individual.nhs.Service.IService.ICustomerService;
+import com.sonnguyen.individual.nhs.Service.IService.ILoginService;
 import com.sonnguyen.individual.nhs.Utils.RequestUtils;
 import com.sonnguyen.individual.nhs.Utils.SessionUtils;
 

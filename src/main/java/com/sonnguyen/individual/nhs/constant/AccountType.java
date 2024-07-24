@@ -1,11 +1,11 @@
-package com.sonnguyen.individual.nhs.constant;
+package com.sonnguyen.individual.nhs.Constant;
 
 public enum AccountType {
-    PRINCIPAL("PRINCIPAL"),
-    SAVINGS("SAVING"),
-    GENERAL("GENERAL");
-    public String value;
-    AccountType(String value) {
+    PRINCIPAL(1),
+    SAVINGS(2),
+    GENERAL(3);
+    public final int value;
+    AccountType(int value) {
         this.value = value;
     }
 }

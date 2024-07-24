@@ -1,10 +1,10 @@
 package com.sonnguyen.individual.nhs.controller.User;
 
-import com.sonnguyen.individual.nhs.model.Account;
-import com.sonnguyen.individual.nhs.model.Login;
-import com.sonnguyen.individual.nhs.model.Transaction;
-import com.sonnguyen.individual.nhs.service.iService.IAccountService;
-import com.sonnguyen.individual.nhs.service.iService.ITransactionService;
+import com.sonnguyen.individual.nhs.Model.Account;
+import com.sonnguyen.individual.nhs.Model.Login;
+import com.sonnguyen.individual.nhs.Model.Transaction;
+import com.sonnguyen.individual.nhs.Service.IService.IAccountService;
+import com.sonnguyen.individual.nhs.Service.IService.ITransactionService;
 import com.sonnguyen.individual.nhs.Utils.SessionUtils;
 
 import javax.inject.Inject;

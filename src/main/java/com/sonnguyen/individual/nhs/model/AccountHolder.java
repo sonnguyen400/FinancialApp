@@ -1,7 +1,8 @@
-package com.sonnguyen.individual.nhs.model;
+package com.sonnguyen.individual.nhs.Model;
 
 import javax.persistence.Column;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Table(name = "account_holder")
 public class AccountHolder {
@@ -17,12 +18,23 @@ public class AccountHolder {
         this.customerID = customerID;
     }
 
+    @Transient
+    public Customer customer;
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
     public boolean isDefault() {
         return isDefault;
     }
 
-    public void setDefault(boolean aDefault) {
-        isDefault = aDefault;
+    public void setDefault(boolean isDefault) {
+        this.isDefault = isDefault;
     }
 
     public AccountHolder() {

@@ -1,4 +1,4 @@
-package com.sonnguyen.individual.nhs.security;
+package com.sonnguyen.individual.nhs.Security;
 
 public class SecureConfiguration {
 }

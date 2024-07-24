@@ -1,4 +1,4 @@
-package com.sonnguyen.individual.nhs.constant;
+package com.sonnguyen.individual.nhs.Constant;
 
 public enum RequestFlags {
     CREATE_TRANSFER("CREATE_TRANSFER"),

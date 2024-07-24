@@ -1,8 +1,9 @@
-package com.sonnguyen.individual.nhs.model;
+package com.sonnguyen.individual.nhs.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Transfer{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -10,13 +11,6 @@ public class Transfer{
     @Column(name = "id")
     private Integer id;
 
-    public Transaction getTransaction() {
-        return transaction;
-    }
-
-    public void setTransaction(Transaction transaction) {
-        this.transaction = transaction;
-    }
 
     @Basic
     @Column(name = "transaction_id")
@@ -28,11 +22,34 @@ public class Transfer{
     @Column(name = "account_id")
     private int accountId;
     @Basic
-    @Column(name = "status")
-    private String status;
-    @Basic
     @Column(name = "message")
     private String message;
+    @Column(name = "type")
+    private String type;
+
+    public Transaction getTransaction() {
+        return transaction;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setTransactionId(Integer transactionId) {
+        this.transactionId = transactionId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setTransaction(Transaction transaction) {
+        this.transaction = transaction;
+    }
 
     public int getId() {
         return id;
@@ -58,13 +75,6 @@ public class Transfer{
         this.accountId = accountId;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
     public String getMessage() {
         return message;
@@ -80,7 +90,6 @@ public class Transfer{
         int result = id;
         result = 31 * result + transactionId;
         result = 31 * result + accountId;
-        result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (message != null ? message.hashCode() : 0);
         return result;
     }
@@ -91,7 +100,7 @@ public class Transfer{
                 "id=" + id +
                 ", transactionId=" + transactionId +
                 ", accountId=" + accountId +
-                ", status='" + status + '\'' +
+                ", status='" + '\'' +
                 ", message='" + message + '\'' +
                 '}';
     }

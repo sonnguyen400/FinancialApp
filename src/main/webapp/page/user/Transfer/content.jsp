@@ -1,11 +1,5 @@
-<%@ page import="com.sonnguyen.individual.nhs.service.AccountService" %>
-<%@ page import="static com.sonnguyen.individual.nhs.Utils.Constants.CONFIRM_PIN" %>
-<%@ page import="static com.sonnguyen.individual.nhs.Utils.Constants.PIN" %>
-<%@ page import="java.io.IOException" %>
-<%@ page import="static com.sonnguyen.individual.nhs.Utils.Constants.*" %>
-<%@ page import="com.sonnguyen.individual.nhs.model.Account" %>
+<%@ page import="com.sonnguyen.individual.nhs.Model.Account" %>
 <%@ page import="java.util.List" %>
-<%@ page import="static com.sonnguyen.individual.nhs.constant.RequestFlags.CREATE_TRANSFER" %>
 <%!String accountNumber;
 String amount;
 String message;
@@ -25,27 +19,14 @@ List<Account> accounts;
         <form id="form1" method="POST" class="row" action="${pageContext.request.contextPath}/app/transfer">
             <div class="part card col">
                 <div class="card-body">
-                    <input type="hidden" name="<%=CREATE_TRANSFER.value%>" value="transfer_information"/>
                     <div class="form-group col">
-                        <label for="provider" class="col-form-label">
-                            <span>Organize</span>
-                            <span class="text-danger">*</span>
-                        </label>
-                        <select data-rule="none" class="form-control input-default">
-                            <option value="">Mb</option>
-                        </select>
-                    </div>
-                    <div class="form-group col">
-                        <label for="provider" class="col-form-label">
-                            <span>Source Account</span>
-                            <span class="text-danger">*</span>
-                        </label>
                         <select name="accountId" data-rule="none" class="form-control input-default">
                             <%
                                 for(Account account : accounts){
                                     out.print("<option value='"+account.getId()+"'>"+account.getAccountNumber()+"</option>");
                                 }
                             %>
+
                         </select>
                     </div>
                     <div class="form-group col">

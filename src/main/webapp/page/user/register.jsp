@@ -1,5 +1,7 @@
 <%@ page import="static com.sonnguyen.individual.nhs.Utils.RequestUtils.ERROR_MESSAGE" %>
+<%@ page import="com.sonnguyen.individual.nhs.type.Message" %>
 <%@include file="/taglib/taglib.jsp" %>
+<%@ taglib prefix="ex" uri="/WEB-INF/custom.tld" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +12,12 @@
     <link rel="stylesheet" href='<c:url value="/resources/plugins/sweetalert/css/sweetalert.css"/>'>
 </head>
 <body>
+
+<jsp:useBean id="message" scope="request" class="com.sonnguyen.individual.nhs.type.Message"/>
+<c:if test="${message!=null&&message.type.name()=='SUCCESS'}">
+    <ex:alert type="SUCCESS" link="Login" href="<c:url/>">jdftftu</ex:alert>
+</c:if>
+
 <div class="d-flex justify-content-center align-items-center" style="height: 100vh">
     <div class="card mw-570 w-100">
         <div class="card-body mw-570 w-100">
@@ -22,13 +30,13 @@
                     <div class=" form-group">
                         <label class="pb-2" for="firstname">First name</label>
                         <input id="firstname" name="firstname" class="form-control" data-rule="required" type="text"
-                               placeholder="First name" />
+                               placeholder="First name"/>
                         <span class="invalid-feedback animated fadeInDown"></span>
                     </div>
                     <div class=" form-group">
                         <label class="pb-2" for="lastname">Last name</label>
                         <input id="lastname" name="lastname" class="form-control" data-rule="required" type="text"
-                               placeholder="Last name" />
+                               placeholder="Last name"/>
                         <span class="invalid-feedback animated fadeInDown"></span>
                     </div>
                     <div class="form-group">
@@ -39,7 +47,7 @@
                                         class="text-white fi-sr-cake-birthday"></i></div>
                             </div>
                             <input name="dateOfBirth" id="dob" class="form-control" data-rule="agemin(18)"
-                                   type="date" />
+                                   type="date"/>
                         </div>
                         <span class="invalid-feedback animated fadeInDown"></span>
                     </div>
@@ -62,7 +70,7 @@
                                         class="text-white fi fi-sr-envelope"></i></div>
                             </div>
                             <input id="email" class="form-control" name="email" data-rule="email" type="text"
-                                   placeholder="Email" />
+                                   placeholder="Email"/>
                         </div>
                         <span class="invalid-feedback animated fadeInDown"></span>
                     </div>
@@ -74,7 +82,7 @@
                                         class="text-white fi-sr-phone-call"></i></div>
                             </div>
                             <input id="phoneNumber" class="form-control" name="phone" data-rule="none" name="phone"
-                                   type="text" placeholder="Phone number" />
+                                   type="text" placeholder="Phone number"/>
                         </div>
                         <span class="invalid-feedback animated fadeInDown"></span>
                     </div>
@@ -86,7 +94,7 @@
                                         class="text-white fi-sr-id-badge"></i></div>
                             </div>
                             <input class="form-control" name="social_security_number" data-rule="minlength(8)"
-                                   type="text" placeholder="ID" />
+                                   type="text" placeholder="ID"/>
                         </div>
                         <span class="invalid-feedback animated fadeInDown"></span>
                     </div>
@@ -104,7 +112,7 @@
                                 </div>
                             </div>
                             <input id="phoneNumber" class="form-control" name="username" data-rule="none"
-                                   name="username" type="text" placeholder="User's name" />
+                                   name="username" type="text" placeholder="User's name"/>
                         </div>
                         <span class="invalid-feedback"></span>
                     </div>
@@ -116,7 +124,8 @@
                                         class="text-white fi-sr-lock"></i>
                                 </div>
                             </div>
-                            <input id="password" class="form-control" name="password" data-rule="none" type="text" placeholder="Password" />
+                            <input id="password" class="form-control" name="password" data-rule="none" type="text"
+                                   placeholder="Password"/>
                         </div>
                         <span class="invalid-feedback"></span>
                     </div>
@@ -129,7 +138,7 @@
                                 </div>
                             </div>
                             <input id="PIN" class="form-control" name="pin" data-rule="none" type="text"
-                                   placeholder="PIN" />
+                                   placeholder="PIN"/>
                         </div>
                         <span class="invalid-feedback"></span>
                     </div>
@@ -142,7 +151,7 @@
                                 </div>
                             </div>
                             <input id="AccountNUmber" class="form-control" name="accountNumber" data-rule="none"
-                                   type="text" placeholder="PIN" />
+                                   type="text" placeholder="PIN"/>
                         </div>
                         <span class="invalid-feedback"></span>
                     </div>
@@ -154,8 +163,6 @@
                 </div>
             </form>
         </div>
-
-
     </div>
 </div>
 <%@include file="/taglib/basescript.jsp" %>
@@ -163,16 +170,13 @@
 <script src='<c:url value="/resources/js/FormValidator.js"/> '></script>
 <script type="module">
     $(function () {
-        $(function () {
-            stepFormValidate($("#form"))
-            <%
-                if (request.getAttribute(ERROR_MESSAGE) != null) {
-                    out.print("sweetAlert(\"Oops...\", \" "+ request.getAttribute(ERROR_MESSAGE)+ " \", \"error\");");
-                }
-            %>
-        })
+        stepFormValidate($("#form"))
+        <%
+            if (request.getAttribute(ERROR_MESSAGE) != null) {
+                out.print("sweetAlert(\"Oops...\", \" "+ request.getAttribute(ERROR_MESSAGE)+ " \", \"error\");");
+            }
+        %>
     })
 </script>
 </body>
-
 </html>

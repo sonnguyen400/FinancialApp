@@ -1,6 +1,6 @@
 package com.sonnguyen.individual.nhs.DTO;
 
-import com.sonnguyen.individual.nhs.model.Login;
+import com.sonnguyen.individual.nhs.Model.Login;
 
 public class LoginDTO{
     private Integer id;

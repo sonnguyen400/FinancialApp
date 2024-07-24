@@ -1,4 +1,4 @@
-<%@ page import="com.sonnguyen.individual.nhs.model.Transfer" %>
+<%@ page import="com.sonnguyen.individual.nhs.Model.Transfer" %>
 <%
     Transfer transfer= (Transfer) request.getAttribute("transfer");
 %>
@@ -10,7 +10,7 @@
                 <div class="p-3 col text-center text-lg text-primary p-5 border-bottom-dashed">
                     <i class="fi fi-ts-check-circle"></i>
                     <h4 class="text-info opacity-5">Successful Transference</h4>
-                    <h2 class="text-primary pt-3"><%=transfer.getTransaction().getValue()%></h2>
+                    <h2 class="text-primary pt-3"><%=transfer.getTransaction().getAmount()%></h2>
                 </div>
                 <div class="pt-5 pb-1 px-3">
                     <table class="invoice-infor table">
@@ -27,7 +27,7 @@
                         </tr>
                         <tr>
                             <td>Invoice Date</td>
-                            <td><%=transfer.getTransaction().getTransactionDate()%></td>
+                            <td><%=transfer.getTransaction().getTransactionAt()%></td>
                         </tr>
                         <tr>
                             <td>Invoice Number</td>

@@ -4973,7 +4973,18 @@ button.bg-dark:focus {
 
 .border-0 {
   border: 0 !important; }
-
+.border-1{
+  border: 1px !important;
+}
+.radius{
+  border-radius: 1.35rem;
+}
+.border-white-gray{
+  border-color:whitesmoke;
+}
+.border-solid{
+  border-style: solid !important;
+}
 .border-top-0 {
   border-top: 0 !important; }
 

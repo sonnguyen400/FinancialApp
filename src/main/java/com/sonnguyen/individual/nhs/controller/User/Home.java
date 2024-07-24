@@ -1,9 +1,9 @@
 package com.sonnguyen.individual.nhs.controller.User;
 
-import com.sonnguyen.individual.nhs.model.Account;
-import com.sonnguyen.individual.nhs.model.Login;
-import com.sonnguyen.individual.nhs.service.iService.IAccountService;
-import com.sonnguyen.individual.nhs.service.iService.ICustomerService;
+import com.sonnguyen.individual.nhs.Model.Account;
+import com.sonnguyen.individual.nhs.Model.Login;
+import com.sonnguyen.individual.nhs.Service.IService.IAccountService;
+import com.sonnguyen.individual.nhs.Service.IService.ICustomerService;
 import com.sonnguyen.individual.nhs.Utils.SessionUtils;
 import org.jboss.logging.Logger;
 
@@ -15,8 +15,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "user-home",urlPatterns = "/app/home")
+
+@WebServlet(name = "user-home",urlPatterns = "/app")
 public class Home extends HttpServlet {
+
+
     private final Logger logger= Logger.getLogger(this.getClass().getName());
     @Inject
     ICustomerService customerService;

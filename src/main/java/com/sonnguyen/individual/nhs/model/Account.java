@@ -1,4 +1,4 @@
-package com.sonnguyen.individual.nhs.model;
+package com.sonnguyen.individual.nhs.Model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -7,7 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.sql.Date;
 import java.util.Collection;
 
 @Table(name = "account")
@@ -26,20 +26,27 @@ public class Account implements Serializable {
 
     @Size(max = 45)
     @Column(name = "account_type", length = 45)
-    private String accountType;
+    private Integer accountType;
 
     @Column(name = "balance", precision = 2)
     private BigDecimal balance;
 
     @Column(name = "open_date")
-    private Instant openDate;
+    private Date openDate;
 
     @Size(max = 45)
     @Column(name = "status", length = 45)
-    private String status;
+    private Integer status;
+    @Column(name = "tier_id")
+    private int tierID;
 
-    @Column(name = "overdraft_limit", precision = 2)
-    private BigDecimal overdraftLimit;
+    @Transient
+    private Tier tier;
+
+    @Transient
+    private Collection<Customer> customers;
+    @Transient
+    private Collection<AccountHolder> accountHolders;
 
     @Override
     public String toString() {
@@ -51,15 +58,52 @@ public class Account implements Serializable {
                 ", balance=" + balance +
                 ", openDate=" + openDate +
                 ", status='" + status + '\'' +
-                ", overdraftLimit=" + overdraftLimit +
+                ", overdraftLimit="  +
                 ", customers=" + customers +
                 '}';
     }
 
-    @Transient
-    private Collection<Customer> customers;
+    public Tier getTier() {
+        return tier;
+    }
+
+    public void setTier(Tier tier) {
+        this.tier = tier;
+    }
+
+    public int getTierID() {
+        return tierID;
+    }
+
+    public void setTierID(int tierID) {
+        this.tierID = tierID;
+    }
+
+    public Collection<AccountHolder> getAccountHolders() {
+        return accountHolders;
+    }
+
+    public void setAccountHolders(Collection<AccountHolder> accountHolders) {
+        this.accountHolders = accountHolders;
+    }
 
 
+
+    public @Size(max = 45) Integer getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(@Size(max = 45) Integer accountType) {
+        this.accountType = accountType;
+    }
+
+    public @Size(max = 45) Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(@Size(max = 45) Integer status) {
+        this.status = status;
+    }
 
     public Collection<Customer> getCustomers() {
         return customers;
@@ -94,13 +138,7 @@ public class Account implements Serializable {
         this.accountNumber = accountNumber;
     }
 
-    public String getAccountType() {
-        return accountType;
-    }
 
-    public void setAccountType(String accountType) {
-        this.accountType = accountType;
-    }
 
     public BigDecimal getBalance() {
         return balance;
@@ -110,29 +148,15 @@ public class Account implements Serializable {
         this.balance = balance;
     }
 
-    public Instant getOpenDate() {
+    public Date getOpenDate() {
         return openDate;
     }
 
-    public void setOpenDate(Instant openDate) {
+    public void setOpenDate(Date openDate) {
         this.openDate = openDate;
     }
 
-    public String getStatus() {
-        return status;
-    }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public BigDecimal getOverdraftLimit() {
-        return overdraftLimit;
-    }
-
-    public void setOverdraftLimit(BigDecimal overdraftLimit) {
-        this.overdraftLimit = overdraftLimit;
-    }
 
 
 

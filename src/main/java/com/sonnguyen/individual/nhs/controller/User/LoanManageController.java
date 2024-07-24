@@ -1,8 +1,12 @@
 package com.sonnguyen.individual.nhs.controller.User;
 
-import com.sonnguyen.individual.nhs.constant.LoanStatus;
-import com.sonnguyen.individual.nhs.model.Login;
-import com.sonnguyen.individual.nhs.service.iService.ILoanService;
+import com.sonnguyen.individual.nhs.Constant.LoanStatus;
+import com.sonnguyen.individual.nhs.Model.Customer;
+import com.sonnguyen.individual.nhs.Model.Login;
+import com.sonnguyen.individual.nhs.Model.Membership;
+import com.sonnguyen.individual.nhs.Service.IService.ICustomerService;
+import com.sonnguyen.individual.nhs.Service.IService.ILoanService;
+import com.sonnguyen.individual.nhs.Service.IService.IMembershipService;
 import com.sonnguyen.individual.nhs.Utils.RequestUtils;
 import com.sonnguyen.individual.nhs.Utils.SessionUtils;
 import javassist.NotFoundException;
@@ -22,10 +26,16 @@ import java.util.Map;
 public class LoanManageController extends HttpServlet {
     @Inject
     ILoanService loanService;
+    @Inject
+    ICustomerService customerService;
+    @Inject
+    IMembershipService membershipService;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Login login= SessionUtils.getPrincipal(req);
         req.setAttribute("loans",loanService.findAllByCustomerId(login.getCustomerId()));
+        Customer customer=customerService.findById(login.getCustomerId());
+        req.setAttribute("membership",membershipService.findById(customer.getId()).orElse(new Membership()));
         req.getRequestDispatcher("/page/user/LoanManage/page.jsp").forward(req, resp);
     }
     @Override
