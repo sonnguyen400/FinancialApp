@@ -2,7 +2,7 @@
 <%@ taglib prefix="tilex" uri="http://tiles.apache.org/tags-tiles-extras" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<jsp:useBean id="membership" scope="request" type="com.sonnguyen.individual.nhs.Model.Membership"/>
+<jsp:useBean id="membership" scope="request" type="com.sonnguyen.individual.nhs.model.Membership"/>
 <div class="row">
     <div class="col-lg-4">
         <c:forEach var="account" items="${requestScope.accounts}">

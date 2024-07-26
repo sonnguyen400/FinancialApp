@@ -1,7 +1,7 @@
 package com.sonnguyen.individual.nhs.dao;
 
-import com.sonnguyen.individual.nhs.Model.Branch;
-import com.sonnguyen.individual.nhs.dao.Idao.IBranchDAO;
+import com.sonnguyen.individual.nhs.model.Branch;
+import com.sonnguyen.individual.nhs.dao.idao.IBranchDAO;
 
 import javax.enterprise.inject.Model;
 

@@ -1,7 +1,7 @@
 package com.sonnguyen.individual.nhs.dao;
 
-import com.sonnguyen.individual.nhs.Model.Membership;
-import com.sonnguyen.individual.nhs.dao.Idao.IMemberShipDao;
+import com.sonnguyen.individual.nhs.model.Membership;
+import com.sonnguyen.individual.nhs.dao.idao.IMemberShipDao;
 
 import javax.enterprise.inject.Model;
 import java.sql.Connection;

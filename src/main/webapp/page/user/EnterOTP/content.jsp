@@ -1,4 +1,4 @@
-<%@ page import="static com.sonnguyen.individual.nhs.Utils.Constants.OTP" %>
+<%@ page import="static com.sonnguyen.individual.nhs.utils.Constants.OTP" %>
 <div class="row  justify-content-center">
     <div class="col-lg-3 mx-auto" >
         <div class="card">

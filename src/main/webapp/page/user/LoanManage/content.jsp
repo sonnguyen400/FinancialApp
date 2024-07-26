@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.sonnguyen.individual.nhs.Constant.LoanStatus" %>
-<%@ page import="com.sonnguyen.individual.nhs.Model.Loan" %>
+<%@ page import="com.sonnguyen.individual.nhs.model.Loan" %>
 <jsp:useBean id="loans" scope="request" type="java.util.List"/>
 <%
     request.setAttribute("newest",loans.get(0));
@@ -8,7 +8,7 @@
 <div class="row">
 
     <div class="col-lg-9">
-        <jsp:useBean id="newest" scope="request" type="com.sonnguyen.individual.nhs.Model.Loan"/>
+        <jsp:useBean id="newest" scope="request" type="com.sonnguyen.individual.nhs.model.Loan"/>
         <c:if test="${newest!=null}">
             <div class="card gradient-10 text-white">
                 <div class="card-body">

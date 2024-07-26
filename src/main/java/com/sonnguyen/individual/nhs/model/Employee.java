@@ -1,4 +1,4 @@
-package com.sonnguyen.individual.nhs.Model;
+package com.sonnguyen.individual.nhs.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;

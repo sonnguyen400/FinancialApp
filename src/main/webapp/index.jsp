@@ -1,5 +1,5 @@
-<%@ page import="com.sonnguyen.individual.nhs.Utils.SessionUtils" %>
-<%@ page import="com.sonnguyen.individual.nhs.Model.Login" %>
+<%@ page import="com.sonnguyen.individual.nhs.utils.SessionUtils" %>
+<%@ page import="com.sonnguyen.individual.nhs.model.Login" %>
 <%@include file="/taglib/taglib.jsp"%>
 <%
     if(SessionUtils.getPrincipal(request)!=null){

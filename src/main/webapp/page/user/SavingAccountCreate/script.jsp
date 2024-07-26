@@ -1,5 +1,5 @@
 <%@ page import="com.sonnguyen.individual.nhs.Constant.SavingType" %>
-<%@ page import="static com.sonnguyen.individual.nhs.Utils.RequestUtils.ERROR_MESSAGE" %>
+<%@ page import="static com.sonnguyen.individual.nhs.utils.RequestUtils.ERROR_MESSAGE" %>
 <script>
     $(function (){
         $("input[name='amount']").on("input",e=>{

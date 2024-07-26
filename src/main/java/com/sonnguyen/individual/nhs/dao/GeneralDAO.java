@@ -1,12 +1,15 @@
 package com.sonnguyen.individual.nhs.dao;
 
-import com.sonnguyen.individual.nhs.Exception.FailureTransaction;
-import com.sonnguyen.individual.nhs.Utils.Console;
-import com.sonnguyen.individual.nhs.Utils.EntityMapper;
-import com.sonnguyen.individual.nhs.Utils.Transactional;
+import com.sonnguyen.individual.nhs.context.ConnectionContext;
+import com.sonnguyen.individual.nhs.exception.FailureTransaction;
+import com.sonnguyen.individual.nhs.utils.Console;
+import com.sonnguyen.individual.nhs.utils.EntityMapper;
+import com.sonnguyen.individual.nhs.utils.Transactional;
 import com.sun.istack.logging.Logger;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 
+import javax.enterprise.inject.Model;
+import javax.inject.Inject;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.sql.*;
@@ -15,7 +18,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
-
 public class GeneralDAO<T> {
     private static final String USERNAME="1Y6wZQbVuhxUp0KQoU1rk2GqQtThEW/r";
     private static final String PASSWORD="Jscs5fU+AFuEnDyOqcE1XA==";
@@ -29,7 +31,7 @@ public class GeneralDAO<T> {
         return standardPBEStringEncryptor.decrypt(encryptor);
     }
 
-    public static Connection getConnection(){
+    public static   Connection getConnection(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             return DriverManager.getConnection(dbURL,"root", "");

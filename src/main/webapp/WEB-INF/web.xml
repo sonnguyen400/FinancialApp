@@ -22,8 +22,12 @@
         <tracking-mode>COOKIE</tracking-mode>
     </session-config>
 
+
     <listener>
         <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>com.sonnguyen.individual.nhs.context.MyAppContext</listener-class>
     </listener>
     <listener>
         <listener-class>org.apache.tiles.extras.complete.CompleteAutoloadTilesListener</listener-class>

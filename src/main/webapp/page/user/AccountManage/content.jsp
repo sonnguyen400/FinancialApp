@@ -1,4 +1,4 @@
-<%@ page import="com.sonnguyen.individual.nhs.Model.Account" %>
+<%@ page import="com.sonnguyen.individual.nhs.model.Account" %>
 <%@ page import="java.math.BigDecimal" %>
 <%@ page import="java.util.List" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>

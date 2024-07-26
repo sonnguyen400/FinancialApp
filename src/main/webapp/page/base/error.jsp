@@ -1,4 +1,4 @@
-<%@ page import="static com.sonnguyen.individual.nhs.Utils.RequestUtils.ERROR_MESSAGE" %>
+<%@ page import="static com.sonnguyen.individual.nhs.utils.RequestUtils.ERROR_MESSAGE" %>
 <%@include file="/taglib/taglib.jsp"%>
 <%!int status;String error;%>
 <%

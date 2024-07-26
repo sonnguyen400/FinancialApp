@@ -1,4 +1,4 @@
-package com.sonnguyen.individual.nhs.Model;
+package com.sonnguyen.individual.nhs.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;

@@ -10,6 +10,7 @@
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/connection/pom.xml" />
         <option value="$PROJECT_DIR$/nhs-api/pom.xml" />
         <option value="$PROJECT_DIR$/nhs-app/pom.xml" />
         <option value="$PROJECT_DIR$/nhs-web/pom.xml" />

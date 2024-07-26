@@ -1,4 +1,4 @@
-<%@ page import="static com.sonnguyen.individual.nhs.Utils.RequestUtils.ERROR_MESSAGE" %>
+<%@ page import="static com.sonnguyen.individual.nhs.utils.RequestUtils.ERROR_MESSAGE" %>
 <script>
     <%
           if(request.getAttribute(ERROR_MESSAGE)!=null){

@@ -2,8 +2,8 @@ package com.sonnguyen.individual.nhs.ajax;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.sonnguyen.individual.nhs.Model.Customer;
-import com.sonnguyen.individual.nhs.Service.IService.ICustomerService;
+import com.sonnguyen.individual.nhs.model.Customer;
+import com.sonnguyen.individual.nhs.service.iservice.ICustomerService;
 import org.springframework.http.HttpStatus;
 
 import javax.inject.Inject;

@@ -1,12 +1,11 @@
 package com.sonnguyen.individual.nhs.dao;
 
-import com.sonnguyen.individual.nhs.Model.Customer;
-import com.sonnguyen.individual.nhs.dao.Idao.ICustomerDAO;
+import com.sonnguyen.individual.nhs.model.Customer;
+import com.sonnguyen.individual.nhs.dao.idao.ICustomerDAO;
 
 import javax.enterprise.inject.Model;
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.List;
 
 @Model
 public class CustomerDAO extends DAO<Customer,Integer> implements ICustomerDAO {

@@ -5,7 +5,7 @@
 <%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page import="com.sonnguyen.individual.nhs.Constant.SavingType" %>
 <%@ page import="com.sonnguyen.individual.nhs.Constant.Rollover" %>
-<jsp:useBean id="savings" scope="request" type="com.sonnguyen.individual.nhs.Model.SavingsInfo"/>
+<jsp:useBean id="savings" scope="request" type="com.sonnguyen.individual.nhs.model.SavingsInfo"/>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>

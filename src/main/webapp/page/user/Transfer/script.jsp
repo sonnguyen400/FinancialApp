@@ -1,5 +1,5 @@
-<%@ page import="static com.sonnguyen.individual.nhs.Utils.RequestUtils.ERROR_MESSAGE" %>
-<%@ page import="static com.sonnguyen.individual.nhs.Utils.Constants.EXACT_PIN" %>
+<%@ page import="static com.sonnguyen.individual.nhs.utils.RequestUtils.ERROR_MESSAGE" %>
+<%@ page import="static com.sonnguyen.individual.nhs.utils.Constants.EXACT_PIN" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="<c:url value="/resources/js/FormValidator.js"/>"></script>
 <script type="module">

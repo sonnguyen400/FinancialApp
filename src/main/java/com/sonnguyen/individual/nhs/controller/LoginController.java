@@ -1,13 +1,16 @@
 package com.sonnguyen.individual.nhs.controller;
 
-import com.sonnguyen.individual.nhs.Model.Login;
-import com.sonnguyen.individual.nhs.Service.IService.IAccountService;
-import com.sonnguyen.individual.nhs.Service.IService.ICustomerService;
-import com.sonnguyen.individual.nhs.Service.IService.ILoginService;
-import com.sonnguyen.individual.nhs.Utils.RequestUtils;
-import com.sonnguyen.individual.nhs.Utils.SessionUtils;
+import com.sonnguyen.individual.nhs.context.DBConnection;
+import com.sonnguyen.individual.nhs.model.Login;
+import com.sonnguyen.individual.nhs.service.iservice.IAccountService;
+import com.sonnguyen.individual.nhs.service.iservice.ICustomerService;
+import com.sonnguyen.individual.nhs.service.iservice.ILoginService;
+import com.sonnguyen.individual.nhs.utils.RequestUtils;
+import com.sonnguyen.individual.nhs.utils.SessionUtils;
+import org.jboss.weld.context.ApplicationContext;
 
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,12 +18,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.sonnguyen.individual.nhs.Utils.RequestUtils.ERROR_MESSAGE;
-import static com.sonnguyen.individual.nhs.Utils.SessionUtils.LOGIN_SESSION;
+import static com.sonnguyen.individual.nhs.utils.RequestUtils.ERROR_MESSAGE;
+import static com.sonnguyen.individual.nhs.utils.SessionUtils.LOGIN_SESSION;
 
 @WebServlet(name = "login",urlPatterns = {"/login","/logout"})
 public class LoginController extends HttpServlet {
-
     @Inject
     ILoginService loginService;
     @Inject

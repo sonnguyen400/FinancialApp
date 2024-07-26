@@ -1,9 +1,9 @@
 <%@ taglib prefix="tilesx" uri="http://tiles.apache.org/tags-tiles-extras" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="com.sonnguyen.individual.nhs.Model.Transaction" %>
+<%@ page import="com.sonnguyen.individual.nhs.model.Transaction" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.sonnguyen.individual.nhs.Model.Account" %>
+<%@ page import="com.sonnguyen.individual.nhs.model.Account" %>
 <%@ page import="com.sonnguyen.individual.nhs.Constant.TransactionType" %>
 <%@ page import="com.sonnguyen.individual.nhs.Constant.TransactionStatus" %>
 
@@ -21,7 +21,7 @@
 </div>
 <div class="card">
     <ul class="list-group">
-        <jsp:useBean id="defaultAccount" scope="request" type="com.sonnguyen.individual.nhs.Model.Account"/>
+        <jsp:useBean id="defaultAccount" scope="request" type="com.sonnguyen.individual.nhs.model.Account"/>
         <c:set var="defaultAccount" value="${defaultAccount}"/>
         <c:forEach items="${requestScope.transactions}" var="transaction">
             <li class="list-group-item">

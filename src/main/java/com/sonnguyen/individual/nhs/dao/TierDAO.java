@@ -1,7 +1,7 @@
 package com.sonnguyen.individual.nhs.dao;
 
-import com.sonnguyen.individual.nhs.Model.Tier;
-import com.sonnguyen.individual.nhs.dao.Idao.ITierDAO;
+import com.sonnguyen.individual.nhs.model.Tier;
+import com.sonnguyen.individual.nhs.dao.idao.ITierDAO;
 
 import javax.enterprise.inject.Model;
 import java.sql.Connection;

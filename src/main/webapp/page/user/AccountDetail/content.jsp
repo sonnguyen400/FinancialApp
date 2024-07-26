@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="ex" uri="/WEB-INF/custom.tld"%>
-<jsp:useBean id="account" scope="request" type="com.sonnguyen.individual.nhs.Model.Account"/>
+<jsp:useBean id="account" scope="request" type="com.sonnguyen.individual.nhs.model.Account"/>
 <c:if test="${requestScope.account!=null}">
     <div class="row  justify-content-center">
         <div class="col-ssm-12 col-md-8 col-lg-5">

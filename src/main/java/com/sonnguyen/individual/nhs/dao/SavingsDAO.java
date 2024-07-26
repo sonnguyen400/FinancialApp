@@ -1,7 +1,7 @@
 package com.sonnguyen.individual.nhs.dao;
 
-import com.sonnguyen.individual.nhs.Model.SavingsInfo;
-import com.sonnguyen.individual.nhs.dao.Idao.ISavingDAO;
+import com.sonnguyen.individual.nhs.model.SavingsInfo;
+import com.sonnguyen.individual.nhs.dao.idao.ISavingDAO;
 
 import javax.enterprise.inject.Model;
 import java.sql.SQLException;

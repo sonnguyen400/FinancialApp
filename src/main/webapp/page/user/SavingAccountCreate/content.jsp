@@ -1,10 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.sonnguyen.individual.nhs.Constant.SavingType" %>
 <%@ page import="com.sonnguyen.individual.nhs.Constant.Rollover" %>
-<%@ page import="com.sonnguyen.individual.nhs.Utils.RequestUtils" %>
+<%@ page import="com.sonnguyen.individual.nhs.utils.RequestUtils" %>
 
 <%@ page import="com.sonnguyen.individual.nhs.Constant.MemberShip" %>
-<jsp:useBean id="membership" scope="request" class="com.sonnguyen.individual.nhs.Model.Membership"/>
+<jsp:useBean id="membership" scope="request" class="com.sonnguyen.individual.nhs.model.Membership"/>
 <div class="row">
     <div class="col-lg-6">
         <div class="card gradient-10 text-white">

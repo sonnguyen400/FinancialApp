@@ -1,8 +1,8 @@
 package com.sonnguyen.individual.nhs.dao;
 
-import com.sonnguyen.individual.nhs.Utils.Console;
-import com.sonnguyen.individual.nhs.Utils.EntityMapper;
-import com.sonnguyen.individual.nhs.dao.Idao.AbstractDAO;
+import com.sonnguyen.individual.nhs.utils.Console;
+import com.sonnguyen.individual.nhs.utils.EntityMapper;
+import com.sonnguyen.individual.nhs.dao.idao.AbstractDAO;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;

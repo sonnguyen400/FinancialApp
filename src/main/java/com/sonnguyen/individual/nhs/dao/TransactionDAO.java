@@ -1,8 +1,8 @@
 package com.sonnguyen.individual.nhs.dao;
 
 import com.sonnguyen.individual.nhs.Constant.TransactionStatus;
-import com.sonnguyen.individual.nhs.Model.Transaction;
-import com.sonnguyen.individual.nhs.dao.Idao.ITransactionDAO;
+import com.sonnguyen.individual.nhs.model.Transaction;
+import com.sonnguyen.individual.nhs.dao.idao.ITransactionDAO;
 
 import javax.enterprise.inject.Model;
 import java.sql.Connection;

@@ -1,7 +1,7 @@
 //package com.sonnguyen.individual.nhs.Security.Filter;
 //
-//import com.sonnguyen.individual.nhs.Model.Account;
-//import com.sonnguyen.individual.nhs.Utils.SessionUtils;
+//import com.sonnguyen.individual.nhs.model.Account;
+//import com.sonnguyen.individual.nhs.utils.SessionUtils;
 //
 //import javax.servlet.*;
 //import javax.servlet.http.HttpServletRequest;
