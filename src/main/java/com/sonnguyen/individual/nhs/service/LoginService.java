@@ -1,8 +1,8 @@
 package com.sonnguyen.individual.nhs.service;
 
+import com.sonnguyen.individual.nhs.dao.impl.LoginDAOImp;
 import com.sonnguyen.individual.nhs.model.Login;
 import com.sonnguyen.individual.nhs.service.iservice.ILoginService;
-import com.sonnguyen.individual.nhs.dao.idao.ILoginDAO;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
@@ -11,14 +11,14 @@ import java.util.Optional;
 @Model
 public class LoginService implements ILoginService {
     @Inject
-    ILoginDAO loginRepository;
+    LoginDAOImp loginDAO;
     @Override
     public boolean validatePIN(Integer loginId,String PIN){
-        return loginRepository.validatePIN(loginId,PIN);
+        return loginDAO.validatePIN(loginId,PIN);
     }
     @Override
     public Login validateLogin(String username, String password){
-        return loginRepository.validateLogin(username,password);
+        return loginDAO.validateLogin(username,password);
     }
 
     @Override

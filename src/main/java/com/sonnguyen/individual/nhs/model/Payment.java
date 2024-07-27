@@ -20,7 +20,7 @@ public class Payment {
     @Column(name = "amount", precision = 2)
     private double amount;
 
-    @Column(name = "payment_date")
+    @Column(name = "payment_date",insertable = false)
     private Date paymentDate;
 
     @Size(max = 45)

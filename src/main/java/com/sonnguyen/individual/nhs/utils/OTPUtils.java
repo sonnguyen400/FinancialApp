@@ -1,8 +1,8 @@
 package com.sonnguyen.individual.nhs.utils;
 
-import com.sonnguyen.individual.nhs.type.Otp;
 import com.sonnguyen.individual.nhs.service.EmailService;
 import com.sonnguyen.individual.nhs.service.iservice.IEmailService;
+import com.sonnguyen.individual.nhs.type.Otp;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
@@ -30,8 +30,8 @@ public class OTPUtils {
         return otp;
     }
     public OTPUtils sendToEmail(String dest){
-        iEmailService.sendEmail(dest,otp.getCode(),"This is verification code sent from System! Please don't share this email with anyone").thenRun(()->{
-
+        iEmailService.sendEmail(dest,otp.getCode(),
+                "This is verification code sent from System! Please don't share this email with anyone").thenRun(()->{
         });
         return this;
     }

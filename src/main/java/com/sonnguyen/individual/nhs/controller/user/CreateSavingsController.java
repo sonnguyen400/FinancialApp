@@ -9,6 +9,7 @@ import com.sonnguyen.individual.nhs.service.iservice.ICustomerService;
 import com.sonnguyen.individual.nhs.service.iservice.IMembershipService;
 import com.sonnguyen.individual.nhs.utils.RequestUtils;
 import com.sonnguyen.individual.nhs.utils.SessionUtils;
+
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -46,7 +47,7 @@ public class CreateSavingsController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(!req.getRequestURI().equalsIgnoreCase("/app/otp")){
+        if(!req.getRequestURI().equalsIgnoreCase(req.getContextPath()+"/app/otp")){
             SavingsInfo savingsInfo=RequestUtils.parseEntity(req,SavingsInfo.class);
             try(ValidatorFactory factory= Validation.buildDefaultValidatorFactory();) {
                 Validator validator=factory.getValidator();
@@ -70,8 +71,9 @@ public class CreateSavingsController extends HttpServlet {
                 req.setAttribute("message","Saving account created successfully");
                 req.getRequestDispatcher("/page/user/Result/page.jsp").forward(req,resp);
             }catch (Exception e){
+                e.printStackTrace();
                 req.setAttribute("accounts",accountService.findAllByCustomerId(login.getCustomerId()));
-                req.setAttribute(ERROR_MESSAGE,"Error while create saving");
+                req.setAttribute(ERROR_MESSAGE,e.getMessage());
                 doGet(req,resp);
             }
         }

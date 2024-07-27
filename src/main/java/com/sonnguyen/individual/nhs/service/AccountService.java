@@ -4,18 +4,19 @@ import com.sonnguyen.individual.nhs.Constant.AccountStatus;
 import com.sonnguyen.individual.nhs.Constant.AccountType;
 import com.sonnguyen.individual.nhs.Constant.DefaultBrand;
 import com.sonnguyen.individual.nhs.Constant.TransactionType;
+import com.sonnguyen.individual.nhs.dao.impl.AccountDAOImp;
+import com.sonnguyen.individual.nhs.dao.impl.AccountHolderDAOImpl;
+import com.sonnguyen.individual.nhs.dao.impl.SavingDAOImp;
+import com.sonnguyen.individual.nhs.dao_v2.DBTransaction;
 import com.sonnguyen.individual.nhs.model.*;
 import com.sonnguyen.individual.nhs.service.iservice.IAccountService;
 import com.sonnguyen.individual.nhs.service.iservice.ITransferService;
-import com.sonnguyen.individual.nhs.dao.GeneralDAO;
-import com.sonnguyen.individual.nhs.dao.idao.IAccountDAO;
-import com.sonnguyen.individual.nhs.dao.idao.IAccountHolderDAO;
-import com.sonnguyen.individual.nhs.dao.idao.ISavingDAO;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import java.math.BigDecimal;
-import java.sql.SQLException;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -24,31 +25,26 @@ import java.util.UUID;
 @Model
 public class AccountService implements IAccountService {
     @Inject
-    private IAccountHolderDAO accountHolderDAO;
+    private AccountHolderDAOImpl accountHolderDAO;
     @Inject
-    private IAccountDAO accountDao;
+    private AccountDAOImp accountDao;
     @Inject
-    private IAccountHolderDAO accountHolderDao;
+    private DBTransaction dbTransaction;
     @Inject
-    private ISavingDAO savingDao;
+    private SavingDAOImp savingDao;
     @Inject
     private ITransferService transferService;
-    public Optional<Account> findByUsername(String username) {
-        return accountDao.findByUsername(username);
-    }
+
 
 
     @Override
     public Optional<Account> findById(int id) {
-        try {
-             return accountDao.findById(id).map(account -> {
-                 List<AccountHolder> accountHolders=GeneralDAO.createTransactional(connection -> accountHolderDAO.findAllByAccountId(connection,account.getId()));
-                 account.setAccountHolders(accountHolders);
-                 return account;
-             });
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        return accountDao.findById(id).map(account -> {
+            List<AccountHolder> accountHolders=dbTransaction.startTransaction(List.class,
+                    connection -> accountHolderDAO.findAllByAccountId(connection,account.getId()));
+            account.setAccountHolders(accountHolders);
+            return account;
+        });
     }
 
     @Override
@@ -63,7 +59,7 @@ public class AccountService implements IAccountService {
 
     @Override
     public void createSavingsAccount(Integer customerId, SavingsInfo savingsInfor) {
-        Account savingAccount=GeneralDAO.createTransactional(connection -> {
+        Account savingAccount=dbTransaction.startTransaction(Account.class,connection -> {
             //Create saving account
             Account account=new Account();
             account.setBalance(BigDecimal.ZERO);
@@ -71,11 +67,12 @@ public class AccountService implements IAccountService {
             account.setAccountType(AccountType.SAVINGS.value);
             account.setBranchID(DefaultBrand.ID.value);
             account.setStatus(AccountStatus.PENDING.value);
+            account.setOpenDate(Date.valueOf(LocalDate.now()));
             Integer accountId=accountDao.executeInsert(connection,account);
-                //Create account holder
+            //Create account holder
             AccountHolder holder=new AccountHolder(accountId, customerId);
-            accountHolderDao.executeInsert(connection,holder);
-                // Create saving information
+            accountHolderDAO.executeInsert(connection,holder);
+            // Create saving information
             savingsInfor.setAccountId(accountId);
             Integer savingAccId=savingDao.executeInsert(connection,savingsInfor);
             account.setId(accountId);
@@ -95,9 +92,9 @@ public class AccountService implements IAccountService {
         transfer.setTransaction(transaction);
 
         String refNumber=transferService.init(transfer);
-        GeneralDAO.createTransactional(connection -> {
-            transferService.transferCommit(connection,refNumber);
-            return accountDao.updateAccountStatusByAccountId(connection,savingAccount.getId(),AccountStatus.OPEN);
+        dbTransaction.startTransaction(Transfer.class,connection -> {
+            accountDao.updateAccountStatusByAccountId(connection,savingAccount.getId(),AccountStatus.OPEN);
+            return transferService.transferCommit(connection,refNumber);
         });
     }
 
@@ -110,7 +107,7 @@ public class AccountService implements IAccountService {
 
     @Override
     public Account findDefaultAccountByCustomerId(Integer customerId) {
-        return accountDao.findDefaultAccountByCustomerId(customerId);
+        return accountDao.findDefaultAccountByCustomerId(customerId).orElse(null);
     }
 
     @Override

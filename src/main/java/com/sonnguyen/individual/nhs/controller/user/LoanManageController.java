@@ -35,7 +35,7 @@ public class LoanManageController extends HttpServlet {
         Login login= SessionUtils.getPrincipal(req);
         req.setAttribute("loans",loanService.findAllByCustomerId(login.getCustomerId()));
         Customer customer=customerService.findById(login.getCustomerId());
-        req.setAttribute("membership",membershipService.findById(customer.getId()).orElse(new Membership()));
+        req.setAttribute("membership",membershipService.findById(customer.getMembershipID()).orElse(new Membership()));
         req.getRequestDispatcher("/page/user/LoanManage/page.jsp").forward(req, resp);
     }
     @Override

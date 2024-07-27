@@ -1,6 +1,6 @@
 package com.sonnguyen.individual.nhs.service;
 
-import com.sonnguyen.individual.nhs.dao.idao.ITransactionDAO;
+import com.sonnguyen.individual.nhs.dao.impl.TransactionDAOImpl;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
@@ -8,7 +8,7 @@ import javax.inject.Inject;
 @Model
 public class TransactionLogService {
     @Inject
-    private ITransactionDAO transactionRepository;
+    private TransactionDAOImpl transactionDAO;
 
 
 }

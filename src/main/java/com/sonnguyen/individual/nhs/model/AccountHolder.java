@@ -17,6 +17,8 @@ public class AccountHolder {
         this.accountID = accountID;
         this.customerID = customerID;
     }
+    public AccountHolder(){}
+
 
     @Transient
     public Customer customer;
@@ -35,9 +37,6 @@ public class AccountHolder {
 
     public void setDefault(boolean isDefault) {
         this.isDefault = isDefault;
-    }
-
-    public AccountHolder() {
     }
 
 

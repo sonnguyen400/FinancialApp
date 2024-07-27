@@ -1,8 +1,8 @@
 package com.sonnguyen.individual.nhs.service;
 
+import com.sonnguyen.individual.nhs.dao.impl.SavingDAOImp;
 import com.sonnguyen.individual.nhs.model.SavingsInfo;
 import com.sonnguyen.individual.nhs.service.iservice.ISavingsInfoService;
-import com.sonnguyen.individual.nhs.dao.idao.ISavingDAO;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
@@ -12,7 +12,7 @@ import java.util.Optional;
 @Model
 public class SavingInfoService implements ISavingsInfoService {
     @Inject
-    ISavingDAO savingDAO;
+    SavingDAOImp savingDAO;
 
     @Override
     public Optional<SavingsInfo> findByAccountId(int accountId) {

@@ -1,4 +1,4 @@
-package com.sonnguyen.individual.nhs.Security.Filter;
+package com.sonnguyen.individual.nhs.security.Filter;
 
 import com.sonnguyen.individual.nhs.model.Login;
 import com.sonnguyen.individual.nhs.service.iservice.IAccountService;

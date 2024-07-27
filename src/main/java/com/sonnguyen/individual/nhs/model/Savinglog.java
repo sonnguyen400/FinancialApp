@@ -19,7 +19,7 @@ public class Savinglog {
     private BigDecimal amount;
     @Column(name = "detail")
     private String details;
-    @Column(name = "created_at")
+    @Column(name = "created_at",insertable = false)
     private Date date;
     @Column(name="savings_infor_id")
     private Integer savings_infor_id;

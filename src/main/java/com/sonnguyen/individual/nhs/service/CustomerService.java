@@ -1,8 +1,8 @@
 package com.sonnguyen.individual.nhs.service;
 
+import com.sonnguyen.individual.nhs.dao.impl.CustomerDAOImpl;
 import com.sonnguyen.individual.nhs.model.Customer;
 import com.sonnguyen.individual.nhs.service.iservice.ICustomerService;
-import com.sonnguyen.individual.nhs.dao.idao.ICustomerDAO;
 
 import javax.ejb.EJB;
 import javax.enterprise.inject.Model;
@@ -14,12 +14,12 @@ import java.util.Collection;
 @EJB
 public class CustomerService implements ICustomerService {
     @Inject
-    private ICustomerDAO customerRepository;
+    private CustomerDAOImpl customerDAO;
 
     @Override
     public Collection<Customer> findAllByAccountNumber(String accountNumber) {
         try {
-            return customerRepository.findAllByAccountNumber(accountNumber);
+            return customerDAO.findAllByAccountNumber(accountNumber);
         } catch (SQLException e) {
             return null;
         }
@@ -27,20 +27,15 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public Customer findById(Integer customerId) {
-        try {
-            return customerRepository.findById(customerId).get();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        return customerDAO.findById(customerId).orElseGet(null);
     }
 
     @Override
     public boolean isValid(String email, String phoneNumber, String social_security_number) {
         try {
-            return customerRepository.isValid(email,phoneNumber,social_security_number);
+            return customerDAO.isValid(email,phoneNumber,social_security_number);
         } catch (SQLException e) {
             return false;
         }
     }
-
 }

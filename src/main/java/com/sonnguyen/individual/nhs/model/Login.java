@@ -19,6 +19,7 @@ public class Login {
     @Transient
     private Customer customer;
 
+
     public Integer getId() {
         return id;
     }
@@ -65,5 +66,17 @@ public class Login {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    @Override
+    public String toString() {
+        return "Login{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", pin='" + pin + '\'' +
+                ", CustomerId=" + CustomerId +
+                ", customer=" + customer +
+                '}';
     }
 }

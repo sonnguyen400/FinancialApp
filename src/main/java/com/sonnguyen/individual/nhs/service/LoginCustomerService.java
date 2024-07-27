@@ -4,6 +4,7 @@ import com.sonnguyen.individual.nhs.Constant.AccountTier;
 import com.sonnguyen.individual.nhs.Constant.AccountType;
 import com.sonnguyen.individual.nhs.Constant.DefaultBrand;
 import com.sonnguyen.individual.nhs.Constant.MemberShip;
+import com.sonnguyen.individual.nhs.dao.idao.ILoginCustomerDAO;
 import com.sonnguyen.individual.nhs.exception.RegisterException;
 import com.sonnguyen.individual.nhs.model.Account;
 import com.sonnguyen.individual.nhs.model.Customer;
@@ -12,7 +13,6 @@ import com.sonnguyen.individual.nhs.service.iservice.IAccountService;
 import com.sonnguyen.individual.nhs.service.iservice.ICustomerService;
 import com.sonnguyen.individual.nhs.service.iservice.ILoginCustomerService;
 import com.sonnguyen.individual.nhs.service.iservice.ILoginService;
-import com.sonnguyen.individual.nhs.dao.idao.ILoginCustomerDAO;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;

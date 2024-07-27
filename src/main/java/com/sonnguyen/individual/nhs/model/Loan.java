@@ -33,7 +33,7 @@ public class Loan {
 
     @Column(name = "approval_date")
     private Date approvalDate;
-    @Column(name = "create_at")
+    @Column(name = "create_at",insertable = false)
     private Date createAt;
 
     @Size(max = 20)

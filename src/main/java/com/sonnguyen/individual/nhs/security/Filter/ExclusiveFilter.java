@@ -1,4 +1,4 @@
-package com.sonnguyen.individual.nhs.Security.Filter;
+package com.sonnguyen.individual.nhs.security.Filter;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;

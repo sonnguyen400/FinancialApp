@@ -1,16 +1,13 @@
 package com.sonnguyen.individual.nhs.controller;
 
-import com.sonnguyen.individual.nhs.context.DBConnection;
 import com.sonnguyen.individual.nhs.model.Login;
 import com.sonnguyen.individual.nhs.service.iservice.IAccountService;
 import com.sonnguyen.individual.nhs.service.iservice.ICustomerService;
 import com.sonnguyen.individual.nhs.service.iservice.ILoginService;
 import com.sonnguyen.individual.nhs.utils.RequestUtils;
 import com.sonnguyen.individual.nhs.utils.SessionUtils;
-import org.jboss.weld.context.ApplicationContext;
 
 import javax.inject.Inject;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

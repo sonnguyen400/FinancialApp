@@ -31,7 +31,7 @@ public class Account implements Serializable {
     @Column(name = "balance", precision = 2)
     private BigDecimal balance;
 
-    @Column(name = "open_date")
+    @Column(name = "open_date",insertable = false)
     private Date openDate;
 
     @Size(max = 45)

@@ -34,7 +34,7 @@ public class Transaction {
     @Column(name = "status")
     private Integer status;
 
-    @Column(name = "transaction_at")
+    @Column(name = "transaction_at",insertable = false)
     private Date transactionAt;
 
     public Date getTransactionAt() {

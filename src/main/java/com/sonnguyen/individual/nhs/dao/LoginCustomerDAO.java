@@ -1,28 +1,35 @@
 package com.sonnguyen.individual.nhs.dao;
 
+import com.sonnguyen.individual.nhs.dao.idao.ILoginCustomerDAO;
+import com.sonnguyen.individual.nhs.dao.impl.AccountDAOImp;
+import com.sonnguyen.individual.nhs.dao.impl.AccountHolderDAOImpl;
+import com.sonnguyen.individual.nhs.dao.impl.CustomerDAOImpl;
+import com.sonnguyen.individual.nhs.dao.impl.LoginDAOImp;
+import com.sonnguyen.individual.nhs.dao_v2.DBTransaction;
 import com.sonnguyen.individual.nhs.model.Account;
 import com.sonnguyen.individual.nhs.model.AccountHolder;
 import com.sonnguyen.individual.nhs.model.Customer;
 import com.sonnguyen.individual.nhs.model.Login;
-import com.sonnguyen.individual.nhs.dao.idao.*;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 
 @Model
-public class LoginCustomerDAO extends DAO<Customer,Integer> implements ILoginCustomerDAO {
+public class LoginCustomerDAO  implements ILoginCustomerDAO {
     @Inject
-    private ILoginDAO loginDAO;
+    private LoginDAOImp loginDAO;
     @Inject
-    private ICustomerDAO customerDAO;
+    private CustomerDAOImpl customerDAO;
     @Inject
-    private IAccountDAO repository;
+    private AccountDAOImp repository;
     @Inject
-    private IAccountHolderDAO accountHolderDAO;
+    private AccountHolderDAOImpl accountHolderDAO;
+    @Inject
+    DBTransaction dbTransaction;
 
     @Override
     public Customer save(Login login, Customer customer, Account account) {
-        return  createTransactional(connection -> {
+        return dbTransaction.startTransaction(Customer.class,connection -> {
             Integer customerId=customerDAO.executeInsert(connection,customer);
             login.setCustomerId(customerId);
             Integer loginId=loginDAO.executeInsert(connection,login);

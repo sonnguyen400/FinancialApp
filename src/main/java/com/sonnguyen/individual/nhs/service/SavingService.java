@@ -1,11 +1,8 @@
 package com.sonnguyen.individual.nhs.service;
 
-import com.sonnguyen.individual.nhs.model.AccountHolder;
-import com.sonnguyen.individual.nhs.model.SavingsInfo;
-import com.sonnguyen.individual.nhs.dao.GeneralDAO;
-import com.sonnguyen.individual.nhs.dao.idao.IAccountDAO;
-import com.sonnguyen.individual.nhs.dao.idao.IAccountHolderDAO;
-import com.sonnguyen.individual.nhs.dao.idao.ISavingDAO;
+import com.sonnguyen.individual.nhs.dao.impl.AccountDAOImp;
+import com.sonnguyen.individual.nhs.dao.impl.AccountHolderDAOImpl;
+import com.sonnguyen.individual.nhs.dao.impl.SavingDAOImp;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
@@ -13,19 +10,9 @@ import javax.inject.Inject;
 @Model
 public class SavingService {
     @Inject
-    ISavingDAO savingDao;
+    SavingDAOImp savingDao;
     @Inject
-    IAccountDAO accountDAO;
+    AccountDAOImp accountDAO;
     @Inject
-    IAccountHolderDAO accountHolderRepository;
-    public SavingsInfo createSaving(Integer customer, SavingsInfo savingInfor) {
-        return GeneralDAO.createTransactional((connection -> {
-            Integer accountId =accountDAO.executeInsert(connection, savingInfor.getAccount());
-            AccountHolder accountHolder=new AccountHolder(accountId,customer);
-            accountHolderRepository.executeInsert(connection,accountHolder);
-            Integer savingId=savingDao.executeInsert(connection,savingInfor);
-            savingInfor.setId(savingId);
-            return savingInfor;
-        }));
-    }
+    AccountHolderDAOImpl accountHolderRepository;
 }

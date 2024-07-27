@@ -24,8 +24,6 @@ public class Transfer{
     @Basic
     @Column(name = "message")
     private String message;
-    @Column(name = "type")
-    private String type;
 
     public Transaction getTransaction() {
         return transaction;
@@ -39,19 +37,13 @@ public class Transfer{
         this.transactionId = transactionId;
     }
 
-    public String getType() {
-        return type;
-    }
 
-    public void setType(String type) {
-        this.type = type;
-    }
 
     public void setTransaction(Transaction transaction) {
         this.transaction = transaction;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
