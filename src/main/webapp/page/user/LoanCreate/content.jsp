@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.sonnguyen.individual.nhs.model.Account" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.sonnguyen.individual.nhs.Constant.MemberShip" %>
+<%@ page import="com.sonnguyen.individual.nhs.constant.MemberShip" %>
 
 <jsp:useBean id="membership" scope="request" type="com.sonnguyen.individual.nhs.model.Membership"/>
 <div class="row">

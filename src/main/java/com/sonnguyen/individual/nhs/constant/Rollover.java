@@ -1,4 +1,4 @@
-package com.sonnguyen.individual.nhs.Constant;
+package com.sonnguyen.individual.nhs.constant;
 
 public enum Rollover {
     WITHDRAW_ENTIRE(1,"Withdraw Entire"),

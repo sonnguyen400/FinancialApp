@@ -1,4 +1,4 @@
-<%@ page import="com.sonnguyen.individual.nhs.Constant.SavingType" %>
+<%@ page import="com.sonnguyen.individual.nhs.constant.SavingType" %>
 <%@ page import="static com.sonnguyen.individual.nhs.utils.RequestUtils.ERROR_MESSAGE" %>
 <script>
     $(function (){

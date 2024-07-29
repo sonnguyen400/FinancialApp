@@ -49,7 +49,7 @@ public class AccountDAOImp extends AbstractDAO<Account, Integer> {
         return Optional.empty();
     }
 
-    public List<Account> findByCustomerIdAndType(Integer customerId, com.sonnguyen.individual.nhs.Constant.AccountType accountType) {
+    public List<Account> findByCustomerIdAndType(Integer customerId, com.sonnguyen.individual.nhs.constant.AccountType accountType) {
         String query = "select * from account where id in (select account_id from account_holder where account_type=? and customer_id=?)";
         return executeSelect(query,accountType.value, customerId);
     }
@@ -57,7 +57,7 @@ public class AccountDAOImp extends AbstractDAO<Account, Integer> {
         String query="Select * from account where id in (select account_id from account_holder where customer_id=?)";
         return executeSelect(query,customerId);
     }
-    public List<Account> findByStatusAndTypeAndCustomerId(com.sonnguyen.individual.nhs.Constant.AccountStatus status, com.sonnguyen.individual.nhs.Constant.AccountType type, Integer customerId) {
+    public List<Account> findByStatusAndTypeAndCustomerId(com.sonnguyen.individual.nhs.constant.AccountStatus status, com.sonnguyen.individual.nhs.constant.AccountType type, Integer customerId) {
         String query = "select * from account where status=? and account_type=? and id in (Select account_id from account_holder where customer_id=?)";
         return executeSelect(query,status.value,type.value,customerId);
     }
@@ -68,8 +68,14 @@ public class AccountDAOImp extends AbstractDAO<Account, Integer> {
         if (accounts.isEmpty()) return Optional.empty();
         return Optional.of(accounts.get(0));
     }
-    public Integer updateAccountStatusByAccountId(Connection connection,Integer accountId, com.sonnguyen.individual.nhs.Constant.AccountStatus status) throws SQLException {
+    public Integer updateAccountStatusByAccountId(Connection connection,Integer accountId, com.sonnguyen.individual.nhs.constant.AccountStatus status) throws SQLException {
         String query = "update account set status=? where id=?";
         return executeUpdate(connection, query, status.value, accountId);
+    }
+    public Optional<Account> findBranchPrincipalAccount(int branchId){
+        String query = "Select * from account where branch_id=? and account_type=4";
+        List<Account> accounts = executeSelect(query, Account.class, branchId);
+        if(accounts.isEmpty()) return Optional.empty();
+        return Optional.of(accounts.get(0));
     }
 }

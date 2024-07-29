@@ -1,4 +1,4 @@
-package com.sonnguyen.individual.nhs.Constant;
+package com.sonnguyen.individual.nhs.constant;
 
 public enum LoanStatus {
     PENDING(2),

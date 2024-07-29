@@ -35,9 +35,9 @@
                     </div>
                     <div class="d-flex justify-content-end">
                         <% Integer status = newest.getStatus();
-                            if (status.equals(com.sonnguyen.individual.nhs.Constant.LoanStatus.PENDING.value)) out.print(" <div class='rounded text-ssm-2 bg-blue-100 text-blue-700 border-blue-700 px - 1'>Pending</div > ");
-                            else if (status.equals(com.sonnguyen.individual.nhs.Constant.LoanStatus.APPROVED.value)) out.print(" <div class=\"rounded text-ssm-2 bg-green-100 text-green-700 border-blue-700 px - 1\">Approved</div>");
-                            if (status.equals(com.sonnguyen.individual.nhs.Constant.LoanStatus.REJECTED.value)) out.print(" <div class=\"rounded text - ssm - 2bg - red - 100text - red - 700border - red - 700px - 1\">Rejected</div>");
+                            if (status.equals(com.sonnguyen.individual.nhs.constant.LoanStatus.PENDING.value)) out.print(" <div class='rounded text-ssm-2 bg-blue-100 text-blue-700 border-blue-700 px - 1'>Pending</div > ");
+                            else if (status.equals(com.sonnguyen.individual.nhs.constant.LoanStatus.APPROVED.value)) out.print(" <div class=\"rounded text-ssm-2 bg-green-100 text-green-700 border-blue-700 px - 1\">Approved</div>");
+                            if (status.equals(com.sonnguyen.individual.nhs.constant.LoanStatus.REJECTED.value)) out.print(" <div class=\"rounded text - ssm - 2bg - red - 100text - red - 700border - red - 700px - 1\">Rejected</div>");
                         %>
                     </div>
                 </div>

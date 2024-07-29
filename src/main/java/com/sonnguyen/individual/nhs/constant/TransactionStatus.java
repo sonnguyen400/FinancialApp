@@ -1,4 +1,4 @@
-package com.sonnguyen.individual.nhs.Constant;
+package com.sonnguyen.individual.nhs.constant;
 
 public enum TransactionStatus {
     SUCCESS(1),

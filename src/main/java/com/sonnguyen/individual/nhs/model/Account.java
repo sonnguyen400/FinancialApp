@@ -63,6 +63,7 @@ public class Account implements Serializable {
                 '}';
     }
 
+
     public Tier getTier() {
         return tier;
     }

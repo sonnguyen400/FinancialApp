@@ -6,10 +6,12 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
 
 @Table(name = "savings_info")
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -30,7 +32,11 @@ public class SavingsInfo {
     private Integer term;
     @Column(name = "account_id")
     private Integer accountId;
+    @Column(name = "update_at",insertable = false)
+    private Date updateAt;
 
+    @Column
+    private int beneficiary_account_id;
 
     @Transient
     private Account account;
@@ -40,6 +46,21 @@ public class SavingsInfo {
     @Transient
     private Integer sourceAccount;
 
+    public int getBeneficiary_account_id() {
+        return beneficiary_account_id;
+    }
+
+    public void setBeneficiary_account_id(int beneficiary_account_id) {
+        this.beneficiary_account_id = beneficiary_account_id;
+    }
+
+    public Date getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(Date updateAt) {
+        this.updateAt = updateAt;
+    }
 
     @Override
     public String toString() {
@@ -138,4 +159,11 @@ public class SavingsInfo {
         }
 
     }
+    public boolean isMature(){
+        Calendar now=Calendar.getInstance();
+        Calendar maturityDate=Calendar.getInstance();
+        maturityDate.add(Calendar.MONTH,term);
+        return now.after(maturityDate);
+    }
+
 }

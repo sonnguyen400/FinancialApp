@@ -15,8 +15,8 @@ public class AccountTier extends SimpleTagSupport {
     @Override
     public void doTag() throws JspException, IOException {
         JspWriter out = getJspContext().getOut();
-        if(value != com.sonnguyen.individual.nhs.Constant.AccountTier.SILVER.id)  out.println("<span class=\"badge badge-light\">"+com.sonnguyen.individual.nhs.Constant.AccountTier.SILVER.name+"</span>");
-        else if(value != com.sonnguyen.individual.nhs.Constant.AccountTier.DIAMOND.id)  out.println("<span class=\"badge badge-light\">"+com.sonnguyen.individual.nhs.Constant.AccountTier.DIAMOND.name+"</span>");
-        else if(value != com.sonnguyen.individual.nhs.Constant.AccountTier.GOLD.id)  out.println("<span class=\"badge badge-warning text-white\">"+com.sonnguyen.individual.nhs.Constant.AccountTier.GOLD.name+"</span>");
+        if(value != com.sonnguyen.individual.nhs.constant.AccountTier.SILVER.id)  out.println("<span class=\"badge badge-light\">"+com.sonnguyen.individual.nhs.constant.AccountTier.SILVER.name+"</span>");
+        else if(value != com.sonnguyen.individual.nhs.constant.AccountTier.DIAMOND.id)  out.println("<span class=\"badge badge-light\">"+com.sonnguyen.individual.nhs.constant.AccountTier.DIAMOND.name+"</span>");
+        else if(value != com.sonnguyen.individual.nhs.constant.AccountTier.GOLD.id)  out.println("<span class=\"badge badge-warning text-white\">"+com.sonnguyen.individual.nhs.constant.AccountTier.GOLD.name+"</span>");
     }
 }

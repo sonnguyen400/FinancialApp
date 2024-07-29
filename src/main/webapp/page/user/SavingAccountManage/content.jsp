@@ -1,4 +1,4 @@
-<%@ page import="com.sonnguyen.individual.nhs.Constant.MemberShip" %>
+<%@ page import="com.sonnguyen.individual.nhs.constant.MemberShip" %>
 <%@ taglib prefix="tilex" uri="http://tiles.apache.org/tags-tiles-extras" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>

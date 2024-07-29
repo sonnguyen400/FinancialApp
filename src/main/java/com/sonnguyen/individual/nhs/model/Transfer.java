@@ -11,7 +11,6 @@ public class Transfer{
     @Column(name = "id")
     private Integer id;
 
-
     @Basic
     @Column(name = "transaction_id")
     private Integer transactionId;
@@ -25,38 +24,28 @@ public class Transfer{
     @Column(name = "message")
     private String message;
 
-    public Transaction getTransaction() {
-        return transaction;
+    public Integer getId() {
+        return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
     }
 
+    public Integer getTransactionId() {
+        return transactionId;
+    }
+
     public void setTransactionId(Integer transactionId) {
         this.transactionId = transactionId;
     }
 
-
+    public Transaction getTransaction() {
+        return transaction;
+    }
 
     public void setTransaction(Transaction transaction) {
         this.transaction = transaction;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getTransactionId() {
-        return transactionId;
-    }
-
-    public void setTransactionId(int transactionId) {
-        this.transactionId = transactionId;
     }
 
     public int getAccountId() {
@@ -67,7 +56,6 @@ public class Transfer{
         this.accountId = accountId;
     }
 
-
     public String getMessage() {
         return message;
     }
@@ -75,7 +63,6 @@ public class Transfer{
     public void setMessage(String message) {
         this.message = message;
     }
-
 
     @Override
     public int hashCode() {

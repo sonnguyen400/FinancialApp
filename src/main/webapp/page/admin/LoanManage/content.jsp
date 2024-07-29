@@ -1,4 +1,4 @@
-<%@ page import="com.sonnguyen.individual.nhs.Constant.LoanStatus" %>
+<%@ page import="com.sonnguyen.individual.nhs.constant.LoanStatus" %>
 <div class="card">
     <div class="card-body">
         <h4 class="card-title">Default Tab</h4>

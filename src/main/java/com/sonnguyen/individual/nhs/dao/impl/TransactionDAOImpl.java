@@ -30,7 +30,7 @@ public class TransactionDAOImpl extends AbstractDAO<Transaction,Integer> {
         String query="Update transaction set transaction.status=? where transaction.id=?";
         return executeUpdate(connection,query,status,transactionId);
     }
-    public void updateStatusByRefNumber(Connection connection, com.sonnguyen.individual.nhs.Constant.TransactionStatus transactionStatus, String refNumber) throws SQLException {
+    public void updateStatusByRefNumber(Connection connection, com.sonnguyen.individual.nhs.constant.TransactionStatus transactionStatus, String refNumber) throws SQLException {
         executeUpdate(connection,"update transaction set transaction.status=? where transaction.reference_number=?",transactionStatus.value,refNumber);
     }
 }

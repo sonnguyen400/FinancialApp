@@ -1,9 +1,9 @@
 package com.sonnguyen.individual.nhs.service;
 
-import com.sonnguyen.individual.nhs.Constant.AccountStatus;
-import com.sonnguyen.individual.nhs.Constant.AccountType;
-import com.sonnguyen.individual.nhs.Constant.DefaultBrand;
-import com.sonnguyen.individual.nhs.Constant.TransactionType;
+import com.sonnguyen.individual.nhs.constant.AccountStatus;
+import com.sonnguyen.individual.nhs.constant.AccountType;
+import com.sonnguyen.individual.nhs.constant.DefaultBrand;
+import com.sonnguyen.individual.nhs.constant.TransactionType;
 import com.sonnguyen.individual.nhs.dao.impl.AccountDAOImp;
 import com.sonnguyen.individual.nhs.dao.impl.AccountHolderDAOImpl;
 import com.sonnguyen.individual.nhs.dao.impl.SavingDAOImp;
@@ -35,6 +35,9 @@ public class AccountService implements IAccountService {
     @Inject
     private ITransferService transferService;
 
+    public Optional<Account> findBranchPrincipalAccount(int branchId){
+        return accountDao.findBranchPrincipalAccount(branchId);
+    }
 
 
     @Override

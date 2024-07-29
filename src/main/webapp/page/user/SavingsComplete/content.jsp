@@ -1,19 +1,20 @@
 <%@ page import="java.time.LocalDateTime" %>
+<%@ page import="java.time.Instant" %>
 <%@ page import="java.time.ZoneId" %>
 <%@ page import="java.time.temporal.ChronoUnit" %>
-<%@ page import="java.time.Instant" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
-<jsp:useBean id="savings" scope="request" type="com.sonnguyen.individual.nhs.model.SavingsInfo"/>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<jsp:useBean id="savings" class="com.sonnguyen.individual.nhs.model.SavingsInfo"/>
+<jsp:useBean id="linkedAccount" class="com.sonnguyen.individual.nhs.model.Account"/>
 <div class="row justify-content-center">
     <div class="col-md-6 col-sm-12">
         <div class="card" >
             <div style="border-radius: inherit;min-width:365px" class="p-4 bg-primary text-white" >
-                <h3 class="text-white">${savings.account.balance}
+                <h3 class="text-white">${linkedAccount.balance}
                 </h3>
-                <p class="text-white-50">${savings.account.openDate}</p>
+                <p class="text-white-50">${linkedAccount.openDate}</p>
                 <div class="row">
                     <div class="col">
                         <div class="text-white-50">Interest Rate</div>
@@ -83,10 +84,7 @@
                         </c:if>
                     </span>
                 </div>
-
             </div>
-
-
         </div>
         <div class="bt-4">
             <a href="<%=request.getContextPath()+"/app/saving/complete?id="+savings.getId()%>" class="btn bg-primary">Complete</a>
@@ -95,7 +93,3 @@
 
 
 </div>
-
-
-
-

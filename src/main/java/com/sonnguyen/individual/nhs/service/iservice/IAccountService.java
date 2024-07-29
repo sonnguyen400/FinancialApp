@@ -1,7 +1,7 @@
 package com.sonnguyen.individual.nhs.service.iservice;
 
-import com.sonnguyen.individual.nhs.Constant.AccountStatus;
-import com.sonnguyen.individual.nhs.Constant.AccountType;
+import com.sonnguyen.individual.nhs.constant.AccountStatus;
+import com.sonnguyen.individual.nhs.constant.AccountType;
 import com.sonnguyen.individual.nhs.model.Account;
 import com.sonnguyen.individual.nhs.model.SavingsInfo;
 

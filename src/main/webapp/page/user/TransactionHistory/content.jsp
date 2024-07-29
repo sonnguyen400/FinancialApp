@@ -4,8 +4,8 @@
 <%@ page import="com.sonnguyen.individual.nhs.model.Transaction" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.sonnguyen.individual.nhs.model.Account" %>
-<%@ page import="com.sonnguyen.individual.nhs.Constant.TransactionType" %>
-<%@ page import="com.sonnguyen.individual.nhs.Constant.TransactionStatus" %>
+<%@ page import="com.sonnguyen.individual.nhs.constant.TransactionType" %>
+<%@ page import="com.sonnguyen.individual.nhs.constant.TransactionStatus" %>
 
 <div class="form-group">
     <div class="input-group-prepend">

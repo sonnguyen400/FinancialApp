@@ -1,9 +1,9 @@
 package com.sonnguyen.individual.nhs.service;
 
-import com.sonnguyen.individual.nhs.Constant.AccountTier;
-import com.sonnguyen.individual.nhs.Constant.AccountType;
-import com.sonnguyen.individual.nhs.Constant.DefaultBrand;
-import com.sonnguyen.individual.nhs.Constant.MemberShip;
+import com.sonnguyen.individual.nhs.constant.AccountTier;
+import com.sonnguyen.individual.nhs.constant.DefaultBrand;
+import com.sonnguyen.individual.nhs.constant.MemberShip;
+import com.sonnguyen.individual.nhs.constant.AccountType;
 import com.sonnguyen.individual.nhs.dao.idao.ILoginCustomerDAO;
 import com.sonnguyen.individual.nhs.exception.RegisterException;
 import com.sonnguyen.individual.nhs.model.Account;

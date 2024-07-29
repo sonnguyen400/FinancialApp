@@ -1,6 +1,6 @@
 package com.sonnguyen.individual.nhs.controller;
 
-import com.sonnguyen.individual.nhs.Constant.LoanStatus;
+import com.sonnguyen.individual.nhs.constant.LoanStatus;
 import com.sonnguyen.individual.nhs.model.Loan;
 import com.sonnguyen.individual.nhs.utils.RequestUtils;
 

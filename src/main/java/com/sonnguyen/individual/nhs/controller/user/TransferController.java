@@ -1,6 +1,6 @@
 package com.sonnguyen.individual.nhs.controller.user;
 
-import com.sonnguyen.individual.nhs.Constant.TransactionType;
+import com.sonnguyen.individual.nhs.constant.TransactionType;
 import com.sonnguyen.individual.nhs.model.Customer;
 import com.sonnguyen.individual.nhs.model.Transaction;
 import com.sonnguyen.individual.nhs.model.Transfer;

@@ -1,6 +1,6 @@
 package com.sonnguyen.individual.nhs.dao.idao;
 
-import com.sonnguyen.individual.nhs.Constant.TransactionStatus;
+import com.sonnguyen.individual.nhs.constant.TransactionStatus;
 import com.sonnguyen.individual.nhs.model.Transaction;
 
 import java.sql.Connection;

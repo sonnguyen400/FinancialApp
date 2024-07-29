@@ -2,6 +2,7 @@ package com.sonnguyen.individual.nhs.sheduler;
 
 import com.sonnguyen.individual.nhs.service.LoanService;
 import org.apache.deltaspike.scheduler.api.Scheduled;
+import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
@@ -10,7 +11,7 @@ import javax.inject.Inject;
 
 @Scheduled(cronExpression = "0 0 2 * * ?")
 @Model
-public class UpdateLoansStatus implements org.quartz.Job
+public class UpdateLoansStatus implements Job
 {
     @Inject
     private LoanService service;

@@ -1,9 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="com.sonnguyen.individual.nhs.Constant.SavingType" %>
-<%@ page import="com.sonnguyen.individual.nhs.Constant.Rollover" %>
+<%@ page import="com.sonnguyen.individual.nhs.constant.SavingType" %>
+<%@ page import="com.sonnguyen.individual.nhs.constant.Rollover" %>
 <%@ page import="com.sonnguyen.individual.nhs.utils.RequestUtils" %>
 
-<%@ page import="com.sonnguyen.individual.nhs.Constant.MemberShip" %>
+<%@ page import="com.sonnguyen.individual.nhs.constant.MemberShip" %>
 <jsp:useBean id="membership" scope="request" class="com.sonnguyen.individual.nhs.model.Membership"/>
 <div class="row">
     <div class="col-lg-6">

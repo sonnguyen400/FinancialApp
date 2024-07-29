@@ -1,6 +1,6 @@
 package com.sonnguyen.individual.nhs.jsptag;
 
-import com.sonnguyen.individual.nhs.Constant.MemberShip;
+import com.sonnguyen.individual.nhs.constant.MemberShip;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;

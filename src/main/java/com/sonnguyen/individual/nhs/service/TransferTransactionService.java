@@ -14,7 +14,6 @@ import com.sonnguyen.individual.nhs.model.Account;
 import com.sonnguyen.individual.nhs.model.Tier;
 import com.sonnguyen.individual.nhs.model.Transaction;
 import com.sonnguyen.individual.nhs.model.Transfer;
-import com.sonnguyen.individual.nhs.service.iservice.ITransferService;
 import org.jboss.logging.Logger;
 
 import javax.enterprise.inject.Model;
@@ -25,7 +24,7 @@ import java.time.Instant;
 import java.util.List;
 
 @Model
-public class TransferService implements ITransferService {
+public class TransferTransactionService {
     @Inject
     TransferDAOImpl transferDAO;
     @Inject
@@ -40,7 +39,6 @@ public class TransferService implements ITransferService {
     Logger logger=Logger.getLogger(this.getClass());
 
 
-    @Override
     public Transfer startTransfer(Connection connection, Transfer transfer) throws SQLException {
         accountDAO.updateBalanceByAccountId(connection,transfer.getTransaction().getAccountId(),transfer.getTransaction().getAmount().negate());
         accountDAO.updateBalanceByAccountId(connection,transfer.getAccountId(),transfer.getTransaction().getAmount());
@@ -51,7 +49,6 @@ public class TransferService implements ITransferService {
     }
 
 
-    @Override
     public Transfer transferCommit(String transactionRefNumber) throws FailureTransaction {
         return dbTransaction.startTransaction(Transfer.class,connection -> transferCommit(connection,transactionRefNumber),connection -> {
             transactionDAO.updateStatusByRefNumber(connection,TransactionStatus.FAILURE,transactionRefNumber);
@@ -59,7 +56,6 @@ public class TransferService implements ITransferService {
         });
     }
 
-    @Override
     public Transfer transferCommit(Connection connection, String transactionRefNumber) throws SQLException,CommitTransactionException {
         //Get equivalent transaction
         List<Transaction> transactions=transactionDAO.findAllByRefNumber(connection,transactionRefNumber);
@@ -91,34 +87,31 @@ public class TransferService implements ITransferService {
         return transfer;
     }
 
-
-    @Override
-    public String init(Transfer send) {
-        return dbTransaction.startTransaction(String.class,connection -> init(connection,send));
+    public String init(Transaction transaction,Transfer send) {
+        return dbTransaction.startTransaction(String.class,connection -> init(connection,transaction,send));
     }
-    @Override
-    public String init(Connection connection, Transfer send) throws SQLException {
+    public String init(Connection connection,Transaction transaction, Transfer send) throws SQLException {
         //ReferenceNumber
-        String referenceNumber= send.getTransaction().getAccountId()+""+send.getAccountId()+Instant.now();
+        String referenceNumber= transaction.getAccountId()+""+send.getAccountId()+Instant.now();
         //ReferenceTransfer
         Transfer receive=new Transfer();
-        receive.setAccountId(send.getTransaction().getAccountId());
+        receive.setAccountId(transaction.getAccountId());
         receive.setMessage(send.getMessage());
         //ReferenceTransaction
         Transaction receiveTransaction=new Transaction();
-        receiveTransaction.setAmount(send.getTransaction().getAmount());
+        receiveTransaction.setAmount(transaction.getAmount());
         receiveTransaction.setAccountId(send.getAccountId());
         receiveTransaction.setStatus(TransactionStatus.PENDING.value);
         receiveTransaction.setTransactionType(TransactionType.RECEIVE.value);
-        receiveTransaction.setDescription(send.getTransaction().getDescription());
+        receiveTransaction.setDescription(transaction.getDescription());
         receiveTransaction.setReferenceNumber(referenceNumber);
         //Transaction
-        send.getTransaction().setTransactionType(TransactionType.TRANSFER.value);
-        send.getTransaction().setStatus(TransactionStatus.PENDING.value);
-        send.getTransaction().setReferenceNumber(referenceNumber);
+        transaction.setTransactionType(TransactionType.TRANSFER.value);
+        transaction.setStatus(TransactionStatus.PENDING.value);
+        transaction.setReferenceNumber(referenceNumber);
 
         //Start transfer
-        send.setTransactionId(transactionDAO.executeInsert(connection,send.getTransaction()));
+        send.setTransactionId(transactionDAO.executeInsert(connection,transaction));
         transferDAO.executeInsert(connection,send);
 
         receive.setTransactionId(transactionDAO.executeInsert(connection,receiveTransaction));

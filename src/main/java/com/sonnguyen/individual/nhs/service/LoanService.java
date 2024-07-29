@@ -1,7 +1,7 @@
 package com.sonnguyen.individual.nhs.service;
 
-import com.sonnguyen.individual.nhs.Constant.LoanStatus;
-import com.sonnguyen.individual.nhs.Constant.TransactionType;
+import com.sonnguyen.individual.nhs.constant.LoanStatus;
+import com.sonnguyen.individual.nhs.constant.TransactionType;
 import com.sonnguyen.individual.nhs.dao.impl.LoanDAOImpl;
 import com.sonnguyen.individual.nhs.dao_v2.DBTransaction;
 import com.sonnguyen.individual.nhs.model.Account;

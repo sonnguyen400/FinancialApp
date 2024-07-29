@@ -1,4 +1,4 @@
-<%@ page import="com.sonnguyen.individual.nhs.Constant.LoanStatus" %>
+<%@ page import="com.sonnguyen.individual.nhs.constant.LoanStatus" %>
 <script>
     $(function(){
         function fetchLoansData({status="PENDING", end, start}){

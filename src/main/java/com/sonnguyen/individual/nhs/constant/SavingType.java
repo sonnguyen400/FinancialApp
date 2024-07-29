@@ -1,4 +1,4 @@
-package com.sonnguyen.individual.nhs.Constant;
+package com.sonnguyen.individual.nhs.constant;
 
 public enum SavingType {
     TERM_DEPOSIT(1,"Term Deposit"),
