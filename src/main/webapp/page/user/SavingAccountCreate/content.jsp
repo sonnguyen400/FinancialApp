@@ -1,8 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="ex" uri="/WEB-INF/custom.tld"%>
 <%@ page import="com.sonnguyen.individual.nhs.constant.SavingType" %>
 <%@ page import="com.sonnguyen.individual.nhs.constant.Rollover" %>
-<%@ page import="com.sonnguyen.individual.nhs.utils.RequestUtils" %>
-
 <%@ page import="com.sonnguyen.individual.nhs.constant.MemberShip" %>
 <jsp:useBean id="membership" scope="request" class="com.sonnguyen.individual.nhs.model.Membership"/>
 <div class="row">
@@ -12,15 +11,7 @@
                 <div class="col mb-3">
                     <p class="mb-1 opacity-5">Membership</p>
                     <h5 class="text-white font-weight-semi-bold">
-                        <c:if test="${membership.id==MemberShip.STANDARD.value}">
-                            <div><span class="badge badge-light">${membership.name}</span></div>
-                        </c:if>
-                        <c:if test="${membership.id==MemberShip.DIAMOND.value}">
-                            <div><span class="badge badge-light">${membership.name}</span></div>
-                        </c:if>
-                        <c:if test="${membership.id==MemberShip.GOLD.value}">
-                            <div><span class="badge badge-light">${membership.name}</span></div>
-                        </c:if>
+                        <ex:membership value="${membership.id}"/>
                     </h5>
                 </div>
                 <div class="row align-items-center">
@@ -74,7 +65,6 @@
                                 <label for="savingType">Type</label>
                                 <select name="type" id="savingType" class="form-control input-default">
                                     <option value="<%=SavingType.TERM_DEPOSIT.value%>">Term deposit</option>
-                                    <option value="<%=SavingType.DEMAND_DEPOSIT.value%>">Demand deposit</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -96,15 +86,25 @@
                                 </select>
                             </div>
                             <div class="form-group">
+                                <label>Default Beneficiary Account</label>
+                                <select class="form-control" name="beneficiary_account_id">
+                                    <c:forEach var="account" items="${requestScope.accounts}">
+                                        <option value="${account.id}">${account.accountNumber}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label for="amount">Amount</label>
                                 <input type="number" name="amount" min="100000" value="0" class="form-control">
                                 <input name="interestRate" value="5" type="hidden">
-                                <div class="d-flex justify-content-end pt-3">
-                                    <button type="submit" class="btn btn-primary">
-                                        Continue
-                                    </button>
-                                </div>
+
                             </div>
+                            <div class="d-flex justify-content-end pt-3">
+                                <button type="submit" class="btn btn-primary">
+                                    Continue
+                                </button>
+                            </div>
+
                         </div>
 
                     </div>

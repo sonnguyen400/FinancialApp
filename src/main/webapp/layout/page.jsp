@@ -22,7 +22,7 @@
         </svg>
     </div>
 </div>
-<jsp:useBean id="message" scope="request" class="com.sonnguyen.individual.nhs.type.Message"/>
+<jsp:useBean id="message" scope="request" class="com.sonnguyen.individual.nhs.dto.Alert"/>
 <c:if test="${message!=null}">
     <ex:alert type="${message.type.name()}" link="${message.link}" href="${message.href}">${message.message}</ex:alert>
 </c:if>

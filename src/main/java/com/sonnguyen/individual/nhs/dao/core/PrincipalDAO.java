@@ -1,4 +1,7 @@
-package com.sonnguyen.individual.nhs.dao_v2;
+package com.sonnguyen.individual.nhs.dao.core;
+
+import com.sonnguyen.individual.nhs.context.ConnectionHolder;
+import com.sonnguyen.individual.nhs.utils.EntityMapper;
 
 import javax.inject.Inject;
 import java.lang.reflect.InvocationTargetException;
@@ -7,6 +10,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Map prepare statements and params
+ * Directly execute query
+ */
 public class PrincipalDAO {
     @Inject
     ConnectionHolder connectionHolder;
@@ -14,9 +21,6 @@ public class PrincipalDAO {
         return connectionHolder.getConnection();
     }
 
-    public ResultSet executeQuery(PreparedStatement preparedStatement) throws SQLException {
-        return preparedStatement.executeQuery();
-    }
     public ResultSet executeQuery(PreparedStatement preparedStatement,Object ...params) throws SQLException {
         QueryBuilder.setStatementParams(preparedStatement,params);
         return preparedStatement.executeQuery();

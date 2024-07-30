@@ -1,4 +1,4 @@
-package com.sonnguyen.individual.nhs.dao_v2;
+package com.sonnguyen.individual.nhs.utils;
 
 
 import com.sun.istack.logging.Logger;
@@ -45,7 +45,7 @@ public class EntityMapper<T> {
     }
     public static <T> List<T> mapObjects(Class<T> clazz,ResultSet resultSet) throws SQLException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         List<T> list=new ArrayList<T>();
-        Map<String,String> fieldsToDataCol=EntityUtils.propertiesMap(clazz);
+        Map<String,String> fieldsToDataCol= EntityUtils.propertiesMap(clazz);
         Map<String,Method> settersForField=EntityUtils.setterMap(clazz);
         while (resultSet.next()){
             T obj=clazz.getConstructor().newInstance();

@@ -3,9 +3,9 @@
 
 
 
-<tiles:insertDefinition name="user.saving.detail">
-    <tiles:definition name="user.saving.detail" extends="page">
-        <tiles:putAttribute name="title" value="Home"/>
+<tiles:insertDefinition name="user.saving.complete">
+    <tiles:definition name="user.saving.complete" extends="page">
+        <tiles:putAttribute name="title" value="Savings"/>
         <tiles:putAttribute name="body">
             <tiles:definition extends="main-wrapper">
                 <tiles:putAttribute name="content" >

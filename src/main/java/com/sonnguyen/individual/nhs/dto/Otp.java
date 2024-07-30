@@ -1,4 +1,4 @@
-package com.sonnguyen.individual.nhs.type;
+package com.sonnguyen.individual.nhs.dto;
 
 import javax.persistence.Column;
 import java.util.Calendar;

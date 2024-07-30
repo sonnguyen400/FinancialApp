@@ -1,4 +1,4 @@
-package com.sonnguyen.individual.nhs.dao_v2.exception;
+package com.sonnguyen.individual.nhs.exception;
 
 public class InterruptedConnection extends RuntimeException{
     public InterruptedConnection() {

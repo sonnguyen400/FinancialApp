@@ -23,10 +23,6 @@ public class AccountDetailController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Optional<Account> account=Optional.ofNullable(req.getParameter("id"))
                 .map(Integer::parseInt)
-                .map(id->{
-                    System.out.println(id);
-                    return id;
-                })
                 .map(id->accountService.findById(id))
                 .orElseThrow(() -> new IllegalArgumentException("Account not found"));
 

@@ -1,6 +1,6 @@
 package com.sonnguyen.individual.nhs.jsptag;
 
-import com.sonnguyen.individual.nhs.type.Message;
+import com.sonnguyen.individual.nhs.dto.Message;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;

@@ -1,4 +1,4 @@
-package com.sonnguyen.individual.nhs.dao_v2;
+package com.sonnguyen.individual.nhs.dao.core;
 
 public class Sort {
     public String column;

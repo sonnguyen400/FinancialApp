@@ -1,6 +1,6 @@
-package com.sonnguyen.individual.nhs.dao_v2;
+package com.sonnguyen.individual.nhs.utils;
 
-import com.sonnguyen.individual.nhs.dao_v2.exception.EntityIntegrityException;
+import com.sonnguyen.individual.nhs.exception.EntityIntegrityException;
 
 import javax.persistence.Column;
 import javax.persistence.Id;

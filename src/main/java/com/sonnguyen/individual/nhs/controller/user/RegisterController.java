@@ -1,12 +1,13 @@
 package com.sonnguyen.individual.nhs.controller.user;
 
 
+import com.sonnguyen.individual.nhs.dto.Alert;
 import com.sonnguyen.individual.nhs.model.Account;
 import com.sonnguyen.individual.nhs.model.Customer;
 import com.sonnguyen.individual.nhs.model.Login;
 import com.sonnguyen.individual.nhs.service.iservice.ICustomerService;
 import com.sonnguyen.individual.nhs.service.iservice.ILoginCustomerService;
-import com.sonnguyen.individual.nhs.type.Message;
+import com.sonnguyen.individual.nhs.dto.Message;
 import com.sonnguyen.individual.nhs.utils.OTPUtils;
 import com.sonnguyen.individual.nhs.utils.RequestUtils;
 import com.sonnguyen.individual.nhs.utils.SessionUtils;
@@ -58,11 +59,11 @@ public class RegisterController extends HttpServlet {
             Customer customer=(Customer) SessionUtils.getSession(req,"customer");
             Account account=(Account) SessionUtils.getSession(req,"account");
             loginCustomerService.save(login,customer,account);
-            req.setAttribute("message",new Message(Message.Type.SUCCESS,"Register Successfully"));
+            req.setAttribute("message",new Alert(Message.Type.SUCCESS,"Register Successfully"));
             doGet(req,resp);
         }catch (Exception e){
             e.printStackTrace();
-            req.setAttribute("message",new Message(Message.Type.ERROR,e.getMessage()));
+            req.setAttribute("message",new Alert(Message.Type.ERROR,e.getMessage()));
         }
         doGet(req,resp);
     }

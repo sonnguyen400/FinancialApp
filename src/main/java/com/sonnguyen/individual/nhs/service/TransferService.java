@@ -7,7 +7,7 @@ import com.sonnguyen.individual.nhs.dao.impl.AccountDAOImp;
 import com.sonnguyen.individual.nhs.dao.impl.TierDAOImpl;
 import com.sonnguyen.individual.nhs.dao.impl.TransactionDAOImpl;
 import com.sonnguyen.individual.nhs.dao.impl.TransferDAOImpl;
-import com.sonnguyen.individual.nhs.dao_v2.DBTransaction;
+import com.sonnguyen.individual.nhs.dao.core.DBTransaction;
 import com.sonnguyen.individual.nhs.exception.CommitTransactionException;
 import com.sonnguyen.individual.nhs.exception.FailureTransaction;
 import com.sonnguyen.individual.nhs.model.Account;
@@ -96,6 +96,14 @@ public class TransferService implements ITransferService {
     public String init(Transfer send) {
         return dbTransaction.startTransaction(String.class,connection -> init(connection,send));
     }
+
+    /**
+     *
+     * @param connection
+     * @param send include transaction data
+     * @return
+     * @throws SQLException
+     */
     @Override
     public String init(Connection connection, Transfer send) throws SQLException {
         //ReferenceNumber

@@ -35,13 +35,14 @@ public class SavingsInfo {
     @Column(name = "update_at",insertable = false)
     private Date updateAt;
 
-    @Column
+    @Column(name = "beneficiary_account_id")
     private int beneficiary_account_id;
 
     @Transient
     private Account account;
     @NotNull
     @Min(100000)
+    @Transient
     private BigDecimal amount;
     @Transient
     private Integer sourceAccount;
@@ -62,20 +63,23 @@ public class SavingsInfo {
         this.updateAt = updateAt;
     }
 
+
     @Override
     public String toString() {
-        return "SavingsInfor{" +
+        return "SavingsInfo{" +
                 "id=" + id +
-                ", type='" + type + '\'' +
-                ", rollover='" + rollover + '\'' +
+                ", type=" + type +
+                ", rollover=" + rollover +
                 ", interestRate=" + interestRate +
                 ", term=" + term +
                 ", accountId=" + accountId +
+                ", updateAt=" + updateAt +
+                ", beneficiary_account_id=" + beneficiary_account_id +
+                ", account=" + account +
                 ", amount=" + amount +
                 ", sourceAccount=" + sourceAccount +
                 '}';
     }
-
 
     public Integer getRollover() {
         return rollover;
