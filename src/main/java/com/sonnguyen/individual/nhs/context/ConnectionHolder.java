@@ -1,6 +1,4 @@
-package com.sonnguyen.individual.nhs.dao_v2;
-
-import com.sonnguyen.individual.nhs.context.DBConnection;
+package com.sonnguyen.individual.nhs.context;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;

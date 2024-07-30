@@ -1,5 +1,7 @@
-package com.sonnguyen.individual.nhs.dao_v2;
+package com.sonnguyen.individual.nhs.dao.core;
 
+
+import com.sonnguyen.individual.nhs.context.ConnectionHolder;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
@@ -10,7 +12,7 @@ import java.sql.SQLException;
 public class DBTransaction {
     @Inject
     ConnectionHolder connectionHolder;
-    public <T> T startTransaction(Class<T> clazz,Transactional<T> transactional) {
+    public <T> T startTransaction(Class<T> clazz, Transactional<T> transactional) {
         Connection connection = connectionHolder.getConnection();
         try {
             connection.setAutoCommit(false);

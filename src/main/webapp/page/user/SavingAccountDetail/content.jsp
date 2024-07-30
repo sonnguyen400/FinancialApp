@@ -3,10 +3,11 @@
 <%@ page import="java.time.temporal.ChronoUnit" %>
 <%@ page import="java.time.Instant" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
-<jsp:useBean id="savings" scope="request" type="com.sonnguyen.individual.nhs.model.SavingsInfo"/>
+
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:useBean id="savings" scope="request" type="com.sonnguyen.individual.nhs.model.SavingsInfo"/>
 <div class="row justify-content-center">
     <div class="col-md-6 col-sm-12">
         <div class="card" >
@@ -84,13 +85,16 @@
                     </span>
                 </div>
 
+                <div class="d-flex justify-content-end py-2">
+                    <div class="bt-4">
+                        <a href="<%=request.getContextPath()+"/app/saving/complete?id="+savings.getId()%>" class="btn bg-primary text-white">Complete</a>
+                    </div>
+                </div>
             </div>
 
 
         </div>
-        <div class="bt-4">
-            <a href="<%=request.getContextPath()+"/app/saving/complete?id="+savings.getId()%>" class="btn bg-primary">Complete</a>
-        </div>
+
     </div>
 
 

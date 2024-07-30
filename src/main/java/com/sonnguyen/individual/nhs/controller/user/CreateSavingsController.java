@@ -1,14 +1,16 @@
 package com.sonnguyen.individual.nhs.controller.user;
 
-import com.sonnguyen.individual.nhs.model.Customer;
-import com.sonnguyen.individual.nhs.model.Login;
-import com.sonnguyen.individual.nhs.model.Membership;
-import com.sonnguyen.individual.nhs.model.SavingsInfo;
+import com.sonnguyen.individual.nhs.constant.AccountStatus;
+import com.sonnguyen.individual.nhs.constant.AccountType;
+import com.sonnguyen.individual.nhs.dto.Message;
+import com.sonnguyen.individual.nhs.dto.Result;
+import com.sonnguyen.individual.nhs.model.*;
 import com.sonnguyen.individual.nhs.service.iservice.IAccountService;
 import com.sonnguyen.individual.nhs.service.iservice.ICustomerService;
 import com.sonnguyen.individual.nhs.service.iservice.IMembershipService;
 import com.sonnguyen.individual.nhs.utils.RequestUtils;
 import com.sonnguyen.individual.nhs.utils.SessionUtils;
+import org.apache.http.HttpStatus;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
@@ -23,6 +25,7 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import static com.sonnguyen.individual.nhs.utils.RequestUtils.ERROR_MESSAGE;
@@ -41,6 +44,8 @@ public class CreateSavingsController extends HttpServlet {
         Login login= SessionUtils.getPrincipal(req);
         req.setAttribute("accounts",accountService.findAllByCustomerId(login.getCustomerId()));
         Customer customer=customerService.findById(login.getCustomerId());
+        List<Account> accounts = new ArrayList<>(accountService.findByStatusAndTypeAndCustomerId(AccountStatus.OPEN, AccountType.PRIMARY, login.getCustomerId()));
+        req.setAttribute("accounts",accounts);
         req.setAttribute("membership",membershipService.findById(customer.getMembershipID()).orElse(new Membership()));
         req.getRequestDispatcher("/page/user/SavingAccountCreate/page.jsp").forward(req,resp);
     }
@@ -67,8 +72,7 @@ public class CreateSavingsController extends HttpServlet {
             try{
                 SavingsInfo savingsInfo= (SavingsInfo) SessionUtils.getSession(req,"savingsInfo");
                 accountService.createSavingsAccount(login.getCustomerId(), savingsInfo);
-                req.setAttribute("status",1);
-                req.setAttribute("message","Saving account created successfully");
+                req.setAttribute("result",new Result(Message.Type.SUCCESS,"Saving account created successfully",HttpStatus.SC_OK ));
                 req.getRequestDispatcher("/page/user/Result/page.jsp").forward(req,resp);
             }catch (Exception e){
                 e.printStackTrace();

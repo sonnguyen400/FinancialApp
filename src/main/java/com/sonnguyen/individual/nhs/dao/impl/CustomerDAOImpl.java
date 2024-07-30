@@ -1,6 +1,7 @@
 package com.sonnguyen.individual.nhs.dao.impl;
 
-import com.sonnguyen.individual.nhs.dao_v2.AbstractDAO;
+import com.sonnguyen.individual.nhs.dao.idao.ICustomerDAO;
+import com.sonnguyen.individual.nhs.dao.core.AbstractDAO;
 import com.sonnguyen.individual.nhs.model.Customer;
 
 import javax.enterprise.inject.Model;
@@ -9,7 +10,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 
 @Model
-public class CustomerDAOImpl extends AbstractDAO<Customer,Integer> {
+public class CustomerDAOImpl extends AbstractDAO<Customer,Integer> implements ICustomerDAO {
     @Override
     protected Class<Customer> getEntityType() {
         return Customer.class;
@@ -19,6 +20,7 @@ public class CustomerDAOImpl extends AbstractDAO<Customer,Integer> {
     protected Class<Integer> getIdType() {
         return Integer.class;
     }
+    @Override
     public boolean isValid(String email, String phone, String socialNumber) throws SQLException {
         Connection connection=getConnection();
         String query="SELECT CASE\n" +
@@ -33,6 +35,7 @@ public class CustomerDAOImpl extends AbstractDAO<Customer,Integer> {
         connection.close();
         return result;
     }
+    @Override
     public Collection<Customer> findAllByAccountNumber(String accountNumber) throws SQLException {
         StringBuilder query=new StringBuilder("select * from customer where id in");
         query.append("(Select customer_id from account_holder where account_id in(");

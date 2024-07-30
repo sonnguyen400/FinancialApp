@@ -1,4 +1,6 @@
-package com.sonnguyen.individual.nhs.dao_v2;
+package com.sonnguyen.individual.nhs.dao.core;
+
+import com.sonnguyen.individual.nhs.utils.EntityUtils;
 
 import javax.persistence.Column;
 import javax.persistence.Transient;
@@ -11,7 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class AbstractDAO<T,ID> extends CRUDDao{
+public abstract class AbstractDAO<T,ID> extends CRUDDao implements GeneralDAO<T,ID>{
     protected abstract Class<T> getEntityType();
     protected abstract Class<ID> getIdType();
     public List<T> findAll(){
@@ -35,7 +37,8 @@ public abstract class AbstractDAO<T,ID> extends CRUDDao{
         }
     }
 
-    public Optional<T> findById(int id){
+    @Override
+    public Optional<T> findById(ID id){
         PreparedStatement ps=null;
         try(Connection connection=getConnection()) {
              return findById(connection,id);
@@ -51,8 +54,8 @@ public abstract class AbstractDAO<T,ID> extends CRUDDao{
             }
         }
     }
-
-    public Optional<T> findById(Connection connection,int id){
+    @Override
+    public Optional<T> findById(Connection connection,ID id){
         PreparedStatement ps=null;
         try {
             StringBuilder builder=new StringBuilder("select *");
@@ -62,7 +65,6 @@ public abstract class AbstractDAO<T,ID> extends CRUDDao{
             System.out.println(builder);
             ps=connection.prepareStatement(builder.toString());
             List<T> result=executeSelect(ps,getEntityType(),id);
-            result.forEach(System.out::println);
             if(result.size()==1) return Optional.of(result.get(0));
             else throw new SQLException("Result is not unique");
         } catch (SQLException  e) {
@@ -77,9 +79,10 @@ public abstract class AbstractDAO<T,ID> extends CRUDDao{
             }
         }
     }
+    @Override
     public ID executeInsert(Connection connection,T object){
         LinkedHashMap<Field,Object> objectMap=EntityUtils.toMap(object,getEntityType());
-        String insertQuery=QueryBuilder.insert(getEntityType());
+        String insertQuery= QueryBuilder.insert(getEntityType());
         List<Object> param=new ArrayList<>();
         objectMap.forEach((field,value)->{
             Column column=field.getDeclaredAnnotation(Column.class);
@@ -89,6 +92,25 @@ public abstract class AbstractDAO<T,ID> extends CRUDDao{
         });
         System.out.println(insertQuery);
         try(PreparedStatement preparedStatement=connection.prepareStatement(insertQuery,PreparedStatement.RETURN_GENERATED_KEYS)){
+            return executeInsert(preparedStatement,getIdType(), param.toArray());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Override
+    public ID executeInsert(T object){
+        LinkedHashMap<Field,Object> objectMap=EntityUtils.toMap(object,getEntityType());
+        String insertQuery= QueryBuilder.insert(getEntityType());
+        List<Object> param=new ArrayList<>();
+        objectMap.forEach((field,value)->{
+            Column column=field.getDeclaredAnnotation(Column.class);
+            if(!(field.getDeclaredAnnotation(Transient.class) != null||(column!=null&& !column.insertable()))){
+                param.add(value);
+            }
+        });
+        System.out.println(insertQuery);
+        try(Connection connection=getConnection();
+                PreparedStatement preparedStatement=connection.prepareStatement(insertQuery,PreparedStatement.RETURN_GENERATED_KEYS)){
             return executeInsert(preparedStatement,getIdType(), param.toArray());
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -107,10 +129,11 @@ public abstract class AbstractDAO<T,ID> extends CRUDDao{
             throw new RuntimeException(e);
         }
     }
-
+    @Override
     public List<T> executeSelect(Connection connection,String query,Object ...params){
         return executeSelect(connection,query,getEntityType(),params);
     }
+    @Override
     public List<T> executeSelect(String query,Object ...params){
         Connection connection=getConnection();
         List<T> result=executeSelect(connection,query,params);

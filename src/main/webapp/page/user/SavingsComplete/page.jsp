@@ -7,7 +7,7 @@
         <tiles:definition extends="main-wrapper">
             <tiles:putAttribute name="content" >
                 <tiles:definition extends="user.default-layout">
-                    <tiles:putAttribute name="content" value="/page/user/HomePage/content.jsp"/>
+                    <tiles:putAttribute name="content" value="/page/user/SavingsComplete/content.jsp"/>
                 </tiles:definition>
             </tiles:putAttribute>
         </tiles:definition>

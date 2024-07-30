@@ -4,10 +4,10 @@ import com.sonnguyen.individual.nhs.constant.AccountStatus;
 import com.sonnguyen.individual.nhs.constant.AccountType;
 import com.sonnguyen.individual.nhs.constant.DefaultBrand;
 import com.sonnguyen.individual.nhs.constant.TransactionType;
-import com.sonnguyen.individual.nhs.dao.impl.AccountDAOImp;
-import com.sonnguyen.individual.nhs.dao.impl.AccountHolderDAOImpl;
-import com.sonnguyen.individual.nhs.dao.impl.SavingDAOImp;
-import com.sonnguyen.individual.nhs.dao_v2.DBTransaction;
+import com.sonnguyen.individual.nhs.dao.core.DBTransaction;
+import com.sonnguyen.individual.nhs.dao.idao.IAccountDAO;
+import com.sonnguyen.individual.nhs.dao.idao.IAccountHolderDAO;
+import com.sonnguyen.individual.nhs.dao.idao.ISavingDAO;
 import com.sonnguyen.individual.nhs.model.*;
 import com.sonnguyen.individual.nhs.service.iservice.IAccountService;
 import com.sonnguyen.individual.nhs.service.iservice.ITransferService;
@@ -25,13 +25,13 @@ import java.util.UUID;
 @Model
 public class AccountService implements IAccountService {
     @Inject
-    private AccountHolderDAOImpl accountHolderDAO;
+    private IAccountHolderDAO accountHolderDAO;
     @Inject
-    private AccountDAOImp accountDao;
+    private IAccountDAO accountDao;
     @Inject
     private DBTransaction dbTransaction;
     @Inject
-    private SavingDAOImp savingDao;
+    private ISavingDAO savingDao;
     @Inject
     private ITransferService transferService;
 
@@ -105,7 +105,7 @@ public class AccountService implements IAccountService {
 
     @Override
     public List<Account> findByStatusAndTypeAndCustomerId(AccountStatus accountStatus,AccountType type,Integer customerId) {
-        return accountDao.findByStatusAndTypeAndCustomerId(AccountStatus.OPEN, AccountType.SAVINGS,customerId );
+        return accountDao.findByStatusAndTypeAndCustomerId(AccountStatus.OPEN, type,customerId );
     }
 
     @Override
@@ -114,8 +114,8 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    public List<Account> findPrincipleByCustomerId(Integer customerId) {
-        return accountDao.findByCustomerIdAndType(customerId,AccountType.PRINCIPAL);
+    public List<Account> findPrimaryByCustomerId(Integer customerId) {
+        return accountDao.findByCustomerIdAndType(customerId,AccountType.PRIMARY);
     }
 
 

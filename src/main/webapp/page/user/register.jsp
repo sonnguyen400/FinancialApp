@@ -1,5 +1,5 @@
 <%@ page import="static com.sonnguyen.individual.nhs.utils.RequestUtils.ERROR_MESSAGE" %>
-<%@ page import="com.sonnguyen.individual.nhs.type.Message" %>
+<%@ page import="com.sonnguyen.individual.nhs.dto.Message" %>
 <%@include file="/taglib/taglib.jsp" %>
 <%@ taglib prefix="ex" uri="/WEB-INF/custom.tld" %>
 <!DOCTYPE html>
@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<jsp:useBean id="message" scope="request" class="com.sonnguyen.individual.nhs.type.Message"/>
+<jsp:useBean id="message" scope="request" class="com.sonnguyen.individual.nhs.dto.Message"/>
 <c:if test="${message!=null&&message.type.name()=='SUCCESS'}">
     <ex:alert type="SUCCESS" link="Login" href="<c:url/>">jdftftu</ex:alert>
 </c:if>

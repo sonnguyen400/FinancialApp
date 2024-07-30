@@ -1,4 +1,6 @@
-package com.sonnguyen.individual.nhs.dao_v2;
+package com.sonnguyen.individual.nhs.dao.core;
+
+import com.sonnguyen.individual.nhs.utils.EntityMapper;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;

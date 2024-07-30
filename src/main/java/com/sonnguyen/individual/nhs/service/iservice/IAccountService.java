@@ -16,5 +16,5 @@ public interface IAccountService{
     void createSavingsAccount(Integer customerId, SavingsInfo savingsInfor);
     List<Account> findByStatusAndTypeAndCustomerId(AccountStatus status,AccountType accountType, Integer customerId);
     Account findDefaultAccountByCustomerId(Integer customerId);
-    List<Account> findPrincipleByCustomerId(Integer customerId);
+    List<Account> findPrimaryByCustomerId(Integer customerId);
 }

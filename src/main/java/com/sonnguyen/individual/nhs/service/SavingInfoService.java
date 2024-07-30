@@ -1,12 +1,11 @@
 package com.sonnguyen.individual.nhs.service;
 
 import com.sonnguyen.individual.nhs.constant.AccountStatus;
-import com.sonnguyen.individual.nhs.constant.Rollover;
 import com.sonnguyen.individual.nhs.constant.TransactionStatus;
 import com.sonnguyen.individual.nhs.constant.TransactionType;
 import com.sonnguyen.individual.nhs.dao.impl.AccountDAOImp;
 import com.sonnguyen.individual.nhs.dao.impl.SavingDAOImp;
-import com.sonnguyen.individual.nhs.dao_v2.DBTransaction;
+import com.sonnguyen.individual.nhs.dao.core.DBTransaction;
 import com.sonnguyen.individual.nhs.model.Account;
 import com.sonnguyen.individual.nhs.model.SavingsInfo;
 import com.sonnguyen.individual.nhs.model.Transaction;
@@ -18,7 +17,6 @@ import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,13 +51,7 @@ public class SavingInfoService implements ISavingsInfoService {
     public Optional<SavingsInfo> completeSavings(SavingsInfo savingsInfo, int beneficiaryAccountId){
         Account linkedAccount=accountDAOImp.findById(savingsInfo.getAccountId()).orElseThrow(()->new ResourceNotFoundException("Account Not Found"));
         Account branchAccount=accountDAOImp.findBranchPrincipalAccount(linkedAccount.getBranchID()).orElseThrow(()->new ResourceNotFoundException("Management Branch isn't found"));
-        if(savingsInfo.getRollover()==Rollover.WITHDRAW_ENTIRE.value){
-            return withdrawEntire(savingsInfo,linkedAccount,branchAccount,beneficiaryAccountId);
-        }else if(savingsInfo.getRollover()==Rollover.ROLLOVER_PRINCIPAL.value){
-            return rollOverPrinciple(savingsInfo,linkedAccount,branchAccount,beneficiaryAccountId);
-        }else{
-            return rollOverAll(savingsInfo,linkedAccount,branchAccount);
-        }
+        return  withdrawEntire(savingsInfo,linkedAccount,branchAccount,beneficiaryAccountId);
     }
 
     @Override
@@ -71,7 +63,6 @@ public class SavingInfoService implements ISavingsInfoService {
     public Optional<SavingsInfo> withdrawEntire(SavingsInfo savingsInfo,Account linkedAccount,Account branchAccount,int beneficiaryAccountId){
         BigDecimal assets=linkedAccount.getBalance();
         BigDecimal profit=savingsInfo.isMature()?calculateProfit(linkedAccount.getBalance(),savingsInfo.getInterestRate().intValue(),savingsInfo.getTerm()):BigDecimal.ZERO;
-
         Transaction transactProfit=new Transaction();
         transactProfit.setTransactionType(TransactionType.DISBURSEMENT.value);
         transactProfit.setAmount(profit);

@@ -1,12 +1,7 @@
-<%@ page import="com.sonnguyen.individual.nhs.model.Account" %>
-<%@ page import="com.sonnguyen.individual.nhs.utils.SessionUtils" %>
-<%@ page import="com.sonnguyen.individual.nhs.model.Login" %>
+
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%
-    Login account = SessionUtils.getPrincipal(request);
-    Account principalAccount = (Account) request.getAttribute("account");
-%>
+<jsp:useBean id="account"  scope="request" class="com.sonnguyen.individual.nhs.model.Account"/>
 
 <div class="row">
     <div class="col-xl-3">
@@ -16,11 +11,10 @@
                     <div class="text-center">
                         <span class="text-md-11 opacity-5 text-white"><i class="fi fi-sr-sack-dollar"></i></span>
                         <h6 class="mt-2 mb-2 text-white-50 text-white">Balance</h6>
-                        <h3 class="text-white"><%=principalAccount.getBalance()%>
+                        <h3 class="text-white">${account.balance}
                         </h3>
                         <button class="btn gradient-3 btn-lg border-0 btn-rounded px-5">
                             <i class="fi fi-sr-eye"></i>
-                            <%--                <i class="fi fi-sr-eye-crossed"></i>--%>
                         </button>
                     </div>
                 </div>

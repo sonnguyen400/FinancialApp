@@ -2,7 +2,7 @@ package com.sonnguyen.individual.nhs.utils;
 
 import com.sonnguyen.individual.nhs.service.EmailService;
 import com.sonnguyen.individual.nhs.service.iservice.IEmailService;
-import com.sonnguyen.individual.nhs.type.Otp;
+import com.sonnguyen.individual.nhs.dto.Otp;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;

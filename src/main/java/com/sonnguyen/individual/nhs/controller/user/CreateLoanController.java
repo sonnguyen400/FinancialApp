@@ -1,5 +1,7 @@
 package com.sonnguyen.individual.nhs.controller.user;
 
+import com.sonnguyen.individual.nhs.constant.AccountStatus;
+import com.sonnguyen.individual.nhs.constant.AccountType;
 import com.sonnguyen.individual.nhs.constant.DefaultBrand;
 import com.sonnguyen.individual.nhs.model.Customer;
 import com.sonnguyen.individual.nhs.model.Loan;
@@ -36,7 +38,7 @@ public class CreateLoanController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if(req.getRequestURI().equalsIgnoreCase("/app/otp")){
             Login account= SessionUtils.getPrincipal(req);
-            req.setAttribute("accounts",accountService.findPrincipleByCustomerId(account.getCustomer().getId()));
+            req.setAttribute("accounts",accountService.findByStatusAndTypeAndCustomerId(AccountStatus.OPEN, AccountType.PRIMARY,account.getCustomer().getId()));
             Customer customer=customerService.findById(account.getCustomerId());
             req.setAttribute("membership",membershipService.findById(customer.getMembershipID()).orElse(new Membership()));
             req.getRequestDispatcher("/page/user/LoanCreate/page.jsp").forward(req, resp);

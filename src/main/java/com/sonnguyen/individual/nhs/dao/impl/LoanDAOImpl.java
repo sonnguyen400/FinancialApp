@@ -1,7 +1,7 @@
 package com.sonnguyen.individual.nhs.dao.impl;
 
 import com.sonnguyen.individual.nhs.dao.idao.ILoanDAO;
-import com.sonnguyen.individual.nhs.dao_v2.AbstractDAO;
+import com.sonnguyen.individual.nhs.dao.core.AbstractDAO;
 import com.sonnguyen.individual.nhs.model.Customer;
 import com.sonnguyen.individual.nhs.model.Loan;
 
@@ -54,17 +54,5 @@ public class LoanDAOImpl extends AbstractDAO<Loan,Integer> implements ILoanDAO {
         String query = "update loan set status=? where id=?";
         return executeUpdate(connection,query,status,id);
     }
-    @Override
-    public Integer executeInsert(Loan loan){
-        Connection connection=getConnection();
-        Integer id=executeInsert(connection,loan);
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return id;
-    }
-
 
 }

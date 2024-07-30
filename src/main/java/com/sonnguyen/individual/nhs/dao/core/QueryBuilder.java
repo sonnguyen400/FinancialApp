@@ -1,7 +1,8 @@
-package com.sonnguyen.individual.nhs.dao_v2;
+package com.sonnguyen.individual.nhs.dao.core;
 
 
-import com.sonnguyen.individual.nhs.dao_v2.exception.EntityIntegrityException;
+import com.sonnguyen.individual.nhs.utils.EntityUtils;
+import com.sonnguyen.individual.nhs.exception.EntityIntegrityException;
 
 import javax.persistence.Column;
 import javax.persistence.Transient;
@@ -14,7 +15,7 @@ import java.util.List;
 public class QueryBuilder {
 
     public static String insert(Class<?> entityType){
-        List<Field> fields=EntityUtils.getField(entityType);
+        List<Field> fields= EntityUtils.getField(entityType);
         StringBuilder query = new StringBuilder("insert into ");
         query.append(EntityUtils.getTableName(entityType));
         query.append("(");
