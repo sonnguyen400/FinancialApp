@@ -2,14 +2,18 @@ package com.sonnguyen.individual.nhs.controller.user;
 
 import com.sonnguyen.individual.nhs.constant.AccountStatus;
 import com.sonnguyen.individual.nhs.constant.AccountType;
+import com.sonnguyen.individual.nhs.dto.Message;
+import com.sonnguyen.individual.nhs.dto.Result;
 import com.sonnguyen.individual.nhs.model.Account;
 import com.sonnguyen.individual.nhs.model.Loan;
 import com.sonnguyen.individual.nhs.model.Login;
+import com.sonnguyen.individual.nhs.model.Payment;
 import com.sonnguyen.individual.nhs.service.iservice.IAccountService;
 import com.sonnguyen.individual.nhs.service.iservice.ILoanService;
 import com.sonnguyen.individual.nhs.service.iservice.IPaymentService;
 import com.sonnguyen.individual.nhs.utils.SessionUtils;
 import io.lettuce.core.RedisNoScriptException;
+import javassist.NotFoundException;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -44,11 +48,24 @@ public class LoansPaymentController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println(req.getRequestURI());
-        if(req.getRequestURI().contains(req.getContextPath()+"/app/otp")) {
-            SessionUtils.setSession(req, "loan", loanService.findById(Integer.parseInt(req.getParameter("loanId"))));
-            SessionUtils.setSession(req, "endpoint", "/loan/payment");
-            resp.sendRedirect(req.getContextPath() + "/app/otp");
+        if(!req.getRequestURI().equals(req.getContextPath()+"/app/otp")) {
+            SessionUtils.setSession(req, "id",Integer.valueOf(req.getParameter("id")));
+            SessionUtils.setSession(req,"account_id",Integer.valueOf(req.getParameter("account_id")));
+            SessionUtils.setSession(req, "endpoint", "/app/loan/payment");
+            resp.sendRedirect(req.getContextPath() + "/app/pin");
+            return;
+        }
+        int loanId=(int) SessionUtils.getSession(req,"id");
+        int account_id=(int) SessionUtils.getSession(req,"account_id");
+        try{
+            Payment payment= paymentService.createPayment(loanId,account_id);
+            System.out.println(payment);
+            req.setAttribute("result", new Result(Message.Type.SUCCESS,"Payment was successful",500));
+            req.getRequestDispatcher("/page/user/Result/page.jsp").forward(req, resp);
+        } catch (Exception e) {
+            e.printStackTrace();
+            req.setAttribute("result", new Result(Message.Type.ERROR,e.getMessage(),500));
+            req.getRequestDispatcher("/page/user/Result/page.jsp").forward(req, resp);
         }
 
     }

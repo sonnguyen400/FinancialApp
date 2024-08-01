@@ -13,8 +13,7 @@ import javassist.NotFoundException;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.temporal.ChronoField;
+import java.util.Calendar;
 import java.util.List;
 
 @Model
@@ -29,16 +28,18 @@ public class PaymentService implements IPaymentService {
     private ITransferService transferService;
     @Inject
     private DBTransaction dbTransaction;
-    public Payment createPayment(int loanId, int srcAccount, BigDecimal amount) throws NotFoundException {
-        Instant now = Instant.now();
+    @Override
+    public Payment createPayment(int loanId, int srcAccount) throws NotFoundException {
+        Calendar now = Calendar.getInstance();
         Loan loan=loanDAO.findById(loanId).orElseThrow(()->new IllegalArgumentException("Loan ID is invalid"));
         Account account=accountDAO.findById(srcAccount).orElseThrow(()->new NotFoundException("Source account not found"));
         Account branchAccount=accountDAO.findBranchPrincipalAccount(account.getBranchID()).orElseThrow(()->new NotFoundException("Branch account illegal"));
         //initial
-        String message="Payment"+now.get(ChronoField.MONTH_OF_YEAR)+"/"+now.get(ChronoField.YEAR)+" for loan "+loan.getId();
+        BigDecimal amount=calculateMonthlyPayment(loan);
+        String message="Payment"+now.get(Calendar.MONTH)+"/"+now.get(Calendar.YEAR)+" for loan "+loan.getId();
         //initialize payment
         Transaction transaction=new Transaction();
-        transaction.setAmount(loan.monthlyPayment());
+        transaction.setAmount(amount);
         transaction.setDescription(message);
         transaction.setAccountId(account.getId());
         transaction.setTransactionType(TransactionType.PAYOFF.value);
@@ -52,7 +53,7 @@ public class PaymentService implements IPaymentService {
         return dbTransaction.startTransaction(Payment.class,connection -> {
             Transfer transfer1=transferService.transferCommit(connection,transactionRef);
             Payment payment=new Payment();
-            payment.setAmount(loan.monthlyPayment());
+            payment.setAmount(amount);
             payment.setLoanId(loanId);
             payment.setTransactionId(transfer1.getTransaction().getId());
             payment.setId(paymentDAO.executeInsert(connection,payment));
@@ -73,5 +74,6 @@ public class PaymentService implements IPaymentService {
         BigDecimal principal=loan.principal().multiply(BigDecimal.valueOf(unpaidMonth));
         BigDecimal interest=loan.interest();
         return principal.add(interest);
+
     }
 }
