@@ -30,7 +30,7 @@ import java.util.Set;
 
 import static com.sonnguyen.individual.nhs.utils.RequestUtils.ERROR_MESSAGE;
 
-@WebServlet(name = "create-savings",urlPatterns = "/app/saving/create")
+@WebServlet(name = "savings/create",urlPatterns = "/app/saving/create")
 @Model
 public class CreateSavingsController extends HttpServlet {
     @Inject

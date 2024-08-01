@@ -5,7 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.Instant;
+import java.time.temporal.ChronoField;
 
 @Entity
 @Table(name = "payment")
@@ -18,10 +21,10 @@ public class Payment {
     private Integer loanId;
 
     @Column(name = "amount", precision = 2)
-    private double amount;
+    private BigDecimal amount;
 
     @Column(name = "payment_date",insertable = false)
-    private Date paymentDate;
+    private Instant paymentDate;
 
     @Size(max = 45)
     @Column(name = "payment_status", length = 45)
@@ -46,19 +49,19 @@ public class Payment {
         this.loanId = loanId;
     }
 
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
-    public Date getPaymentDate() {
+    public Instant getPaymentDate() {
         return paymentDate;
     }
 
-    public void setPaymentDate(Date paymentDate) {
+    public void setPaymentDate(Instant paymentDate) {
         this.paymentDate = paymentDate;
     }
 
@@ -76,5 +79,20 @@ public class Payment {
 
     public void setTransactionId(int transactionId) {
         this.transactionId = transactionId;
+    }
+    public boolean after(int month, int year) {
+        int curMonth = paymentDate.get(ChronoField.MONTH_OF_YEAR);
+        int curYear = paymentDate.get(ChronoField.YEAR);
+        return( month>curMonth&&year==curYear)||year>curYear;
+    }
+    public boolean before(int month, int year) {
+        int curMonth = paymentDate.get(ChronoField.MONTH_OF_YEAR);
+        int curYear = paymentDate.get(ChronoField.YEAR);
+        return (month<curMonth&&year==curYear)||year<curYear;
+    }
+    public boolean in(int month, int year) {
+        int curMonth = paymentDate.get(ChronoField.MONTH_OF_YEAR);
+        int curYear = paymentDate.get(ChronoField.YEAR);
+        return month==curMonth&&year==curYear;
     }
 }

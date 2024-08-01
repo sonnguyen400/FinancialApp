@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "transaction-history",urlPatterns = "/app/history")
+@WebServlet(name = "transaction/history",urlPatterns = "/app/history")
 public class TransactionHistoryController extends HttpServlet {
     @Inject
     ITransactionService transactionService;

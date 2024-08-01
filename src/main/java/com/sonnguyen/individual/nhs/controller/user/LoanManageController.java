@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Map;
 
-@WebServlet(name = "loan-manage",urlPatterns = "/app/loan")
+@WebServlet(name = "loan/manage",urlPatterns = "/app/loan")
 public class LoanManageController extends HttpServlet {
     @Inject
     ILoanService loanService;

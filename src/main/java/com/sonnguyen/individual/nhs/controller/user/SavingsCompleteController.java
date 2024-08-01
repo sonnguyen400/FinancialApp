@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "savings-complete",urlPatterns = "/app/saving/complete")
+@WebServlet(name = "savings/complete",urlPatterns = "/app/saving/complete")
 public class SavingsCompleteController extends HttpServlet {
     @Inject
     private SavingInfoService savingInfoService;

@@ -56,6 +56,7 @@
                         <td>Term</td>
                         <td>Interest Rate</td>
                         <td>Status</td>
+                        <td>Action</td>
                         </thead>
                         <tbody>
                         <c:forEach items="${requestScope.loans}" var="loan_">
@@ -66,6 +67,7 @@
                                 <td>${loan_.term}</td>
                                 <td>${loan_.interestRate}</td>
                                 <td>${loan_.status}</td>
+                                <td><a href="<%=request.getContextPath()%>/app/loan/detail?id=${loan_.id}" class="link-1">Details</a> </td>
                             </tr>
                         </c:forEach>
                         </tbody>

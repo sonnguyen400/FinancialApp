@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
-@WebServlet(name = "account-manage",urlPatterns = "/app/account/manage")
+@WebServlet(name = "account/manage",urlPatterns = "/app/account/manage")
 public class AccountManageController extends HttpServlet {
     @Inject
     IAccountService accountService;

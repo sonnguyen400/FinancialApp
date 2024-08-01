@@ -14,7 +14,7 @@ import java.util.Objects;
 
 import static com.sonnguyen.individual.nhs.utils.RequestUtils.ERROR_MESSAGE;
 
-@WebServlet("/app/transfer/commit")
+@WebServlet("/transfer/commit")
 public class TransferCommitController extends HttpServlet {
     @Inject
     ITransferService transferService;

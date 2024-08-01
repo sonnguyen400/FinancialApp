@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "auth",urlPatterns = "/register")
+@WebServlet(name = "register",urlPatterns = "/register")
 @Model
 public class RegisterController extends HttpServlet {
     @Inject

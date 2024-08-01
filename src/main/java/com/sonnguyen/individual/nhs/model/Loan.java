@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Date;
 
 @Entity
@@ -174,4 +175,16 @@ public class Loan {
                 ", disbursementAccountNumber='" + disbursementAccountNumber + '\'' +
                 '}';
     }
+    public BigDecimal interest(){
+        return amount.multiply(interestRate).divide(BigDecimal.valueOf(100),4, RoundingMode.HALF_UP).divide(BigDecimal.valueOf(term),4, RoundingMode.HALF_UP);
+    }
+    public BigDecimal principal(){
+        return amount.divide(BigDecimal.valueOf(term),4, RoundingMode.HALF_UP);
+    }
+    public BigDecimal monthlyPayment(){
+        final BigDecimal principal=principal();
+        final BigDecimal interest=interest();
+        return principal.add(interest);
+    }
+
 }

@@ -2,6 +2,7 @@ package com.sonnguyen.individual.nhs.service;
 
 import com.sonnguyen.individual.nhs.constant.LoanStatus;
 import com.sonnguyen.individual.nhs.constant.TransactionType;
+import com.sonnguyen.individual.nhs.dao.idao.ILoanDAO;
 import com.sonnguyen.individual.nhs.dao.impl.LoanDAOImpl;
 import com.sonnguyen.individual.nhs.dao.core.DBTransaction;
 import com.sonnguyen.individual.nhs.model.Account;
@@ -18,11 +19,12 @@ import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Optional;
 
 @Model
 public class LoanService implements ILoanService {
     @Inject
-    private LoanDAOImpl loanDAO;
+    private ILoanDAO loanDAO;
     @Inject
     private ITransferService transferService;
     @Inject
@@ -49,6 +51,12 @@ public class LoanService implements ILoanService {
     public Collection<Loan> findAll(){
         return loanDAO.findAll();
     }
+
+    @Override
+    public Optional<Loan> findById(int id) {
+        return loanDAO.findById(id);
+    }
+
     @Override
     public Loan updateStatusById(Integer id, LoanStatus status) throws SQLException, NotFoundException {
         loanDAO.updateStatusById(id, status.value);

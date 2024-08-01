@@ -9,8 +9,9 @@ import javax.persistence.Transient;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.sql.*;
-import java.util.Collections;
-import java.util.List;
+import java.sql.Date;
+import java.time.Instant;
+import java.util.*;
 
 public class QueryBuilder {
 
@@ -89,14 +90,15 @@ public class QueryBuilder {
                 else if(object instanceof Boolean) preparedStatement.setBoolean(i,(Boolean) object);
                 else if(object instanceof byte[]) preparedStatement.setBytes(i,(byte[]) object);
                 else if(object instanceof Blob) preparedStatement.setBlob(i,(Blob) object);
+                else if(object instanceof Instant) preparedStatement.setDate(i,new Date(((Instant) object).toEpochMilli()));
                 else if(object.getClass().isPrimitive()){
-                    if(object.getClass().getSimpleName().equals("int"))  preparedStatement.setInt(i, (Integer) object);
-                    else if(object.getClass().getSimpleName().equals("long")) preparedStatement.setLong(i,(Long)object);
-                    else if(object.getClass().getSimpleName().equals("float")) preparedStatement.setFloat(i,(Float)object);
-                    else if(object.getClass().getSimpleName().equals("double")) preparedStatement.setDouble(i,(Double)object);
-                    else if(object.getClass().getSimpleName().equals("short")) preparedStatement.setShort(i,(Short)object);
-                    else if(object.getClass().getSimpleName().equals("byte")) preparedStatement.setByte(i,(Byte)object);
-                    else if(object.getClass().getSimpleName().equals("boolean")) preparedStatement.setBoolean(i,(Boolean)object);
+                    if(object.getClass().getSimpleName().equals("int"))  preparedStatement.setInt(i, (int)object);
+                    else if(object.getClass().getSimpleName().equals("long")) preparedStatement.setLong(i,(long)object);
+                    else if(object.getClass().getSimpleName().equals("float")) preparedStatement.setFloat(i,(float)object);
+                    else if(object.getClass().getSimpleName().equals("double")) preparedStatement.setDouble(i,(double)object);
+                    else if(object.getClass().getSimpleName().equals("short")) preparedStatement.setShort(i,(short)object);
+                    else if(object.getClass().getSimpleName().equals("byte")) preparedStatement.setByte(i,(byte)object);
+                    else if(object.getClass().getSimpleName().equals("boolean")) preparedStatement.setBoolean(i,(boolean)object);
                 }
                 else preparedStatement.setObject(i,object);
 
@@ -106,6 +108,5 @@ public class QueryBuilder {
             }
             i++;
         }
-        System.out.println();
     }
 }

@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "user-saving-manage-controller",urlPatterns = "/app/saving")
+@WebServlet(name = "savings/manage",urlPatterns = "/app/saving")
 public class SavingsManageController extends HttpServlet {
     @Inject
     IAccountService accountService;

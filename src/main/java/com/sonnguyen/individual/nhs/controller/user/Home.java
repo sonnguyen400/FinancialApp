@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebServlet(name = "user-home",urlPatterns = "/app")
+@WebServlet(name = "home",urlPatterns = "/app")
 public class Home extends HttpServlet {
 
 

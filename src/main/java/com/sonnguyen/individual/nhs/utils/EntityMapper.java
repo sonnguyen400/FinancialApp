@@ -9,6 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.sql.*;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -76,7 +77,9 @@ public class EntityMapper<T> {
             else if (paramType== Timestamp.class) setter.invoke(object,resultSet.getTimestamp(columnName));
             else if (paramType== Blob.class) setter.invoke(object,resultSet.getBlob(columnName));
             else if (paramType== Clob.class) setter.invoke(object,resultSet.getClob(columnName));
+            else if(paramType== Instant.class) setter.invoke(object,Instant.ofEpochMilli(resultSet.getDate(columnName).getTime()));
             else setter.invoke(object,resultSet.getObject(columnName));
+
         } catch (SQLException | InvocationTargetException | IllegalAccessException e) {
             log.warning("Error why mapping object in EntityMapper class Column: "+columnName);
             e.printStackTrace();

@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
-@WebServlet(name ="loan-create",urlPatterns = "/app/loan/create")
+@WebServlet(name ="loan/create",urlPatterns = "/app/loan/create")
 public class CreateLoanController extends HttpServlet {
     @Inject
     ICustomerService customerService;

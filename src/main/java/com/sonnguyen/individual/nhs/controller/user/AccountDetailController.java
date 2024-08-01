@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
-@WebServlet(name = "user-account-detail",urlPatterns = "/app/account")
+@WebServlet(name = "account/detail",urlPatterns = "/app/account")
 public class AccountDetailController extends HttpServlet {
     @Inject
     IAccountService accountService;

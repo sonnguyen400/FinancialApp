@@ -66,7 +66,8 @@ public abstract class AbstractDAO<T,ID> extends CRUDDao implements GeneralDAO<T,
             ps=connection.prepareStatement(builder.toString());
             List<T> result=executeSelect(ps,getEntityType(),id);
             if(result.size()==1) return Optional.of(result.get(0));
-            else throw new SQLException("Result is not unique");
+            else if(result.size()>1) throw new SQLException("Result is not unique");
+            return Optional.empty();
         } catch (SQLException  e) {
             throw new RuntimeException(e);
         }finally {

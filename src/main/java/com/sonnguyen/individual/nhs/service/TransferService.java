@@ -88,6 +88,8 @@ public class TransferService implements ITransferService {
         accountDAO.updateBalanceByAccountId(connection,transfer.getAccountId(),transfer.getTransaction().getAmount());
         transactionDAO.updateStatus(connection,transactions.get(0).getId(),TransactionStatus.SUCCESS.value);
         transactionDAO.updateStatus(connection,transactions.get(1).getId(),TransactionStatus.SUCCESS.value);
+
+        transfer.setTransaction(transferTransaction);
         return transfer;
     }
 
