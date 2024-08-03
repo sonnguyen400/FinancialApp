@@ -2,10 +2,12 @@ package com.sonnguyen.individual.nhs.dao.impl;
 
 import com.sonnguyen.individual.nhs.dao.idao.IPaymentDAO;
 import com.sonnguyen.individual.nhs.dao.core.AbstractDAO;
+import com.sonnguyen.individual.nhs.model.Loan;
 import com.sonnguyen.individual.nhs.model.Payment;
 
 import javax.enterprise.inject.Model;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;

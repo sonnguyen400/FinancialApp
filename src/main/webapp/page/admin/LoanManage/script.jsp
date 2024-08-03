@@ -1,85 +1,78 @@
 <%@ page import="com.sonnguyen.individual.nhs.constant.LoanStatus" %>
 <script>
-    $(function(){
-        function fetchLoansData({status="PENDING", end, start}){
-            return $.get("<%=request.getContextPath()%>/app/ajax/loans?status="+status);
+    console.log(bootstrap)
+    $(function () {
+        const baseUrl = "<%=request.getContextPath()%>/ajax/loans";
+
+        function fetchLoansData({status, end, start}) {
+            return $.get(`\${baseUrl}?status=\${status}`);
         }
-        function approveLoan(id){
+
+        function approveLoan(id) {
             $.ajax({
-                url:"<%=request.getContextPath()%>/app/ajax/loans",
-                method:"PUT",
-                data:{
-                    id:id,
-                    status:"<%=LoanStatus.APPROVED%>"
+                url: baseUrl,
+                method: "PUT",
+                data: {
+                    id: id,
+                    status: "<%=LoanStatus.APPROVED%>"
                 }
             })
         }
-        function rejectLoan(id){
+
+        function rejectLoan(id) {
             $.ajax({
-                url:"<%=request.getContextPath()%>/app/ajax/loans",
-                method:"PUT",
-                data:{
-                    id:id,
-                    status:"<%=LoanStatus.REJECTED%>"
+                url: baseUrl,
+                method: "PUT",
+                data: {
+                    id: id,
+                    status: "<%=LoanStatus.REJECTED%>"
                 }
             })
         }
-        fetchLoansData("PENDING").done(data=>{
-            $("#PENDING tbody").html(JSON.parse(data).map(loan=>{
-                return `<tr>
-                                <td>1</td>
-                                <td>\${loan.customer.firstname} \${loan.customer.lastname}</td>
-                                <td>\${loan.disbursementAccountNumber}</td>
-                                <td>\${loan.createAt}</td>
-                                <td>\${loan.amount}</td>
-                                <td>\${loan.interestRate}</td>
-                                <td>\${loan.term} Month</td>
+
+        var triggerTabList = $("#loans a")
+        triggerTabList.on("shown.bs.tab", function (e) {
+            $.get(`\${baseUrl}?status=\${this.getAttribute("data-status")}`, (data) => {
+                data=JSON.parse(data)
+                console.log(data)
+                $(this.hash+" tbody").html(
+                    data.map(item=>` <tr>
+                                <td>\${item.id}</td>
+                                <td>\${item.customer.firstname+" "+item.customer.lastname}</td>
+                                <td>\${item.disbursementAccountNumber}</td>
+                                <td>\${item.createAt}</td>
+                                <td>\${item.amount}</td>
+                                <td>\${item.interestRate}%</td>
+                                <td>\${item.term} Month</td>
                                 <td>
-                                    <button value="\${loan.id}"  class="btn btn-success approve">Approved</button>
-                                    <button value="\${loan.id}"  class="btn btn-warning reject">Reject</button>
-                                    <a href="./index.html" class="btn btn-warning">Detail</a>
+                                    \${item.status==2?"<button class='btn btn-success' onclick={(e)=>approveLoan(\${item.id})}>Approved</button><button onclick={(e)=>rejectLoan(\${item.id})} class='btn btn-warning'>Reject</button>":""}
+                                    <a href=<%=request.getContextPath()%>/admin/loan/detail?id=\${item.id} class="btn btn-warning">Detail</a>
                                 </td>
-                            </tr>`;
-            }).join(''));
+                            </tr> `).join("")
+                )
+            })
         })
-
-        var triggerTabList = [].slice.call(document.querySelectorAll('#loan-status a'));
-        triggerTabList.forEach(function (triggerEl) {
-            var tabTrigger = new bootstrap.Tab(triggerEl)
-            var status = triggerEl.getAttribute("data-status");
-            $("#"+status+" tbody").on("click",e=>{
-                if(e.target.classList.contains("approve")){
-                    approveLoan(e.target.value)
-                }else if(e.target.classList.contains("reject")){
-                    rejectLoan(e.target.value)
-                }
-            })
-
-            triggerEl.addEventListener('click', function (event) {
-                fetchLoansData(status).done(data=>{
-                    $("#"+status+" tbody").html(JSON.parse(data).map(loan=>{
-                        return `<tr>
-                                <td>1</td>
-                                <td>\${loan.customer.firstname} \${loan.customer.lastname}</td>
-                                <td>\${loan.disbursementAccountNumber}</td>
-                                <td>\${loan.createAt}</td>
-                                <td>\${loan.amount}</td>
-                                <td>\${loan.interestRate}</td>
-                                <td>\${loan.term} Month</td>
+        $.get(`\${baseUrl}?status=PENDING`, (data) => {
+            data=JSON.parse(data)
+            $("#PENDING tbody").html(
+                data.map(item=>` <tr>
+                                <td>\${item.id}</td>
+                                <td>\${item.customer}</td>
+                                <td>\${item.disbursementAccountNumber}</td>
+                                <td>\${item.createAt}</td>
+                                <td>\${item.amount}</td>
+                                <td>\${item.interestRate}%</td>
+                                <td>\${item.term} Month</td>
                                 <td>
-                                    \${status=="PENDING"&&`<button value='\${loan.id}' class='btn btn-success approve'>Approve</button>
-                        <button  value="\${loan.id}" class="btn btn-warning">Reject</button>`}
-                                    <a href="./index.html" class="btn btn-warning">Detail</a>
+                                    \${item.status==2?"<button class='btn btn-success'>Approved</button><button class='btn btn-warning'>Reject</button>":""}
+                                    <a href=<%=request.getContextPath()%>/admin/loan/detail?id=\${item.id} class="btn btn-warning">Detail</a>
                                 </td>
-                            </tr>`;
-                    }).join(''));
-                })
-                event.preventDefault()
-                tabTrigger.show()
-            })
-
-        });
+                            </tr> `).join("")
+            )
+        })
+        console.log(triggerTabList.tab())
 
 
     })
 </script>
+

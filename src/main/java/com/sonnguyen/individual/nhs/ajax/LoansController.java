@@ -16,10 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@WebServlet(name = "ajax-admin-loans-list-controller",value = "/app/ajax/loans")
+@WebServlet(name = "admin/ajax/loans",value = "/ajax/loans")
 public class LoansController extends HttpServlet {
     @Inject
     ILoanService service;
@@ -30,9 +31,8 @@ public class LoansController extends HttpServlet {
         ObjectWriter ow=new ObjectMapper().writer().withDefaultPrettyPrinter();
         if(status==null){
             resp.getWriter().write( ow.writeValueAsString(service.findAll()));
-        }else if( Arrays.stream(LoanStatus.values()).anyMatch(loanstatus -> Objects.equals(loanstatus.value, status.toUpperCase()))){
-            resp.getWriter().write(ow.writeValueAsString(service.findAllByStatus(LoanStatus.valueOf(status.toUpperCase()))));
         }
+        resp.getWriter().write(ow.writeValueAsString(service.findAllByStatus(LoanStatus.valueOf(status))));
     }
 
     @Override

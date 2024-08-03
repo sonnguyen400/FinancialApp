@@ -5,9 +5,6 @@
 <html>
 <head>
 
-    <link rel="stylesheet" href='<c:url value="/resources/plugins/chartist/css/chartist.min.css"/>'>
-    <link rel="stylesheet"
-          href='<c:url value="/resources/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css"/>'>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title><tiles:insertAttribute name="title"/></title>

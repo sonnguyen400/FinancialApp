@@ -5,8 +5,10 @@ import com.sonnguyen.individual.nhs.model.Loan;
 import javassist.NotFoundException;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 public interface ILoanService{
@@ -17,5 +19,6 @@ public interface ILoanService{
     Loan save(Loan loan);
     Collection<Loan> findAllByStatus(LoanStatus loanStatus);
     Collection<Loan> findAll();
+    List<Loan> findAllByNextPaymentDate(Date nextPaymentDate, int diff, boolean nextnewest);
 
 }

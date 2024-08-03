@@ -17,8 +17,10 @@ import org.jboss.logging.Logger;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Model
@@ -53,6 +55,15 @@ public class LoanService implements ILoanService {
     }
 
     @Override
+    public List<Loan> findAllByNextPaymentDate(Date nextPaymentDate, int diff, boolean nextnewest) {
+        try {
+            return loanDAO.findAllByNextPaymentDate(nextPaymentDate,diff,nextnewest);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public Optional<Loan> findById(int id) {
         return loanDAO.findById(id);
     }
@@ -64,9 +75,10 @@ public class LoanService implements ILoanService {
     }
 
     @Override
-    public Loan approveLoan(Integer id) throws SQLException, NotFoundException {
+    public Loan approveLoan(Integer id) throws NotFoundException {
         Loan loan=loanDAO.findById(id).orElseThrow(()->new NotFoundException("Could not find"));
         Account account=accountService.findByAccountNumber(loan.getDisbursementAccountNumber()).orElseThrow(()->new NotFoundException("Could not find"));
+        if(loan.getStatus()==LoanStatus.REJECTED.value||loan.getStatus()==LoanStatus.APPROVED.value) throw new IllegalArgumentException("Illegal loan status");
         return dbTransaction.startTransaction(Loan.class,connection -> {
             Transaction transaction=new Transaction();
             transaction.setAmount(loan.getAmount());
@@ -77,7 +89,7 @@ public class LoanService implements ILoanService {
             transfer.setMessage("Disburse for loan");
             transfer.setAccountId(account.getId());
             transfer.setTransaction(transaction);
-            loanDAO.updateStatusById(connection,id,LoanStatus.APPROVED.value);
+            loanDAO.approveLoanById(connection,loan.getId());
             transferService.startTransfer(connection,transfer);
             loan.setStatus(LoanStatus.APPROVED.value);
             return loan;
