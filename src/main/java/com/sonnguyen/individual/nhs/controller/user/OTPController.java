@@ -1,8 +1,10 @@
 package com.sonnguyen.individual.nhs.controller.user;
 
+import com.sonnguyen.individual.nhs.security.core.SecurityContextHolder;
 import com.sonnguyen.individual.nhs.utils.OTPUtils;
 import com.sonnguyen.individual.nhs.utils.SessionUtils;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,16 +17,17 @@ import static com.sonnguyen.individual.nhs.utils.RequestUtils.ERROR_MESSAGE;
 
 @WebServlet(name = "otp-validate",urlPatterns = "/app/otp")
 public class OTPController extends HttpServlet {
-
+    @Inject
+    SecurityContextHolder securityContextHolder;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/page/user/EnterOTP/page.jsp").forward(req,resp);
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        securityContextHolder.setPrincipal(SessionUtils.getPrincipal(req));
         if(req.getParameter(OTP) != null){
             if(OTPUtils.isValid(req)){
-                System.out.println("Valid OTP");
                 req.getRequestDispatcher((String) SessionUtils.getSession(req,"endpoint")).include(req,resp);
             }else {
                 System.out.println("Invalid OTP");

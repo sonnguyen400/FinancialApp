@@ -8,6 +8,7 @@ import javax.enterprise.inject.Model;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 @Model
 public class LoginDAOImp extends AbstractDAO<Login,Integer> implements ILoginDAO {
@@ -46,5 +47,12 @@ public class LoginDAOImp extends AbstractDAO<Login,Integer> implements ILoginDAO
         }
         if(logins!=null&&logins.size()==1) return logins.get(0);
         return null;
+    }
+    @Override
+    public Optional<Login> findByUsername(String username){
+        String query="select * from login where username=?";
+        List<Login> login=executeSelect(query,username);
+        if(login.isEmpty()) return Optional.empty();
+        return Optional.of(login.get(0));
     }
 }

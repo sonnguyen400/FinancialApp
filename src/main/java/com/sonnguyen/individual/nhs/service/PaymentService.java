@@ -13,6 +13,7 @@ import javassist.NotFoundException;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 
@@ -74,6 +75,9 @@ public class PaymentService implements IPaymentService {
         BigDecimal principal=loan.principal().multiply(BigDecimal.valueOf(unpaidMonth));
         BigDecimal interest=loan.interest();
         return principal.add(interest);
-
+    }
+    @Override
+    public Date findNextPaymentByLoanId(int loanId){
+        return paymentDAO.findNextPaymentByLoanId(loanId);
     }
 }

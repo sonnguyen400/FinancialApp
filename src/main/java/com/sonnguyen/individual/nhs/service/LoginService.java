@@ -23,6 +23,6 @@ public class LoginService implements ILoginService {
 
     @Override
     public Optional<Login> findByUsername(String username) {
-        return Optional.empty();
+        return loginDAO.findByUsername(username);
     }
 }

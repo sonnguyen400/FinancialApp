@@ -9,6 +9,7 @@ import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Optional;
 
 @Model
 @EJB
@@ -26,8 +27,8 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Customer findById(Integer customerId) {
-        return customerDAO.findById(customerId).orElseGet(null);
+    public Optional<Customer> findById(Integer customerId) {
+        return customerDAO.findById(customerId);
     }
 
     @Override

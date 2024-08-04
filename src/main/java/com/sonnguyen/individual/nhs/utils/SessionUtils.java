@@ -1,6 +1,7 @@
 package com.sonnguyen.individual.nhs.utils;
 
 import com.sonnguyen.individual.nhs.model.Login;
+import com.sonnguyen.individual.nhs.security.UserDetailImp;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,7 +13,7 @@ public class SessionUtils {
     public static Object getSession(HttpServletRequest request, String key) {
         return request.getSession().getAttribute(key);
     }
-    public static Login getPrincipal(HttpServletRequest request){
-        return (Login) getSession(request,SessionUtils.LOGIN_SESSION);
+    public static UserDetailImp getPrincipal(HttpServletRequest request){
+        return (UserDetailImp) getSession(request,SessionUtils.LOGIN_SESSION);
     }
 }

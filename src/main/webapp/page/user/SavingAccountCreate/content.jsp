@@ -38,7 +38,7 @@
                     </div>
                     <div class="col d-flex flex-column align-items-end">
                         <p class="text-sm-6 mb-1 opacity-7">Interest Rate</p>
-                        <h6 class="text-white font-weight-semi-bold" id="interest_rate_ref">5% per year</h6>
+                        <h6 class="text-white font-weight-semi-bold" id="interest_rate_ref">3% per year</h6>
                         <i class="fi fi-sr-budget-alt text-sm-12 opacity-5"></i>
                     </div>
                 </div>

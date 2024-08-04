@@ -3,6 +3,8 @@ package com.sonnguyen.individual.nhs.controller.user;
 import com.sonnguyen.individual.nhs.model.Account;
 import com.sonnguyen.individual.nhs.model.Login;
 import com.sonnguyen.individual.nhs.model.Transaction;
+import com.sonnguyen.individual.nhs.security.UserDetailImp;
+import com.sonnguyen.individual.nhs.security.core.SecurityContextHolder;
 import com.sonnguyen.individual.nhs.service.iservice.IAccountService;
 import com.sonnguyen.individual.nhs.service.iservice.ITransactionService;
 import com.sonnguyen.individual.nhs.utils.SessionUtils;
@@ -22,10 +24,12 @@ public class TransactionHistoryController extends HttpServlet {
     ITransactionService transactionService;
     @Inject
     IAccountService accountService;
+    @Inject
+    SecurityContextHolder securityContextHolder;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Login login= SessionUtils.getPrincipal(req);
-        Account defaultAcc=accountService.findDefaultAccountByCustomerId(login.getCustomerId());
+        UserDetailImp userDetailImp= (UserDetailImp) securityContextHolder.getPrincipal();
+        Account defaultAcc=accountService.findDefaultAccountByCustomerId(userDetailImp.getCustomerId());
         List<Transaction> transactionList=transactionService.findHistoryByAccountId(defaultAcc.getId());
         req.setAttribute("defaultAccount",defaultAcc);
         req.setAttribute("transactions",transactionList);

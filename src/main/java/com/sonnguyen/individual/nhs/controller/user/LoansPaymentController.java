@@ -8,6 +8,8 @@ import com.sonnguyen.individual.nhs.model.Account;
 import com.sonnguyen.individual.nhs.model.Loan;
 import com.sonnguyen.individual.nhs.model.Login;
 import com.sonnguyen.individual.nhs.model.Payment;
+import com.sonnguyen.individual.nhs.security.UserDetailImp;
+import com.sonnguyen.individual.nhs.security.core.SecurityContextHolder;
 import com.sonnguyen.individual.nhs.service.iservice.IAccountService;
 import com.sonnguyen.individual.nhs.service.iservice.ILoanService;
 import com.sonnguyen.individual.nhs.service.iservice.IPaymentService;
@@ -33,12 +35,14 @@ public class LoansPaymentController extends HttpServlet {
     IPaymentService paymentService;
     @Inject
     IAccountService accountService;
+    @Inject
+    SecurityContextHolder securityContextHolder;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Login login=SessionUtils.getPrincipal(req);
+        UserDetailImp userDetailImp= (UserDetailImp) securityContextHolder.getPrincipal();
         int loanId=Integer.parseInt(req.getParameter("id"));
         Loan loan=loanService.findById(loanId).orElseThrow(()->new RedisNoScriptException("Invalid arguments"));
-        List<Account> accounts=accountService.findByStatusAndTypeAndCustomerId(AccountStatus.OPEN, AccountType.PRIMARY, login.getCustomerId());
+        List<Account> accounts=accountService.findByStatusAndTypeAndCustomerId(AccountStatus.OPEN, AccountType.PRIMARY, userDetailImp.getCustomerId());
         BigDecimal paymentAmount=paymentService.calculateMonthlyPayment(loan);
         req.setAttribute("amount", paymentAmount);
         req.setAttribute("loan", loan);

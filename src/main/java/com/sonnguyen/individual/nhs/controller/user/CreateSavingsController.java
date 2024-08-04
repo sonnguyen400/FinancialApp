@@ -5,6 +5,8 @@ import com.sonnguyen.individual.nhs.constant.AccountType;
 import com.sonnguyen.individual.nhs.dto.Message;
 import com.sonnguyen.individual.nhs.dto.Result;
 import com.sonnguyen.individual.nhs.model.*;
+import com.sonnguyen.individual.nhs.security.UserDetailImp;
+import com.sonnguyen.individual.nhs.security.core.SecurityContextHolder;
 import com.sonnguyen.individual.nhs.service.iservice.IAccountService;
 import com.sonnguyen.individual.nhs.service.iservice.ICustomerService;
 import com.sonnguyen.individual.nhs.service.iservice.IMembershipService;
@@ -39,12 +41,14 @@ public class CreateSavingsController extends HttpServlet {
     ICustomerService customerService;
     @Inject
     IMembershipService membershipService;
+    @Inject
+    SecurityContextHolder securityContextHolder;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Login login= SessionUtils.getPrincipal(req);
-        req.setAttribute("accounts",accountService.findAllByCustomerId(login.getCustomerId()));
-        Customer customer=customerService.findById(login.getCustomerId());
-        List<Account> accounts = new ArrayList<>(accountService.findByStatusAndTypeAndCustomerId(AccountStatus.OPEN, AccountType.PRIMARY, login.getCustomerId()));
+        UserDetailImp userDetailImp= (UserDetailImp) securityContextHolder.getPrincipal();
+        req.setAttribute("accounts",accountService.findAllByCustomerId(userDetailImp.getCustomerId()));
+        Customer customer=customerService.findById(userDetailImp.getCustomerId()).get();
+        List<Account> accounts = new ArrayList<>(accountService.findByStatusAndTypeAndCustomerId(AccountStatus.OPEN, AccountType.PRIMARY, userDetailImp.getCustomerId()));
         req.setAttribute("accounts",accounts);
         req.setAttribute("membership",membershipService.findById(customer.getMembershipID()).orElse(new Membership()));
         req.getRequestDispatcher("/page/user/SavingAccountCreate/page.jsp").forward(req,resp);
@@ -68,7 +72,7 @@ public class CreateSavingsController extends HttpServlet {
             SessionUtils.setSession(req,"endpoint","/app/saving/create");
             req.getRequestDispatcher("/app/pin").include(req,resp);
         }else{
-            Login login= SessionUtils.getPrincipal(req);
+            UserDetailImp login= (UserDetailImp) securityContextHolder.getPrincipal();
             try{
                 SavingsInfo savingsInfo= (SavingsInfo) SessionUtils.getSession(req,"savingsInfo");
                 accountService.createSavingsAccount(login.getCustomerId(), savingsInfo);

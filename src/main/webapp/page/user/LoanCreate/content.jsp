@@ -49,7 +49,7 @@
                     </div>
                     <div class="col d-flex flex-column align-items-end">
                         <p class="text-sm-6 mb-1 opacity-7">Interest Rate</p>
-                        <h6 class="text-white font-weight-semi-bold" id="interest_rate_ref">5% per year</h6>
+                        <h6 class="text-white font-weight-semi-bold" id="interest_rate_ref">10% per year</h6>
                         <i class="fi fi-sr-budget-alt text-sm-12 opacity-5"></i>
 
                     </div>
@@ -86,7 +86,7 @@
                                 <label for="amount">Amount</label>
                                 <input type="number" name="amount" max="${membership.saving_limit}" min="100000" value="0" class="form-control">
                                 <input name="LoanCreate" value="" type="hidden">
-                                <input name="interestRate" value="5" type="hidden">
+                                <input name="interestRate" value="10" type="hidden">
                                 <div class="d-flex justify-content-end pt-3">
                                     <button type="submit" class="btn btn-primary">
                                         Continue

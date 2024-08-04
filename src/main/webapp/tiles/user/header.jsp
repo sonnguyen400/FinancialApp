@@ -1,8 +1,9 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.sonnguyen.individual.nhs.utils.SessionUtils" %>
 <%@ page import="com.sonnguyen.individual.nhs.model.Login" %>
-<%
-    Login account= SessionUtils.getPrincipal(request);
-%>
+<%@ page import="com.sonnguyen.individual.nhs.security.UserDetailImp" %>
+
+<%UserDetailImp account=SessionUtils.getPrincipal(request);%>
 <div class="header">
     <div class="header-content clearfix">
 
@@ -154,13 +155,13 @@
                 <li class="icons dropdown">
                     <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
                         <span class="activity active"></span>
-                        <img src="images/user/1.png" height="40" width="40" alt="">
+                        <img src="<c:url value="/resources/images/avatar/avatar-media.png"/>" height="40" width="40" alt="">
                     </div>
                     <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
                         <div class="dropdown-content-body">
                             <ul>
                                 <li>
-                                    <a href="app-profile.html"><i class="icon-user"></i> <span>
+                                    <a href="<%=request.getContextPath()%>/app/personal"><i class="icon-user"></i> <span>
                                         <%=account.getCustomer().getFirstname()+"  "+account.getCustomer().getLastname()%>
                                     </span></a>
                                 </li>

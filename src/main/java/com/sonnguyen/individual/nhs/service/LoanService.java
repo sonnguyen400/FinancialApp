@@ -1,5 +1,6 @@
 package com.sonnguyen.individual.nhs.service;
 
+import com.sonnguyen.individual.nhs.constant.DefaultBrand;
 import com.sonnguyen.individual.nhs.constant.LoanStatus;
 import com.sonnguyen.individual.nhs.constant.TransactionType;
 import com.sonnguyen.individual.nhs.dao.idao.ILoanDAO;
@@ -41,6 +42,7 @@ public class LoanService implements ILoanService {
 
     @Override
     public Loan save(Loan loan) {
+        loan.setBranchId(DefaultBrand.ID.value);
         loan.setStatus(LoanStatus.PENDING.value);
         loan.setId(loanDAO.executeInsert(loan));
         return  loan ;

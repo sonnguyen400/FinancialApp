@@ -4,6 +4,8 @@ import com.sonnguyen.individual.nhs.constant.TransactionType;
 import com.sonnguyen.individual.nhs.model.Customer;
 import com.sonnguyen.individual.nhs.model.Transaction;
 import com.sonnguyen.individual.nhs.model.Transfer;
+import com.sonnguyen.individual.nhs.security.UserDetailImp;
+import com.sonnguyen.individual.nhs.security.core.SecurityContextHolder;
 import com.sonnguyen.individual.nhs.service.iservice.IAccountService;
 import com.sonnguyen.individual.nhs.service.iservice.ITransferService;
 import com.sonnguyen.individual.nhs.utils.RequestUtils;
@@ -23,10 +25,12 @@ public class TransferController extends HttpServlet {
     IAccountService accountService;
     @Inject
     ITransferService transferService;
+    @Inject
+    SecurityContextHolder securityContextHolder;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Customer customer=SessionUtils.getPrincipal(req).getCustomer();
-        req.setAttribute("accounts",accountService.findAllByCustomerId(customer.getId()));
+        UserDetailImp userDetailImp=(UserDetailImp)securityContextHolder.getPrincipal();
+        req.setAttribute("accounts",accountService.findAllByCustomerId(userDetailImp.getCustomerId()));
         req.getRequestDispatcher("/page/user/Transfer/page.jsp").forward(req,resp);
     }
 

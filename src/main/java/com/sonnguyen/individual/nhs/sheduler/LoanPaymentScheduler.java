@@ -31,7 +31,7 @@ public class LoanPaymentScheduler implements Job {
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         List<Loan> loans=loanService.findAllByNextPaymentDate(new Date(Instant.now().getEpochSecond()),-3,false);
         for (Loan loan : loans) {
-            Customer customer=customerService.findById(loan.getCustomerId());
+            Customer customer=customerService.findById(loan.getCustomerId()).get();
             sendGridEmailService.sendEmail(customer.getEmail(),"Your loan in in close to the payment date","Loan alert");
         }
     }

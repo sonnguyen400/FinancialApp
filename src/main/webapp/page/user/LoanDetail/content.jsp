@@ -9,8 +9,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:useBean id="loan" scope="request" class="com.sonnguyen.individual.nhs.model.Loan"/>
-<jsp:useBean id="alert" scope="request" class="com.sonnguyen.individual.nhs.dto.Alert"/>
-<ex:alert type="${alert.type.name()}" link="${alert.link}" href="${alert.href}">${alert.message}</ex:alert>
+<c:if test="${requestScope.alert!=null}">
+    <jsp:useBean id="alert" scope="request" class="com.sonnguyen.individual.nhs.dto.Alert"/>
+    <ex:alert type="${alert.type.name()}" link="${alert.link}" href="${alert.href}">${alert.message}</ex:alert>
+</c:if>
 <div class="row justify-content-center">
     <div class="col-md-6 col-sm-12">
         <div class="card" >
@@ -53,13 +55,6 @@
                 <div class="d-flex justify-content-between py-2">
                     <span>To Date</span>
                     <span><%=localDateTime.plusMonths(6).format(DateTimeFormatter.ISO_DATE)%></span>
-                </div>
-
-
-                <div class="d-flex justify-content-end py-2">
-                    <div class="bt-4">
-                        <a href="<%=request.getContextPath()+"/app/loan/payment?id="+loan.getId()%>" class="btn bg-primary text-white">Complete</a>
-                    </div>
                 </div>
             </div>
 

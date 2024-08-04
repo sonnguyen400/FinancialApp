@@ -76,14 +76,6 @@ public class LoanDAOImpl extends AbstractDAO<Loan,Integer> implements ILoanDAO {
         String query="select * from loan when DATEDIFF(DATE_ADD(loan.approval_date, INTERVAL TIMESTAMPDIFF(MONTH ,loan.approval_date, now())+? MONTH),?)=?";
         return executeSelect(query,newest,nextPaymentDate,diff);
     }
-    @Override
-    public Date findNextPaymentByLoanId(int loanId) {
-        try(Connection connection = getConnection()) {
-            String query="select DATE_ADD(loan.approval_date, INTERVAL TIMESTAMPDIFF(MONTH ,loan.approval_date, now())+1 MONTH) from loan where approval_date is not null and loan.id=?";
-            return select(connection,query,Date.class,loanId);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
 
 }

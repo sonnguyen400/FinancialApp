@@ -6,6 +6,8 @@ import com.sonnguyen.individual.nhs.model.Account;
 import com.sonnguyen.individual.nhs.model.Customer;
 import com.sonnguyen.individual.nhs.model.Login;
 import com.sonnguyen.individual.nhs.model.Membership;
+import com.sonnguyen.individual.nhs.security.UserDetailImp;
+import com.sonnguyen.individual.nhs.security.core.SecurityContextHolder;
 import com.sonnguyen.individual.nhs.service.iservice.IAccountService;
 import com.sonnguyen.individual.nhs.service.iservice.ICustomerService;
 import com.sonnguyen.individual.nhs.service.iservice.ILoginService;
@@ -31,12 +33,14 @@ public class SavingsManageController extends HttpServlet {
     IMembershipService membershipService;
     @Inject
     ICustomerService customerService;
+    @Inject
+    SecurityContextHolder securityContextHolder;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Login login= SessionUtils.getPrincipal(req);
+        UserDetailImp login= (UserDetailImp) securityContextHolder.getPrincipal();
         List<Account> accountList=accountService.findByStatusAndTypeAndCustomerId(AccountStatus.OPEN, AccountType.SAVINGS,login.getCustomerId());
         req.setAttribute("accounts",accountList);
-        Customer customer=customerService.findById(login.getCustomerId());
+        Customer customer=customerService.findById(login.getCustomerId()).orElse(null);
         System.out.println(customer.getMembershipID());
         req.setAttribute("membership",membershipService.findById(customer.getMembershipID()).orElse(new Membership()));
         req.getRequestDispatcher("/page/user/SavingAccountManage/page.jsp").forward(req, resp);

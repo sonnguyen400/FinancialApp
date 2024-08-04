@@ -1,10 +1,13 @@
 package com.sonnguyen.individual.nhs.controller.user;
 
+import com.mysql.cj.util.TimeUtil;
+import com.sonnguyen.individual.nhs.constant.LoanStatus;
 import com.sonnguyen.individual.nhs.dto.Alert;
 import com.sonnguyen.individual.nhs.dto.Message;
 import com.sonnguyen.individual.nhs.model.Loan;
 import com.sonnguyen.individual.nhs.service.PaymentService;
 import com.sonnguyen.individual.nhs.service.iservice.ILoanService;
+import com.sonnguyen.individual.nhs.service.iservice.IPaymentService;
 import org.apache.velocity.exception.ResourceNotFoundException;
 
 import javax.inject.Inject;
@@ -14,24 +17,35 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Date;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 
 @WebServlet(name = "loan/detail",urlPatterns = "/app/loan/detail")
 public class LoansDetailController extends HttpServlet {
     @Inject
     ILoanService loanService;
     @Inject
-    PaymentService paymentService;
+    IPaymentService paymentService;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int loanId = Integer.parseInt(req.getParameter("id"));
         Loan loan=loanService.findById(loanId).orElseThrow(()->new ResourceNotFoundException("Loan with id "+loanId+" not found"));
         req.setAttribute("loan", loan);
-        int unpaidMonth= paymentService.unpaidMonth(loanId);
-        if(unpaidMonth==1){
-            req.setAttribute("alert", new Alert(Message.Type.WARNING,"Payment in this month has yet made",req.getContextPath()+"/app/loan/payment?id="+loan.getId(),"Continue"));
-        }else if(unpaidMonth>1){
-            req.setAttribute("alert", new Alert(Message.Type.ERROR,"we have not received your monthly loan payment for "+unpaidMonth+" months",req.getContextPath()+"/app/loan/payment?id="+loan.getId(),"Continue"));
+        if(loan.getStatus()== LoanStatus.APPROVED.value){
+            Date paymentdate=paymentService.findNextPaymentByLoanId(loanId);
+            LocalDateTime now=LocalDateTime.now();
+            LocalDateTime paymentDate=paymentdate.toLocalDate().atTime(LocalTime.MAX);
+            long diff = ChronoUnit.DAYS.between(now,paymentDate);
+            int unpaid=paymentService.unpaidMonth(loanId);
+            if(diff<3){
+                req.setAttribute("alert", new Alert(Message.Type.WARNING,"Your loan monthly payment are coming up",req.getContextPath()+"/app/loan/payment","Continue"));
+            }
         }
+
         req.getRequestDispatcher("/page/user/LoanDetail/page.jsp").forward(req, resp);
     }
 }

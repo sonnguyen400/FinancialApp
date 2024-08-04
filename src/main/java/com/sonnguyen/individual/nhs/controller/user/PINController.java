@@ -1,6 +1,8 @@
 package com.sonnguyen.individual.nhs.controller.user;
 
 import com.sonnguyen.individual.nhs.model.Login;
+import com.sonnguyen.individual.nhs.security.UserDetailImp;
+import com.sonnguyen.individual.nhs.security.core.SecurityContextHolder;
 import com.sonnguyen.individual.nhs.service.iservice.ILoginService;
 import com.sonnguyen.individual.nhs.utils.OTPUtils;
 import com.sonnguyen.individual.nhs.utils.SessionUtils;
@@ -22,6 +24,8 @@ public class PINController extends HttpServlet {
     ILoginService loginService;
     @Inject
     OTPUtils otpUtils;
+    @Inject
+    SecurityContextHolder securityContextHolder;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/page/user/EnterPin/page.jsp").forward(req,resp);
@@ -29,8 +33,8 @@ public class PINController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Login account= SessionUtils.getPrincipal(req);
-        if(req.getParameter(PIN) != null&&loginService.validatePIN(account.getId(),req.getParameter(PIN))){
+        UserDetailImp userDetailImp= (UserDetailImp) securityContextHolder.getPrincipal();
+        if(req.getParameter(PIN) != null&&loginService.validatePIN(userDetailImp.getId(), req.getParameter(PIN))){
             otpUtils.generateOTP().sessionSave(req).sendToEmail("hellohoangson@outlook.com");
             req.getRequestDispatcher("/app/otp").include(req,resp);
             return;

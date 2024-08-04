@@ -30,7 +30,7 @@
                     interestRate=5;
                     break;
                 case "6":
-                    interestRate=10;
+                    interestRate=3;
                     break;
             }
             $("input[name='interestRate']").val(interestRate);

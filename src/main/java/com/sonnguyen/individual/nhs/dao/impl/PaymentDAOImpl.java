@@ -2,14 +2,12 @@ package com.sonnguyen.individual.nhs.dao.impl;
 
 import com.sonnguyen.individual.nhs.dao.idao.IPaymentDAO;
 import com.sonnguyen.individual.nhs.dao.core.AbstractDAO;
-import com.sonnguyen.individual.nhs.model.Loan;
 import com.sonnguyen.individual.nhs.model.Payment;
 
 import javax.enterprise.inject.Model;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,6 +42,15 @@ public class PaymentDAOImpl extends AbstractDAO<Payment,Integer> implements IPay
         try(Connection connection=getConnection()){
             String query="Select unpaidMonthlyLoanCount(?)";
             return select(connection,query,Integer.class,loanID);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Override
+    public Date findNextPaymentByLoanId(int loanId) {
+        try(Connection connection = getConnection()) {
+            String query="select DATE_ADD(loan.approval_date, INTERVAL TIMESTAMPDIFF(MONTH ,loan.approval_date, now())+1 MONTH) from loan where approval_date is not null and loan.id=?";
+            return select(connection,query,Date.class,loanId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -2,6 +2,8 @@ package com.sonnguyen.individual.nhs.controller.user;
 
 import com.sonnguyen.individual.nhs.model.Account;
 import com.sonnguyen.individual.nhs.model.Login;
+import com.sonnguyen.individual.nhs.security.UserDetailImp;
+import com.sonnguyen.individual.nhs.security.core.SecurityContextHolder;
 import com.sonnguyen.individual.nhs.service.iservice.IAccountService;
 import com.sonnguyen.individual.nhs.service.iservice.ICustomerService;
 import com.sonnguyen.individual.nhs.utils.SessionUtils;
@@ -18,17 +20,17 @@ import java.io.IOException;
 
 @WebServlet(name = "home",urlPatterns = "/app")
 public class Home extends HttpServlet {
-
-
     private final Logger logger= Logger.getLogger(this.getClass().getName());
     @Inject
-    ICustomerService customerService;
+    SecurityContextHolder securityContextHolder;
     @Inject
     IAccountService accountService;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Login login=SessionUtils.getPrincipal(req);
-        Account defaultAccount=accountService.findDefaultAccountByCustomerId(login.getCustomerId());
+        UserDetailImp userDetailImp = (UserDetailImp) securityContextHolder.getPrincipal();
+        System.out.println(securityContextHolder.getPrincipal());
+        Account defaultAccount=accountService.findDefaultAccountByCustomerId(userDetailImp.getCustomerId());
         req.setAttribute("account", defaultAccount);
         req.getRequestDispatcher("/page/user/HomePage/page.jsp").forward(req,resp);
     }
