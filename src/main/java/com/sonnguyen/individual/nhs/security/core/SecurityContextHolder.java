@@ -2,11 +2,12 @@ package com.sonnguyen.individual.nhs.security.core;
 
 import com.sonnguyen.individual.nhs.exception.AuthenticationException;
 
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
+import java.io.Serializable;
 
-@RequestScoped
-public class SecurityContextHolder {
+@SessionScoped
+public class SecurityContextHolder implements Serializable {
     private UserDetail principal;
 
     @Inject

@@ -1,11 +1,12 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="com.sonnguyen.individual.nhs.model.Account" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.sonnguyen.individual.nhs.constant.MemberShip" %>
 
 <jsp:useBean id="membership" scope="request" type="com.sonnguyen.individual.nhs.model.Membership"/>
-<div class="row">
+<div class="row justify-content-center">
     <div class="col-lg-6">
         <div class="card gradient-10 text-white">
             <div class="card-body">
@@ -28,9 +29,9 @@
 
                         <div class="d-flex justify-content-center">
                             <span class="text-lg-10 pr-3 opacity-5 pb-2"><i class="fi fi-sr-usd-circle"></i></span>
-                            <h3 class="text-white text-xl-10">upto</h3>
+                            <h3 class="text-white text-xl-10">Upto</h3>
                         </div>
-                        <h3 class="text-white font-weight-semi-bold">${membership.saving_limit}</h3>
+                        <h3 class="text-white font-weight-semi-bold"><fmt:formatNumber value="${membership.loan_limit}"  currencyCode=","/> </h3>
                     </div>
 
                 </div>
@@ -38,31 +39,9 @@
         </div>
     </div>
     <div class="col-lg-6">
-        <div class="card gradient-8">
-            <div class="card-body">
-                <div class="row justify-content-between">
-                    <div class="col">
-                        <p class="text-sm-6 mb-1 opacity-7">Disbursement Account  </p>
-                        <h4 class="text-white" id="disbursement_account_ref"> </h4>
-                        <p class="text-sm-6 mb-1 opacity-7">Amount</p>
-                        <h4 class="text-white" id="amountRef">0</h4>
-                    </div>
-                    <div class="col d-flex flex-column align-items-end">
-                        <p class="text-sm-6 mb-1 opacity-7">Interest Rate</p>
-                        <h6 class="text-white font-weight-semi-bold" id="interest_rate_ref">10% per year</h6>
-                        <i class="fi fi-sr-budget-alt text-sm-12 opacity-5"></i>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col">
         <div class="card">
             <div class="card-body">
-                <form  method="post" action="${pageContext.request.contextPath}/app/loan/create">
+                <form  method="post">
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
@@ -75,16 +54,17 @@
                             </div>
                             <div class="form-group">
                                 <label for="term">Term</label>
-                                <select class="form-control" name="term" >
-                                    <option value="6">6 Months</option>
-                                    <option value="12">12 Months</option>
+                                <select class="form-control" name="term_id" >
+                                    <c:forEach var="setting" items="${requestScope.loanSettings}">
+                                        <option value="${setting.id}">${setting.term} Month</option>
+                                    </c:forEach>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="amount">Amount</label>
-                                <input type="number" name="amount" max="${membership.saving_limit}" min="100000" value="0" class="form-control">
+                                <input type="number" name="amount" max="${membership.loan_limit}" min="100000" value="0" class="form-control">
                                 <input name="LoanCreate" value="" type="hidden">
                                 <input name="interestRate" value="10" type="hidden">
                                 <div class="d-flex justify-content-end pt-3">

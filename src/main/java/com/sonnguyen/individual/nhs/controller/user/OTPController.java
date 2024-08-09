@@ -17,15 +17,12 @@ import static com.sonnguyen.individual.nhs.utils.RequestUtils.ERROR_MESSAGE;
 
 @WebServlet(name = "otp-validate",urlPatterns = "/app/otp")
 public class OTPController extends HttpServlet {
-    @Inject
-    SecurityContextHolder securityContextHolder;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/page/user/EnterOTP/page.jsp").forward(req,resp);
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        securityContextHolder.setPrincipal(SessionUtils.getPrincipal(req));
         if(req.getParameter(OTP) != null){
             if(OTPUtils.isValid(req)){
                 req.getRequestDispatcher((String) SessionUtils.getSession(req,"endpoint")).include(req,resp);

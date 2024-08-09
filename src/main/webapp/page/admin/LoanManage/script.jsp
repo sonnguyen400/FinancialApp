@@ -1,6 +1,5 @@
 <%@ page import="com.sonnguyen.individual.nhs.constant.LoanStatus" %>
 <script>
-    console.log(bootstrap)
     $(function () {
         const baseUrl = "<%=request.getContextPath()%>/ajax/loans";
 
@@ -45,7 +44,7 @@
                                 <td>\${item.interestRate}%</td>
                                 <td>\${item.term} Month</td>
                                 <td>
-                                    \${item.status==2?"<button class='btn btn-success' onclick={(e)=>approveLoan(\${item.id})}>Approved</button><button onclick={(e)=>rejectLoan(\${item.id})} class='btn btn-warning'>Reject</button>":""}
+                                    \${item.status==2?"<button class='btn btn-success' onclick='{(e)=>approveLoan(\${item.id})}'>Approved</button> <button onclick='{(e)=>rejectLoan(\${item.id})}' class='btn btn-warning'>Reject</button>":""}
                                     <a href=<%=request.getContextPath()%>/admin/loan/detail?id=\${item.id} class="btn btn-warning">Detail</a>
                                 </td>
                             </tr> `).join("")
@@ -57,20 +56,19 @@
             $("#PENDING tbody").html(
                 data.map(item=>` <tr>
                                 <td>\${item.id}</td>
-                                <td>\${item.customer}</td>
+                                <td>\${item.customer.firstname+" "+item.customer.lastname }</td>
                                 <td>\${item.disbursementAccountNumber}</td>
                                 <td>\${item.createAt}</td>
                                 <td>\${item.amount}</td>
                                 <td>\${item.interestRate}%</td>
                                 <td>\${item.term} Month</td>
                                 <td>
-                                    \${item.status==2?"<button class='btn btn-success'>Approved</button><button class='btn btn-warning'>Reject</button>":""}
+                                     \${item.status==2?"<button class='btn btn-success' onclick='{(e)=>approveLoan(\${item.id})}'>Approved</button> <button onclick='{(e)=>rejectLoan(\${item.id})}' class='btn btn-warning'>Reject</button>":""}
                                     <a href=<%=request.getContextPath()%>/admin/loan/detail?id=\${item.id} class="btn btn-warning">Detail</a>
                                 </td>
                             </tr> `).join("")
             )
         })
-        console.log(triggerTabList.tab())
 
 
     })
