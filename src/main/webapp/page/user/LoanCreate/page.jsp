@@ -12,6 +12,5 @@
                 </tiles:putAttribute>
             </tiles:definition>
         </tiles:putAttribute>
-        <tiles:putAttribute name="inline-script" value="/page/user/LoanCreate/script.jsp"/>
     </tiles:definition>
 </tiles:insertDefinition>

@@ -21,7 +21,7 @@ public abstract class AbstractDAO<T,ID> extends CRUDDao implements GeneralDAO<T,
         PreparedStatement ps=null;
         try(Connection connection=getConnection()){
             StringBuilder builder=new StringBuilder("select * from ");
-            builder.append(getEntityType().getSimpleName());
+            builder.append(EntityUtils.getTableName(getEntityType()));
             if(applicationConfig.debugEnable()) System.out.println(builder);
             ps=connection.prepareStatement(builder.toString());
             return executeSelect(ps,getEntityType());

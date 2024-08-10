@@ -1,5 +1,7 @@
 package com.sonnguyen.individual.nhs.controller.user;
 
+import com.sonnguyen.individual.nhs.constant.AccountStatus;
+import com.sonnguyen.individual.nhs.constant.AccountType;
 import com.sonnguyen.individual.nhs.model.Account;
 import com.sonnguyen.individual.nhs.security.UserDetailImp;
 import com.sonnguyen.individual.nhs.security.core.SecurityContextHolder;
@@ -23,8 +25,11 @@ public class AccountManageController extends HttpServlet {
     SecurityContextHolder securityContextHolder;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Account> accounts=accountService.findPrimaryByCustomerId(((UserDetailImp)securityContextHolder.getPrincipal()).getCustomerId());
+        UserDetailImp userDetailImp=(UserDetailImp)securityContextHolder.getPrincipal();
+        List<Account> accounts=accountService.findByCustomerIdAndType(AccountType.PRIMARY,userDetailImp.getCustomerId());
+        List<Account> coopAccounts=accountService.findByCustomerIdAndType(AccountType.INCORPORATE,userDetailImp.getCustomerId());
         req.setAttribute("accounts",accounts);
+        req.setAttribute("coopAccounts",coopAccounts);
         req.setAttribute("sum",accounts.stream().reduce(BigDecimal.ZERO,(pre,acc)->acc.getBalance().add(pre),BigDecimal::add));
         req.getRequestDispatcher("/page/user/AccountManage/page.jsp").forward(req,resp);
     }

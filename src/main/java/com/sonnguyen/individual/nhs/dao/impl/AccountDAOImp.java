@@ -53,7 +53,7 @@ public class AccountDAOImp extends AbstractDAO<Account, Integer> implements IAcc
     }
 @Override
     public List<Account> findByCustomerIdAndType(Integer customerId, com.sonnguyen.individual.nhs.constant.AccountType accountType) {
-        String query = "select * from account where id in (select account_id from account_holder where account_type=? and customer_id=?)";
+        String query = "select * from account where account_type=? and id in (select account_id from account_holder where customer_id=?)";
         return executeSelect(query,accountType.value, customerId);
     }
     @Override
@@ -69,7 +69,7 @@ public class AccountDAOImp extends AbstractDAO<Account, Integer> implements IAcc
 
     @Override
     public Optional<Account> findDefaultAccountByCustomerId(Integer customerId) {
-        String query = "Select * from account where id in (select account_id from account_holder where customer_id=? && is_default=true)";
+        String query = "Select * from account where id in (select account_id from account_holder where customer_id=? and is_default=true)";
         List<Account> accounts=executeSelect(query,customerId);
         if (accounts.isEmpty()) return Optional.empty();
         return Optional.of(accounts.get(0));

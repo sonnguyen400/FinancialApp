@@ -3,6 +3,7 @@ package com.sonnguyen.individual.nhs.service.iservice;
 import com.sonnguyen.individual.nhs.constant.AccountStatus;
 import com.sonnguyen.individual.nhs.constant.AccountType;
 import com.sonnguyen.individual.nhs.model.Account;
+import com.sonnguyen.individual.nhs.model.AccountHolder;
 import com.sonnguyen.individual.nhs.model.SavingsInfo;
 
 import java.util.Collection;
@@ -18,5 +19,6 @@ public interface IAccountService{
     void createSavingsAccount(Integer customerId, SavingsInfo savingsInfor);
     List<Account> findByStatusAndTypeAndCustomerId(AccountStatus status,AccountType accountType, Integer customerId);
     Account findDefaultAccountByCustomerId(Integer customerId);
-    List<Account> findPrimaryByCustomerId(Integer customerId);
+    List<Account> findByCustomerIdAndType(AccountType accountType,Integer customerId);
+    Account createNewAccount(Account account, List<AccountHolder> accountHolder);
 }

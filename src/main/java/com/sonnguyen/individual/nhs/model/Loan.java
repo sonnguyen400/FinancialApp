@@ -46,12 +46,20 @@ public class Loan {
     private String repayment;
     @Column(name = "branch_id")
     private int branchId;
-
+    @Transient
+    private Integer term_id;
     @Column(name = "disbursement_account_number")
     private String disbursementAccountNumber;
     @Transient
     private Customer customer;
 
+    public Integer getTerm_id() {
+        return term_id;
+    }
+
+    public void setTerm_id(Integer term_id) {
+        this.term_id = term_id;
+    }
 
     public Customer getCustomer() {
         return customer;

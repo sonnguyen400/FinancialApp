@@ -34,7 +34,8 @@ public class SavingsInfo {
     private Integer accountId;
     @Column(name = "update_at",insertable = false)
     private Date updateAt;
-
+    @Transient
+    private Integer term_id;
     @Column(name = "beneficiary_account_id")
     private int beneficiary_account_id;
 
@@ -46,6 +47,14 @@ public class SavingsInfo {
     private BigDecimal amount;
     @Transient
     private Integer sourceAccount;
+
+    public Integer getTerm_id() {
+        return term_id;
+    }
+
+    public void setTerm_id(Integer term_id) {
+        this.term_id = term_id;
+    }
 
     public int getBeneficiary_account_id() {
         return beneficiary_account_id;

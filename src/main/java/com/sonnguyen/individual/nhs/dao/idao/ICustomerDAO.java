@@ -5,8 +5,11 @@ import com.sonnguyen.individual.nhs.model.Customer;
 
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Optional;
 
 public interface ICustomerDAO extends GeneralDAO<Customer,Integer> {
     Collection<Customer> findAllByAccountNumber(String accountNumber) throws SQLException;
     boolean isValid(String email, String phone,String socialNumber) throws SQLException;
+
+    Optional<Customer> findByEmail(String email);
 }

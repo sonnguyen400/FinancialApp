@@ -1827,7 +1827,9 @@ pre {
   -ms-overflow-style: -ms-autohiding-scrollbar; }
   .table-responsive > .table-bordered {
     border: 0; }
-
+.h-fit{
+  height: fit-content !important;
+}
 .form-control {
   display: block;
   width: 100%;
@@ -13347,14 +13349,25 @@ table.dataTable thead .sorting::after {
 .select-custom {
   position: relative;
 }
+
 .select-custom select {
   display: none;
 }
+
 .select-custom .select {
+  z-index: 1;
   width: 100%;
   position: absolute;
-  z-index: 1;
 }
+
+.select-custom .select .option {
+  width: 100%;
+}
+
+.select-custom .select .option:hover {
+  background-color: rgb(228, 228, 228);
+}
+
 .select-custom .content:focus~.select {
   display: block;
 }

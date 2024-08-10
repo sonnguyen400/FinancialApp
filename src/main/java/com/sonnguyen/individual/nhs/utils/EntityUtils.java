@@ -131,9 +131,11 @@ public class EntityUtils {
             try {
                 objectMap.put(field,getMethods.get(field.getName().toLowerCase()).invoke(object));
             } catch (IllegalAccessException | InvocationTargetException e) {
-
                 throw new RuntimeException(e);
+            }catch (NullPointerException e){
+                continue;
             }
+
         }
         return objectMap;
     }

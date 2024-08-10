@@ -11,4 +11,6 @@ public interface ICustomerService {
     Collection<Customer> findAllByAccountNumber(String accountNumber);
     Optional<Customer> findById(Integer customerId);
     boolean isValid(String email,String phoneNumber,String social_security_number);
+
+    Optional<Customer> findByEmail(String email);
 }

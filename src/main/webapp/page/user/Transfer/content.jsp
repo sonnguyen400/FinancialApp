@@ -17,19 +17,17 @@ Object receiver_name;
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="select-custom">
-                                        <div class="select d-none" data-name="accountId">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <c:forEach items="${requestScope.accounts}" var="account">
-                                                        <div class="option" data-value="${account.id}">
-                                                            <div class="row">
-                                                                <div class="col-12"><h4 class="text-primary font-weight-bold">${account.accountNumber}</h4></div>
-                                                                <div class="col-12"><h5 class="text-primary"><fmt:formatNumber value="${account.balance}" currencyCode="."/></h5></div>
-                                                            </div>
+                                    <div class="select-custom" data-name="accountId">
+                                        <div class="select d-none" >
+                                            <div class="list-group list-group-flush">
+                                                <c:forEach items="${requestScope.accounts}" var="account">
+                                                    <div class="option list-group-item" data-value="${account.id}">
+                                                        <div class="row">
+                                                            <div class="col-12"><h4 class="text-primary font-weight-bold">${account.accountNumber}</h4></div>
+                                                            <div class="col-12"><h5 class="text-primary"><fmt:formatNumber value="${account.balance}" currencyCode="."/></h5></div>
                                                         </div>
-                                                    </c:forEach>
-                                                </div>
+                                                    </div>
+                                                </c:forEach>
                                             </div>
                                         </div>
                                     </div>

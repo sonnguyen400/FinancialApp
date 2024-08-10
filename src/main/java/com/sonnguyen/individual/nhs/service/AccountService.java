@@ -1,9 +1,6 @@
 package com.sonnguyen.individual.nhs.service;
 
-import com.sonnguyen.individual.nhs.constant.AccountStatus;
-import com.sonnguyen.individual.nhs.constant.AccountType;
-import com.sonnguyen.individual.nhs.constant.DefaultBrand;
-import com.sonnguyen.individual.nhs.constant.TransactionType;
+import com.sonnguyen.individual.nhs.constant.*;
 import com.sonnguyen.individual.nhs.dao.core.DBTransaction;
 import com.sonnguyen.individual.nhs.dao.idao.IAccountDAO;
 import com.sonnguyen.individual.nhs.dao.idao.IAccountHolderDAO;
@@ -114,9 +111,31 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    public List<Account> findPrimaryByCustomerId(Integer customerId) {
-        return accountDao.findByCustomerIdAndType(customerId, AccountType.PRIMARY);
+    public List<Account> findByCustomerIdAndType(AccountType accountType,Integer customerId) {
+        return accountDao.findByCustomerIdAndType(customerId, accountType);
     }
 
+    @Override
+    public Account createNewAccount(Account account, List<AccountHolder> accountHolder){
+        for(int i=0;i<accountHolder.size()-1;i++){
+            for(int j=i+1;j<accountHolder.size();j++){
+                if(accountHolder.get(j)==accountHolder.get(i)){
+                    accountHolder.remove(j);
+                }
+            }
+        }
+        return dbTransaction.startTransaction(Account.class,connection -> {
+            account.setTierID(AccountTier.SILVER.id);
+            account.setStatus(AccountStatus.OPEN.value);
+            account.setBranchID(DefaultBrand.ID.value);
+            Integer newAccId=accountDao.executeInsert(connection,account);
+            for(AccountHolder holder:accountHolder){
+                holder.setAccountID(newAccId);
+                accountHolderDAO.executeInsert(connection,holder);
+            }
+            account.setId(accountDao.executeInsert(connection,account));
+            return account;
+        });
+    }
 
 }
