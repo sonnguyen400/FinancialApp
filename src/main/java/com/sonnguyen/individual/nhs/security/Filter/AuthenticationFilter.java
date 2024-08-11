@@ -51,8 +51,11 @@ public class AuthenticationFilter  implements Filter {
                 request.getRequestDispatcher("/page/base/error.jsp").forward(servletRequest,servletResponse);
             }else{
                 securityContextHolder.setPrincipal(account);
+                response.setCharacterEncoding("UTF-8");
+                response.setContentType("text/html;charset=UTF-8");
                 filterChain.doFilter(request,response);
             }
         }
+
     }
 }

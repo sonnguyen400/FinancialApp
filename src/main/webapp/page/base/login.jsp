@@ -1,10 +1,15 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="static com.sonnguyen.individual.nhs.utils.RequestUtils.ERROR_MESSAGE" %>
 <%@include file="/taglib/taglib.jsp"%>
+<%--<fmt:setLocale value="${pageContext.request.locale.toString()}"/>--%>
+<fmt:setLocale value="vi"/>
+<fmt:setBundle basename="lang"/>
+<%@page pageEncoding="UTF-8" %>
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
     <title>Login</title>
+    <meta charset="UTF-8"/>
     <link rel='stylesheet'
           href='<c:url value="https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css"/>'>
     <%@include file="/taglib/header.jsp" %>
@@ -19,27 +24,26 @@
 <div class="d-flex justify-content-center align-items-center" style="height: 100vh">
     <div class="card mw-570 w-100">
         <div class="card-body mw-570 w-100">
-            <h4 class="text-center">Register</h4>
+            <h4 class="text-center"><fmt:message key="login"/></h4>
             <h2 class="text-center">Harmony U</h2>
-            <p class="text-black-50 text-sm-center ">Register and receive all your desired treats</p>
             <!-- Form 1 -->
             <form action="${pageContext.request.contextPath}/login" style="display: block;" method="post" id="form1">
                 <div class="part">
                     <div class=" form-group">
-                        <label class="pb-2" for="firstname">Username</label>
+                        <label class="pb-2" for="firstname"><fmt:message key="username"/></label>
                         <input id="firstname" name="username" class="form-control" data-rule="required" type="text"
-                               placeholder="Username" />
+                               placeholder="<fmt:message key="password" />" />
                         <span class="invalid-feedback animated fadeInDown"></span>
                     </div>
                     <div class=" form-group">
-                        <label class="pb-2" for="lastname">Password</label>
-                        <input id="lastname" name="password" class="form-control" data-rule="required" type="password"
-                               placeholder="Password" />
+                        <label class="pb-2" ><fmt:message key="password" /></label>
+                        <input  name="password" class="form-control" data-rule="required" type="password"
+                               placeholder="<fmt:message key="password" />" />
                         <span class="invalid-feedback animated fadeInDown"></span>
                     </div>
-                    <div class="">Don't have an account? <a class="link" href="${pageContext.request.contextPath}/register">Register</a></div>
+                    <div class=""><fmt:message key="page.login.footer.message"/> <a class="link" href="${pageContext.request.contextPath}/register"><fmt:message key="register"/></a></div>
                     <div class="d-flex justify-content-end">
-                        <button class="btn btn-primary mx-2" id="submitBtn" type="submit" >Login</button>
+                        <button class="btn btn-primary mx-2" id="submitBtn" type="submit" ><fmt:message key="login" /></button>
                     </div>
                 </div>
             </form>

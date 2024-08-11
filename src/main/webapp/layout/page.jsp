@@ -1,13 +1,16 @@
+
+<%@page pageEncoding="UTF-8" %>
 <%@ taglib prefix="tilesx" uri="http://tiles.apache.org/tags-tiles-extras" %>
 <%@ taglib prefix="ex" uri="/WEB-INF/custom.tld" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@include file="/taglib/taglib.jsp"%>
-<fmt:setLocale value="en_US"/>
+<%--<fmt:setLocale value="${pageContext.request.localName}"/>--%>
+<%@page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title><tiles:insertAttribute name="title"/></title>
     <tiles:insertAttribute name="css"/>

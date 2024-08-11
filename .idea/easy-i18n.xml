@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectSettingsService">
+    <option name="localesDirectory" value="D:\WorkSpace\IndividualProject\BankSimulator\src\main\resources" />
+    <option name="parserStrategy" value="PROPERTIES" />
+    <option name="filePattern" value="lang*.properties" />
+    <option name="includeSubDirs" value="true" />
+    <option name="defaultNamespace" value="" />
+    <option name="previewLocale" value="lang_en" />
+  </component>
+</project>

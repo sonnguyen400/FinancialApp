@@ -2,6 +2,10 @@
 <%@ page import="com.sonnguyen.individual.nhs.dto.Message" %>
 <%@include file="/taglib/taglib.jsp" %>
 <%@ taglib prefix="ex" uri="/WEB-INF/custom.tld" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="vi"/>
+<fmt:setBundle basename="lang"/>
+<%@page pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,26 +25,24 @@
 <div class="d-flex justify-content-center align-items-center" style="height: 100vh">
     <div class="card mw-570 w-100">
         <div class="card-body mw-570 w-100">
-            <h4 class="text-center">Register</h4>
+            <h4 class="text-center"><fmt:message key="register"/></h4>
             <h2 class="text-center">Harmony U</h2>
-            <p class="text-black-50 text-sm-center ">Register and receive all your desired treats</p>
+            <p class="text-black-50 text-sm-center "><fmt:message key="page.register.header.slogan"/> </p>
             <form id="form" method="post">
                 <!-- Part1 -->
                 <div class="part">
                     <div class=" form-group">
-                        <label class="pb-2" for="firstname">First name</label>
-                        <input id="firstname" name="firstname" class="form-control" data-rule="required" type="text"
-                               placeholder="First name"/>
+                        <label class="pb-2" for="firstname"><fmt:message key="page.register.field.firstname"/> </label>
+                        <input id="firstname" name="firstname" class="form-control" data-rule="required" type="text" />
                         <span class="invalid-feedback animated fadeInDown"></span>
                     </div>
                     <div class=" form-group">
-                        <label class="pb-2" for="lastname">Last name</label>
-                        <input id="lastname" name="lastname" class="form-control" data-rule="required" type="text"
-                               placeholder="Last name"/>
+                        <label class="pb-2" for="lastname"><fmt:message key="page.register.field.lastname"/> </label>
+                        <input id="lastname" name="lastname" class="form-control" data-rule="required" type="text"/>
                         <span class="invalid-feedback animated fadeInDown"></span>
                     </div>
                     <div class="form-group">
-                        <label class="pb-2" for="dob">Date of birth</label>
+                        <label class="pb-2" for="dob"><fmt:message key="page.register.field.dateOfBirth"/> </label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text bg-primary-darken-5"><i
@@ -52,7 +54,7 @@
                         <span class="invalid-feedback animated fadeInDown"></span>
                     </div>
                     <div class="form-group">
-                        <label class="pb-2" for="dob">Gender</label>
+                        <label class="pb-2" for="dob"><fmt:message key="page.register.field.gender"/></label>
                         <select name="gender" class="form-control">
                             <option>Male</option>
                             <option>Female</option>
@@ -63,38 +65,37 @@
                 <!-- Part2 -->
                 <div class="part">
                     <div class="col form-group pb-4">
-                        <label class="pb-2" for="email">Email</label>
+                        <label class="pb-2" for="email"><fmt:message key="page.register.field.email"/> </label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text bg-primary-darken-5"><i
                                         class="text-white fi fi-sr-envelope"></i></div>
                             </div>
-                            <input id="email" class="form-control" name="email" data-rule="email" type="text"
-                                   placeholder="Email"/>
+                            <input id="email" class="form-control" name="email" data-rule="email" type="text"/>
                         </div>
                         <span class="invalid-feedback animated fadeInDown"></span>
                     </div>
                     <div class="col form-group pb-4">
-                        <label class="pb-2" for="dob">Phone number</label>
+                        <label class="pb-2" for="dob"><fmt:message key="page.register.field.phoneNumber"/> </label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text bg-primary-darken-5"><i
                                         class="text-white fi-sr-phone-call"></i></div>
                             </div>
                             <input id="phoneNumber" class="form-control" name="phone" data-rule="none" name="phone"
-                                   type="text" placeholder="Phone number"/>
+                                   type="text" />
                         </div>
                         <span class="invalid-feedback animated fadeInDown"></span>
                     </div>
                     <div class="col form-group pb-4">
-                        <label class="pb-2" for="dob">ID</label>
+                        <label class="pb-2" for="dob"><fmt:message key="page.register.field.id"/></label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text bg-primary-darken-5"><i
                                         class="text-white fi-sr-id-badge"></i></div>
                             </div>
                             <input class="form-control" name="social_security_number" data-rule="minlength(8)"
-                                   type="text" placeholder="ID"/>
+                                   type="text"/>
                         </div>
                         <span class="invalid-feedback animated fadeInDown"></span>
                     </div>
@@ -104,7 +105,7 @@
                 <div class="part">
                     <h6 class="Agree with terms"></h6>
                     <div class="col form-group pb-4">
-                        <label class="pb-2" for="dob">User name</label>
+                        <label class="pb-2" for="dob"><fmt:message key="page.register.field.username"/></label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text bg-primary-darken-5"><i
@@ -112,38 +113,36 @@
                                 </div>
                             </div>
                             <input id="phoneNumber" class="form-control" name="username" data-rule="none"
-                                   name="username" type="text" placeholder="User's name"/>
+                                   name="username" type="text"/>
                         </div>
                         <span class="invalid-feedback"></span>
                     </div>
                     <div class="col form-group pb-4">
-                        <label class="pb-2" for="password">Password</label>
+                        <label class="pb-2" for="password"><fmt:message key="page.register.field.password"/></label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text bg-primary-darken-5"><i
                                         class="text-white fi-sr-lock"></i>
                                 </div>
                             </div>
-                            <input id="password" class="form-control" name="password" data-rule="none" type="text"
-                                   placeholder="Password"/>
+                            <input id="password" class="form-control" name="password" data-rule="none" type="text"/>
                         </div>
                         <span class="invalid-feedback"></span>
                     </div>
                     <div class="col form-group pb-4">
-                        <label class="pb-2" for="PIN">PIN</label>
+                        <label class="pb-2" for="PIN"><fmt:message key="page.register.field.PIN"/></label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text bg-primary-darken-5"><i
                                         class="text-white fi-sr-lock"></i>
                                 </div>
                             </div>
-                            <input id="PIN" class="form-control" name="pin" data-rule="none" type="text"
-                                   placeholder="PIN"/>
+                            <input id="PIN" class="form-control" name="pin" data-rule="none" type="text"/>
                         </div>
                         <span class="invalid-feedback"></span>
                     </div>
                     <div class="col form-group pb-4">
-                        <label class="pb-2" for="dob">AccountNumber</label>
+                        <label class="pb-2" for="dob"><fmt:message key="page.register.field.accountNumber"/> </label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text bg-primary-darken-5"><i
@@ -151,15 +150,15 @@
                                 </div>
                             </div>
                             <input id="AccountNUmber" class="form-control" name="accountNumber" data-rule="none"
-                                   type="text" placeholder="PIN"/>
+                                   type="text"/>
                         </div>
                         <span class="invalid-feedback"></span>
                     </div>
                 </div>
                 <div class="d-flex flex-row-reverse">
-                    <button class="btn btn-primary mx-2" type="button" id="nextStep">Next</button>
-                    <button class="btn btn-success mx-2" type="button" id="submitBtn">Send</button>
-                    <button class="btn btn-outline-primary mx-2" type="button" id="preStep">Pre</button>
+                    <button class="btn btn-primary mx-2" type="button" id="nextStep"><fmt:message key="page.register.button.next"/></button>
+                    <button class="btn btn-success mx-2" type="button" id="submitBtn"><fmt:message key="page.register.button.register"/></button>
+                    <button class="btn btn-outline-primary mx-2" type="button" id="preStep"><fmt:message key="page.register.button.pre"/></button>
                 </div>
             </form>
         </div>

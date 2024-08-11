@@ -18,6 +18,8 @@
         <url-pattern>/app/*</url-pattern>
     </filter-mapping>
 
+
+
     <session-config>
         <tracking-mode>COOKIE</tracking-mode>
     </session-config>

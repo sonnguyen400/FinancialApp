@@ -6,10 +6,6 @@ import org.apache.http.HttpStatus;
 public class Result extends Message{
     private int httpStatus;
 
-    public Result(int httpStatus) {
-        this.httpStatus = httpStatus;
-    }
-
     public Result(){
 
     }

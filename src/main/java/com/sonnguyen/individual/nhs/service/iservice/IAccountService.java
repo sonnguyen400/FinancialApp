@@ -21,4 +21,8 @@ public interface IAccountService{
     Account findDefaultAccountByCustomerId(Integer customerId);
     List<Account> findByCustomerIdAndType(AccountType accountType,Integer customerId);
     Account createNewAccount(Account account, List<AccountHolder> accountHolder);
+    void inactiveAccount(Integer accountId);
+    void freezeAccount(Integer accountId);
+
+    void openAccount(Integer accountId);
 }

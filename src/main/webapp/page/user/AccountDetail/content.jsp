@@ -58,14 +58,21 @@
                             </c:if>
                         </span>
                     </div>
-                    <div class="row pt-4">
-                        <c:if test="${account.status!=2}">
-                            <div class="col"><a class="btn btn-block bg-primary text-white">Freeze</a></div>
-                        </c:if>
-                        <c:if test="${account.status!=5}">
-                            <div class="col"><a class="btn btn-block bg-danger text-white">Inactive</a></div>
-                        </c:if>
-                    </div>
+                    <form method="post">
+                        <div class="row pt-4">
+                            <c:if test="${account.status==1}">
+                                <c:if test="${account.status!=2}">
+                                    <div class="col"><button name="freeze" value="${account.id}" class="btn btn-block bg-primary text-white">Freeze</button></div>
+                                </c:if>
+                                <c:if test="${account.status!=5}">
+                                    <div class="col"><button name="inactive" value="${account.id}" class="btn btn-block bg-danger text-white">Inactive</button></div>
+                                </c:if>
+                            </c:if>
+                            <c:if test="${account.status==2}">
+                                <div class="col"><button name="unfreeze" value="${account.id}" class="btn btn-block bg-primary text-white">Unfreeze</button></div>
+                            </c:if>
+                        </div>
+                    </form>
                 </div>
             </div>
 

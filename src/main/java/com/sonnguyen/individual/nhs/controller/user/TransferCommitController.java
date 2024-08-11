@@ -20,7 +20,7 @@ public class TransferCommitController extends HttpServlet {
     ITransferService transferService;
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(!Objects.equals(req.getRequestURI(), "/app/otp")){
+        if(!req.getRequestURI().equals(req.getContextPath()+"/app/otp")){
             resp.sendRedirect(req.getContextPath()+"/");
             return;
         }

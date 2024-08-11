@@ -2,6 +2,9 @@
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@page pageEncoding="UTF-8" %>
+<fmt:setLocale value="vi"/>
+<fmt:setBundle basename="lang"/>
 <jsp:useBean id="account"  scope="request" class="com.sonnguyen.individual.nhs.model.Account"/>
 <div class="row">
     <div class="col-lg-4 col-xl-3">
@@ -10,7 +13,7 @@
                 <div class="card-body">
                     <div class="text-center">
                         <span class="text-md-11 opacity-5 text-white"><i class="fi fi-sr-sack-dollar"></i></span>
-                        <h6 class="mt-2 mb-2 text-white-50 text-white">Balance</h6>
+                        <h6 class="mt-2 mb-2 text-white-50 text-white"><fmt:message key="balance"/></h6>
                         <h3 class="text-white">
                             <fmt:formatNumber value="${account.balance}" currencyCode=","/>
                         </h3>
@@ -59,7 +62,7 @@
         <div class="card react-widget gradient-2">
             <div class="gutter-md-2">
                 <div class="col">
-                    <h4 class="text-white text-md-8">Transfer</h4>
+                    <h4 class="text-white text-md-8"><fmt:message key="transfer"/></h4>
                     <span class="float-right text-md-11 opacity-5 "><i
                             class="fi fi-sr-money-bill-transfer"></i></span>
                 </div>
@@ -70,7 +73,7 @@
         <div class="card react-widget gradient-3">
             <div class="gutter-md-2">
                 <div class="col">
-                    <h4 class="text-white text-md-8">History</h4>
+                    <h4 class="text-white text-md-8"><fmt:message key="history"/></h4>
                     <span class="float-right text-md-11 opacity-5 "><i
                             class="fi fi-sr-clock"></i></span>
                 </div>
@@ -81,7 +84,7 @@
         <div class="card react-widget gradient-3">
             <div class="gutter-md-2">
                 <div class="col">
-                    <h4 class="text-white text-md-8">Loan</h4>
+                    <h4 class="text-white text-md-8"><fmt:message key="loan"/></h4>
                     <span class="float-right text-md-11 opacity-5 ">
                         <i class="fi fi-sr-hand-holding-usd"></i>
                     </span>
@@ -93,7 +96,7 @@
         <div class="card react-widget gradient-4">
             <div class="gutter-md-2">
                 <div class="col">
-                    <h4 class="text-white text-md-8">Savings</h4>
+                    <h4 class="text-white text-md-8"><fmt:message key="savings"/> </h4>
                     <span class="float-right text-md-11 opacity-5 ">
                         <i class="fi fi-sr-piggy-bank"></i>
                     </span>

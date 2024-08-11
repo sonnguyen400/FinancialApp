@@ -30,7 +30,7 @@
                         <div class="d-flex align-items-center flex-column">
                             <div><img class="w-100" src="<c:url value="/resources/images/avatar/unknown.webp"/> "></div>
                             <small>\${coop_.firstname} \${coop_.lastname}</small>
-                            <input type="hidden" name="coop" value="\${coop_.id}">
+                            <input type="hidden" name="memberId" value="\${coop_.id}">
                             <div style="top:0px;left:0px" onClick="deleteCoop(\${coop_.id})" class="bg-primary-darken-5 position-absolute w-100 h-100 opacity-6 d-flex align-items-center justify-content-center">
                              Delete
                         </div>

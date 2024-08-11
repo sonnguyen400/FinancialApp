@@ -102,7 +102,7 @@ public class AccountService implements IAccountService {
 
     @Override
     public List<Account> findByStatusAndTypeAndCustomerId(AccountStatus accountStatus, AccountType type, Integer customerId) {
-        return accountDao.findByStatusAndTypeAndCustomerId(AccountStatus.OPEN, type, customerId);
+        return accountDao.findByStatusAndTypeAndCustomerId(accountStatus, type, customerId);
     }
 
     @Override
@@ -117,6 +117,9 @@ public class AccountService implements IAccountService {
 
     @Override
     public Account createNewAccount(Account account, List<AccountHolder> accountHolder){
+         if(findByAccountNumber(account.getAccountNumber()).isPresent()){
+             throw new RuntimeException("Account number already exists");
+         }
         for(int i=0;i<accountHolder.size()-1;i++){
             for(int j=i+1;j<accountHolder.size();j++){
                 if(accountHolder.get(j)==accountHolder.get(i)){
@@ -128,13 +131,37 @@ public class AccountService implements IAccountService {
             account.setTierID(AccountTier.SILVER.id);
             account.setStatus(AccountStatus.OPEN.value);
             account.setBranchID(DefaultBrand.ID.value);
+            account.setBalance(BigDecimal.ZERO);
             Integer newAccId=accountDao.executeInsert(connection,account);
             for(AccountHolder holder:accountHolder){
                 holder.setAccountID(newAccId);
                 accountHolderDAO.executeInsert(connection,holder);
             }
-            account.setId(accountDao.executeInsert(connection,account));
+            account.setId(newAccId);
             return account;
+        });
+    }
+
+    @Override
+    public void inactiveAccount(Integer accountId) {
+        dbTransaction.startTransaction(null,connection -> {
+            accountDao.updateAccountStatus(connection,accountId,AccountStatus.INACTIVE.value);
+            return null;
+        });
+    }
+
+    @Override
+    public void freezeAccount(Integer accountId) {
+        dbTransaction.startTransaction(null,connection -> {
+            accountDao.updateAccountStatus(connection,accountId,AccountStatus.FROZEN.value);
+            return null;
+        });
+    }
+    @Override
+    public void openAccount(Integer accountId) {
+        dbTransaction.startTransaction(null,connection -> {
+            accountDao.updateAccountStatus(connection,accountId,AccountStatus.OPEN.value);
+            return null;
         });
     }
 

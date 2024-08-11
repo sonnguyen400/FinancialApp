@@ -26,11 +26,13 @@ public class AccountManageController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserDetailImp userDetailImp=(UserDetailImp)securityContextHolder.getPrincipal();
-        List<Account> accounts=accountService.findByCustomerIdAndType(AccountType.PRIMARY,userDetailImp.getCustomerId());
+        List<Account> accounts=accountService.findByStatusAndTypeAndCustomerId(AccountStatus.OPEN,AccountType.PRIMARY,userDetailImp.getCustomerId());
+        List<Account> freezes=accountService.findByStatusAndTypeAndCustomerId(AccountStatus.FROZEN,AccountType.PRIMARY,userDetailImp.getCustomerId());
         List<Account> coopAccounts=accountService.findByCustomerIdAndType(AccountType.INCORPORATE,userDetailImp.getCustomerId());
         req.setAttribute("accounts",accounts);
         req.setAttribute("coopAccounts",coopAccounts);
-        req.setAttribute("sum",accounts.stream().reduce(BigDecimal.ZERO,(pre,acc)->acc.getBalance().add(pre),BigDecimal::add));
+        req.setAttribute("freezes",freezes);
+        req.setAttribute("sum",accounts.stream().reduce(BigDecimal.ZERO,(pre,acc)->pre.add(acc.getBalance()==null?BigDecimal.ZERO:acc.getBalance()),BigDecimal::add));
         req.getRequestDispatcher("/page/user/AccountManage/page.jsp").forward(req,resp);
     }
 }

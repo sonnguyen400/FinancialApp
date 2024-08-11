@@ -1,5 +1,6 @@
 package com.sonnguyen.individual.nhs.dao.impl;
 
+import com.sonnguyen.individual.nhs.constant.AccountStatus;
 import com.sonnguyen.individual.nhs.dao.idao.IAccountDAO;
 import com.sonnguyen.individual.nhs.dao.core.AbstractDAO;
 import com.sonnguyen.individual.nhs.model.Account;
@@ -79,6 +80,13 @@ public class AccountDAOImp extends AbstractDAO<Account, Integer> implements IAcc
         String query = "update account set status=? where id=?";
         return executeUpdate(connection, query, status.value, accountId);
     }
+
+    @Override
+    public void updateAccountStatus(Connection connection, Integer accountId, int status) {
+        String query="update account set status=? where id=?";
+        executeUpdate(connection, query, status, accountId);
+    }
+
     @Override
     public Optional<Account> findBranchPrincipalAccount(int branchId){
         String query = "Select * from account where branch_id=? and account_type=4";

@@ -8,6 +8,7 @@ import com.sonnguyen.individual.nhs.model.AccountHolder;
 import com.sonnguyen.individual.nhs.security.UserDetailImp;
 import com.sonnguyen.individual.nhs.security.core.SecurityContextHolder;
 import com.sonnguyen.individual.nhs.service.iservice.IAccountService;
+import com.sonnguyen.individual.nhs.utils.RequestUtils;
 import com.sonnguyen.individual.nhs.utils.SessionUtils;
 import org.apache.http.HttpStatus;
 
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "/account/new",urlPatterns = "/app/account/new")
-public class AccountCreateNew extends HttpServlet {
+public class AccountCreateNewController extends HttpServlet {
     @Inject
     private IAccountService accountService;
     @Inject
@@ -34,39 +35,41 @@ public class AccountCreateNew extends HttpServlet {
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Account account= new Account();
-        account.setAccountNumber(req.getParameter("accountNumber"));
-        try{
-            account.setAccountType(Integer.valueOf(req.getParameter("accountType")));
-        } catch (Exception ignored) {
-        }
-        SessionUtils.setSession(req,"newAccount",account);
-        if(account.getAccountType()!=null&&account.getAccountType()== AccountType.INCORPORATE.value){
+        Account account= RequestUtils.parseEntity(req, Account.class);
+        if(account.getAccountType()!=null&&account.getAccountType()==AccountType.INCORPORATE.value){
+            SessionUtils.setSession(req,"account",account);
             req.getRequestDispatcher("/page/user/AccountCreateNew/ChooseCoopCustomer/page.jsp").forward(req, resp);
             return;
         }
-        Account account1= (Account) SessionUtils.getSession(req,"newAccount");
-        List<AccountHolder> holders= new ArrayList<>();
-        AccountHolder accountHolder=new AccountHolder();
-        accountHolder.setDefault(false);
-        accountHolder.setCustomerID(((UserDetailImp)securityContextHolder.getPrincipal()).getCustomerId());
-        holders.add(accountHolder);
-        String[] coops=req.getParameterMap().get("coop");
-        if(coops!=null){
-            for(String coop:coops) {
-                AccountHolder holder=new AccountHolder(Integer.parseInt(coop));
-                holder.setDefault(false);
-                holders.add(holder);
-            }
+        if(account.getAccountType()!=null&&account.getAccountType()==AccountType.PRIMARY.value){
+            AccountHolder accountHolder=new AccountHolder(((UserDetailImp)securityContextHolder.getPrincipal()).getCustomerId());
+            accountHolder.setDefault(false);
+            accountService.createNewAccount(account,List.of(accountHolder));
+            req.setAttribute("result",new Result(Message.Type.SUCCESS,"Created new account successfully", HttpStatus.SC_OK));
+            req.getRequestDispatcher("/page/user/Result/page.jsp").forward(req, resp);
+            return;
         }
-        try{
+        if(req.getParameter("action").equals("addmember")){
+            AccountHolder accountHolder=new AccountHolder(((UserDetailImp)securityContextHolder.getPrincipal()).getCustomerId());
+            accountHolder.setDefault(false);
+            List<AccountHolder> holders=new ArrayList<>();
+            holders.add(accountHolder);
+            String[] memberId=req.getParameterMap().get("memberId");
+            if(memberId!=null){
+                for(String coop:memberId) {
+                    AccountHolder holder=new AccountHolder(Integer.parseInt(coop));
+                    holder.setDefault(false);
+                    holders.add(holder);
+                }
+            }
+            Account account1= (Account) SessionUtils.getSession(req,"account");
             accountService.createNewAccount(account1,holders);
             req.setAttribute("result",new Result(Message.Type.SUCCESS,"Created new account successfully", HttpStatus.SC_OK));
             req.getRequestDispatcher("/page/user/Result/page.jsp").forward(req, resp);
-        } catch (Exception e) {
-            e.printStackTrace();
-            req.setAttribute("result",new Result(Message.Type.ERROR,e.getMessage(),HttpStatus.SC_INTERNAL_SERVER_ERROR));
-            req.getRequestDispatcher("/page/user/Result/page.jsp").forward(req, resp);
+            return;
         }
+        req.setAttribute("result",new Result(Message.Type.ERROR,"Created new account failure", HttpStatus.SC_OK));
+        req.getRequestDispatcher("/page/user/Result/page.jsp").forward(req, resp);
+
     }
 }

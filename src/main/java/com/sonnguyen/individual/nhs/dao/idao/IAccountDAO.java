@@ -22,4 +22,5 @@ public interface IAccountDAO extends GeneralDAO<Account, Integer> {
     Optional<Account> findDefaultAccountByCustomerId(Integer customerId);
     Integer updateAccountStatusByAccountId(Connection connection,Integer accountId, AccountStatus status) throws SQLException;
     Optional<Account> findById(Integer accountId);
+    void updateAccountStatus(Connection connection, Integer accountId, int status) throws SQLException;
 }

@@ -1,6 +1,6 @@
 <div class="nav-header">
   <div class="brand-logo">
-    <a href="<%=request.getContextPath()%>/app">
+    <a href="<%=request.getContextPath()%>/">
       <b class="logo-abbr"><img src="images/logo.png" alt=""> </b>
       <span class="logo-compact"><img  alt=""></span>
       <span class="brand-title">
