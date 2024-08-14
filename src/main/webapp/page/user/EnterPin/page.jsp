@@ -4,7 +4,7 @@
 
 
 <tiles:definition name="cur.page" extends="page">
-    <tiles:putAttribute name="title" value="Transfer"/>
+    <tiles:putAttribute name="title" value="HarmonyU"/>
     <tiles:putAttribute name="body">
         <tiles:definition extends="main-wrapper">
             <tiles:putAttribute name="content">

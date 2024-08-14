@@ -1,20 +1,18 @@
 <%@ taglib prefix="tilesx" uri="http://tiles.apache.org/tags-tiles-extras" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="com.sonnguyen.individual.nhs.model.Transaction" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.sonnguyen.individual.nhs.model.Account" %>
 <%@ page import="com.sonnguyen.individual.nhs.constant.TransactionType" %>
 <%@ page import="com.sonnguyen.individual.nhs.constant.TransactionStatus" %>
-
+<fmt:setLocale value="${sessionScope.lang}"  />
+<fmt:setBundle basename="lang"/>
 <div class="form-group">
     <div class="input-group-prepend">
     <span class="input-group-text pr-2 pr-sm-3">
-        From
+        <fmt:message key="from"/>
     </span>
         <input type="date" class="form-control" id="startDate">
         <span class="input-group-text  pr-2 pr-sm-3" >
-        To
+        <fmt:message key="to"/>
     </span>
         <input type="date" class="form-control" id="endDate">
     </div>

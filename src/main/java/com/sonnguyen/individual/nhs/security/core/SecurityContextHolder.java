@@ -12,6 +12,8 @@ public class SecurityContextHolder implements Serializable {
 
     @Inject
     private UserDetailService userDetailService;
+    @Inject
+    private PasswordEncoder passwordEncoder;
     public UserDetail getPrincipal() {
         return principal;
     }
@@ -20,7 +22,7 @@ public class SecurityContextHolder implements Serializable {
     }
     public UserDetail authenticate(String username,String password) throws AuthenticationException{
         UserDetail userdetail=userDetailService.findByUsername(username).orElseThrow(()->new AuthenticationException("Username not found"));
-        if(!userdetail.getPassword().equals(password)) throw new AuthenticationException("Wrong password");
+        if(!passwordEncoder.matches(password,userdetail.getPassword())) throw new AuthenticationException("Wrong password");
         return userdetail;
     }
 

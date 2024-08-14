@@ -8,6 +8,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean id="savings" scope="request" class="com.sonnguyen.individual.nhs.model.SavingsInfo"/>
 <jsp:useBean id="linkedAccount" scope="request" class="com.sonnguyen.individual.nhs.model.Account"/>
+<fmt:setLocale value="${sessionScope.lang}"  />
+<fmt:setBundle basename="lang"/>
 <%
     LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(savings.getUpdateAt().getTime()), ZoneId.of("GMT+7"));
     long currentDays = ChronoUnit.DAYS.between(localDateTime, LocalDateTime.now(ZoneId.of("GMT+7")));

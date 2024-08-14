@@ -49,8 +49,8 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    public Optional<Account> findByAccountNumber(String username) {
-        return accountDao.findAccountByAccountNumber(username);
+    public Optional<Account> findByAccountNumber(String accountNumber) {
+        return accountDao.findByAccountNumber(accountNumber);
     }
 
     @Override

@@ -40,7 +40,7 @@ public class AccountDAOImp extends AbstractDAO<Account, Integer> implements IAcc
     }
 
     @Override
-    public Optional<Account> findAccountByAccountNumber(String accountNumber) {
+    public Optional<Account> findByAccountNumber(String accountNumber) {
         Connection connection = getConnection();
         String query = "Select * from account where account_number=?";
         List<Account> accounts = executeSelect(connection, query, Account.class, accountNumber);

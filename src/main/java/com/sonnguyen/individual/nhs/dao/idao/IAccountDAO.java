@@ -15,7 +15,7 @@ public interface IAccountDAO extends GeneralDAO<Account, Integer> {
     int updateBalanceByAccountId(Connection connection, Integer accountId, BigDecimal bigDecimal) throws SQLException;
     Optional<Account> findBranchPrincipalAccount(int branchId);
     BigDecimal findBalanceByAccountId(int accountId);
-    Optional<Account> findAccountByAccountNumber(String accountNumber);
+    Optional<Account> findByAccountNumber(String accountNumber);
     List<Account> findByCustomerIdAndType(Integer customerId, AccountType accountType);
     List<Account> findAllByCustomerId(Integer customerId);
     List<Account> findByStatusAndTypeAndCustomerId(AccountStatus status, AccountType type, Integer customerId);

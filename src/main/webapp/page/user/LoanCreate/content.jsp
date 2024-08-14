@@ -4,6 +4,9 @@
 <%@ page import="com.sonnguyen.individual.nhs.model.Account" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.sonnguyen.individual.nhs.constant.MemberShip" %>
+<fmt:setLocale value="${sessionScope.lang}"  />
+<fmt:setBundle basename="lang"/>
+
 
 <jsp:useBean id="membership" scope="request" type="com.sonnguyen.individual.nhs.model.Membership"/>
 <div class="row justify-content-center">

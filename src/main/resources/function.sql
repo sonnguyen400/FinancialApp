@@ -25,8 +25,11 @@ begin
         end while;
     return unpaidMonthCount;
 end //
+
+
+
 # select DATE_ADD(str_to_date("31/1/2003","%d/%m/%YYYY"),INTERVAL  2 MONTH );
-select DATE_ADD(str_to_date("1/8/2020","%d/%m/%YYYY"), INTERVAL TIMESTAMPDIFF(MONTH , str_to_date("1/8/2020","%d/%m/%YYYY"), now())+1 MONTH)
-    as nextpayment having datediff(nextpayment,now())=?;
-;
-select * from loan where DATEDIFF(DATE_ADD(loan.approval_date, INTERVAL TIMESTAMPDIFF(MONTH ,loan.approval_date, now())+? MONTH),?)=?
+# select DATE_ADD(str_to_date("1/8/2020","%d/%m/%YYYY"), INTERVAL TIMESTAMPDIFF(MONTH , str_to_date("1/8/2020","%d/%m/%YYYY"), now())+1 MONTH)
+#     as nextpayment having datediff(nextpayment,now())=?;
+# ;
+# select * from loan where DATEDIFF(DATE_ADD(loan.approval_date, INTERVAL TIMESTAMPDIFF(MONTH ,loan.approval_date, now())+? MONTH),?)=?

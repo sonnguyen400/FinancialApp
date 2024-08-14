@@ -6,7 +6,7 @@ import com.sonnguyen.individual.nhs.model.Account;
 import com.sonnguyen.individual.nhs.model.Customer;
 import com.sonnguyen.individual.nhs.model.Login;
 import com.sonnguyen.individual.nhs.service.iservice.ICustomerService;
-import com.sonnguyen.individual.nhs.service.iservice.ILoginCustomerService;
+import com.sonnguyen.individual.nhs.service.iservice.IRegisterService;
 import com.sonnguyen.individual.nhs.dto.Message;
 import com.sonnguyen.individual.nhs.utils.OTPUtils;
 import com.sonnguyen.individual.nhs.utils.RequestUtils;
@@ -26,7 +26,7 @@ import java.util.List;
 @Model
 public class RegisterController extends HttpServlet {
     @Inject
-    ILoginCustomerService loginCustomerService;
+    IRegisterService loginCustomerService;
     @Inject
     ICustomerService customerService;
     @Inject
@@ -47,6 +47,7 @@ public class RegisterController extends HttpServlet {
             SessionUtils.setSession(req,"login",login);
             SessionUtils.setSession(req,"customer",customer);
             SessionUtils.setSession(req,"account",account);
+            System.out.println("Send code to "+req.getParameter("email"));
             otpUtils.generateOTP()
                     .sessionSave(req)
                     .sendToEmail(req.getParameter("email"));
@@ -58,13 +59,12 @@ public class RegisterController extends HttpServlet {
             Login login= (Login) SessionUtils.getSession(req,"login");
             Customer customer=(Customer) SessionUtils.getSession(req,"customer");
             Account account=(Account) SessionUtils.getSession(req,"account");
-            loginCustomerService.save(login,customer,account);
-            req.setAttribute("message",new Alert(Message.Type.SUCCESS,"Register Successfully"));
+            loginCustomerService.register(login,customer,account);
+            req.setAttribute("alert",new Alert(Message.Type.SUCCESS,"Register Successfully",req.getContextPath()+"/login","Login Now"));
             doGet(req,resp);
         }catch (Exception e){
             e.printStackTrace();
-            req.setAttribute("message",new Alert(Message.Type.ERROR,e.getMessage()));
+            req.setAttribute("alert",new Alert(Message.Type.ERROR,e.getMessage()));
         }
-        doGet(req,resp);
     }
 }

@@ -1,8 +1,8 @@
-<%@ page import="com.sonnguyen.individual.nhs.model.Transfer" %>
-<%
-    Transfer transfer= (Transfer) request.getAttribute("transfer");
-%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lang}"  />
+<fmt:setBundle basename="lang"/>
 
+<jsp:useBean id="transfer" scope="request" type="com.sonnguyen.individual.nhs.model.Transfer"/>
 <div class="row justify-content-center">
     <div class="col-ssm col-sm-6 col-xl-3 align-self-center">
         <div class="invoice shadow-lg">
@@ -10,32 +10,28 @@
                 <div class="p-3 col text-center text-lg text-primary p-5 border-bottom-dashed">
                     <i class="fi fi-ts-check-circle"></i>
                     <h4 class="text-info opacity-5">Successful Transference</h4>
-                    <h2 class="text-primary pt-3"><%=transfer.getTransaction().getAmount()%></h2>
+                    <h2 class="text-primary pt-3"><fmt:formatNumber value="${transfer.transaction.amount}" currencyCode="."/> </h2>
                 </div>
                 <div class="pt-5 pb-1 px-3">
                     <table class="invoice-infor table">
                         <tr>
                             <td>Destination Account</td>
                             <td>
-                                <span><%=transfer.getAccountId()%></span><br>
+                                <span>${transfer.accountId}</span><br>
                                 <span>Harmony</span>
                             </td>
                         </tr>
                         <tr>
                             <td>Source Account</td>
-                            <td><%=transfer.getTransaction().getAccountId()%></td>
+                            <td>${transfer.transaction.accountId}</td>
                         </tr>
                         <tr>
                             <td>Invoice Date</td>
-                            <td><%=transfer.getTransaction().getTransactionAt()%></td>
-                        </tr>
-                        <tr>
-                            <td>Invoice Number</td>
-                            <td>156789</td>
+                            <td>${transfer.transaction.transactionAt}</td>
                         </tr>
                         <tr>
                             <td>Transfer details</td>
-                            <td><%=transfer.getMessage()%></td>
+                            <td>${transfer.message}</td>
                         </tr>
                     </table>
                 </div>

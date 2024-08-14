@@ -13,7 +13,7 @@ import java.io.IOException;
 public class LanguageSelectionController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(req.getParameter("language") != null) SessionUtils.setSession(req,"language",req.getParameter("language"));
+        if(req.getParameter("lang") != null) SessionUtils.setSession(req,"lang",req.getParameter("lang"));
         resp.sendRedirect(req.getContextPath()+req.getParameter("language_page_uri"));
     }
 }

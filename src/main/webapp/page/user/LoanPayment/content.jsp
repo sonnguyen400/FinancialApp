@@ -5,6 +5,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean id="loan" class="com.sonnguyen.individual.nhs.model.Loan"/>
+<fmt:setLocale value="${sessionScope.lang}"  />
+<fmt:setBundle basename="lang"/>
+
 <%!Calendar now=Calendar.getInstance();%>
 <div class="row justify-content-center">
     <div class="col-xl-4 col-ssm-1">

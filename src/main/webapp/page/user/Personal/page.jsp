@@ -5,7 +5,7 @@
 
 <tiles:insertDefinition name="personal">
     <tiles:definition name="personal" extends="page">
-        <tiles:putAttribute name="title" value="Harmony"/>
+        <tiles:putAttribute name="title" value="HarmonyU"/>
         <tiles:putAttribute name="body">
             <tiles:definition extends="main-wrapper">
                 <tiles:putAttribute name="content" >

@@ -3,8 +3,10 @@ package com.sonnguyen.individual.nhs.dao.impl;
 import com.sonnguyen.individual.nhs.dao.idao.ILoginDAO;
 import com.sonnguyen.individual.nhs.dao.core.AbstractDAO;
 import com.sonnguyen.individual.nhs.model.Login;
+import com.sonnguyen.individual.nhs.security.PasswordEncoderArgon2;
 
 import javax.enterprise.inject.Model;
+import javax.inject.Inject;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -12,12 +14,12 @@ import java.util.Optional;
 
 @Model
 public class LoginDAOImp extends AbstractDAO<Login,Integer> implements ILoginDAO {
-
+    @Inject
+    private PasswordEncoderArgon2 passwordEncoderArgon2;
     @Override
     protected Class<Login> getEntityType() {
         return Login.class;
     }
-
     @Override
     protected Class<Integer> getIdType() {
         return Integer.class;
@@ -54,5 +56,10 @@ public class LoginDAOImp extends AbstractDAO<Login,Integer> implements ILoginDAO
         List<Login> login=executeSelect(query,username);
         if(login.isEmpty()) return Optional.empty();
         return Optional.of(login.get(0));
+    }
+    @Override
+    public Integer executeInsert(Connection connection,Login login){
+        login.setPassword(passwordEncoderArgon2.encode(login.getPassword()));
+        return super.executeInsert(connection,login);
     }
 }

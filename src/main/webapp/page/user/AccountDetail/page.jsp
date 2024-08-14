@@ -2,7 +2,7 @@
 <%@include file="/taglib/taglib.jsp"%>
 <tiles:insertDefinition name="page">
     <tiles:definition name="page" extends="page">
-        <tiles:putAttribute name="title" value="Wallet"/>
+        <tiles:putAttribute name="title" value="HarmonyU"/>
         <tiles:putAttribute name="body">
             <tiles:definition extends="main-wrapper">
                 <tiles:putAttribute name="content" >

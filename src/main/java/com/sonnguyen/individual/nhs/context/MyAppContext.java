@@ -15,6 +15,5 @@ public class MyAppContext implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext servletContext=sce.getServletContext();
-        servletContext.setAttribute("connection",new DBConnection("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/nhsbank","root", ""));
     }
 }

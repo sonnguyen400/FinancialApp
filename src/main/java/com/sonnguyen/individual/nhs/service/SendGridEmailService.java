@@ -7,6 +7,7 @@ import com.sendgrid.SendGrid;
 import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
+import com.sonnguyen.individual.nhs.context.annotation.Value;
 import com.sonnguyen.individual.nhs.service.iservice.IEmailService;
 
 import javax.enterprise.inject.Model;
@@ -14,14 +15,18 @@ import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 @Model
 public class SendGridEmailService implements IEmailService {
-    private final Email from=new Email("hellohoangson@gmail.com");
+    @Value(name = "service.mail.sendgrid.apiKey")
+    private String apiKey;
+    @Value(name = "service.mail.sendgrid.from")
+    private String fromAddress;
     @Override
     public CompletableFuture<Void> sendEmail(String dest, String content, String subject) {
+        Email from=new Email(fromAddress);
         return CompletableFuture.runAsync(()->{
             Email to=new Email(dest);
             Content content1=new Content("text/plain", content);
             Mail mail=new Mail(from,subject,to,content1);
-            SendGrid sendGrid=new SendGrid("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");
+            SendGrid sendGrid=new SendGrid(apiKey);
             Request request = new Request();
             try {
                 request.setMethod(Method.POST);

@@ -1,4 +1,4 @@
-package com.sonnguyen.individual.nhs.context;
+package com.sonnguyen.individual.nhs.context.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

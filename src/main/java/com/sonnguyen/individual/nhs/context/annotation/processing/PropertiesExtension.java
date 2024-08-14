@@ -1,4 +1,6 @@
-package com.sonnguyen.individual.nhs.context;
+package com.sonnguyen.individual.nhs.context.annotation.processing;
+
+import com.sonnguyen.individual.nhs.context.annotation.Value;
 
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.event.Observes;

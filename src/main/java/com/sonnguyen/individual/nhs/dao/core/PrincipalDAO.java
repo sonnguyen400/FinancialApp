@@ -2,7 +2,7 @@ package com.sonnguyen.individual.nhs.dao.core;
 
 import com.sonnguyen.individual.nhs.context.ApplicationConfig;
 import com.sonnguyen.individual.nhs.context.ConnectionHolder;
-import com.sonnguyen.individual.nhs.context.Value;
+import com.sonnguyen.individual.nhs.context.annotation.Value;
 import com.sonnguyen.individual.nhs.utils.EntityMapper;
 
 import javax.inject.Inject;

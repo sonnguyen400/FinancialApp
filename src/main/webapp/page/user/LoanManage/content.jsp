@@ -1,7 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="com.sonnguyen.individual.nhs.model.Loan" %>
+<fmt:setLocale value="${sessionScope.lang}"  />
+<fmt:setBundle basename="lang"/>
+
 <jsp:useBean id="loans" scope="request" type="java.util.List"/>
+
 <%
     if(!loans.isEmpty()) request.setAttribute("newest",loans.get(0));
 %>

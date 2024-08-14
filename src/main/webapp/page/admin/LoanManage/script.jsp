@@ -1,5 +1,27 @@
 <%@ page import="com.sonnguyen.individual.nhs.constant.LoanStatus" %>
 <script>
+    function approveLoan(e) {
+        console.log(e.target.value)
+        <%--$.ajax({--%>
+        <%--    url: baseUrl,--%>
+        <%--    method: "PUT",--%>
+        <%--    data: {--%>
+        <%--        id: e.target.value,--%>
+        <%--        status: "<%=LoanStatus.APPROVED%>"--%>
+        <%--    }--%>
+        <%--})--%>
+    }
+
+    function rejectLoan(id) {
+        $.ajax({
+            url: baseUrl,
+            method: "PUT",
+            data: {
+                id: id,
+                status: "<%=LoanStatus.REJECTED%>"
+            }
+        })
+    }
     $(function () {
         const baseUrl = "<%=request.getContextPath()%>/ajax/loans";
 
@@ -7,27 +29,7 @@
             return $.get(`\${baseUrl}?status=\${status}`);
         }
 
-        function approveLoan(id) {
-            $.ajax({
-                url: baseUrl,
-                method: "PUT",
-                data: {
-                    id: id,
-                    status: "<%=LoanStatus.APPROVED%>"
-                }
-            })
-        }
 
-        function rejectLoan(id) {
-            $.ajax({
-                url: baseUrl,
-                method: "PUT",
-                data: {
-                    id: id,
-                    status: "<%=LoanStatus.REJECTED%>"
-                }
-            })
-        }
 
         var triggerTabList = $("#loans a")
         triggerTabList.on("shown.bs.tab", function (e) {
@@ -44,7 +46,7 @@
                                 <td>\${item.interestRate}%</td>
                                 <td>\${item.term} Month</td>
                                 <td>
-                                    \${item.status==2?"<button class='btn btn-success' onclick='{(e)=>approveLoan(\${item.id})}'>Approved</button> <button onclick='{(e)=>rejectLoan(\${item.id})}' class='btn btn-warning'>Reject</button>":""}
+                                    \${item.status==2?`<button class='btn btn-success' name='approve' value='\${item.id}' type='submit'>Approved</button> <button onclick='{(e)=>rejectLoan(\${item.id})}' class='btn btn-warning'>Reject</button>`:""}
                                     <a href=<%=request.getContextPath()%>/admin/loan/detail?id=\${item.id} class="btn btn-warning">Detail</a>
                                 </td>
                             </tr> `).join("")
@@ -63,7 +65,7 @@
                                 <td>\${item.interestRate}%</td>
                                 <td>\${item.term} Month</td>
                                 <td>
-                                     \${item.status==2?"<button class='btn btn-success' onclick='{(e)=>approveLoan(\${item.id})}'>Approved</button> <button onclick='{(e)=>rejectLoan(\${item.id})}' class='btn btn-warning'>Reject</button>":""}
+                                     \${item.status==2?`<button class='btn btn-success' value='\${item.id}' name='approve' type='submit'>Approved</button> <button onclick='{(e)=>rejectLoan(\${item.id})}' class='btn btn-warning'>Reject</button>`:""}
                                     <a href=<%=request.getContextPath()%>/admin/loan/detail?id=\${item.id} class="btn btn-warning">Detail</a>
                                 </td>
                             </tr> `).join("")

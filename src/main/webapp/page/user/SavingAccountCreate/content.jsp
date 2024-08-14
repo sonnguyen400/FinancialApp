@@ -3,7 +3,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="com.sonnguyen.individual.nhs.constant.SavingType" %>
 <%@ page import="com.sonnguyen.individual.nhs.constant.Rollover" %>
+<fmt:setLocale value="${sessionScope.lang}"  />
+<fmt:setBundle basename="lang"/>
 <jsp:useBean id="membership" scope="request" class="com.sonnguyen.individual.nhs.model.Membership"/>
+
 <div class="row justify-content-center">
     <div class="col col-sm-12 col-md-12 col-lg-6 col-xl-4">
         <div class="row">

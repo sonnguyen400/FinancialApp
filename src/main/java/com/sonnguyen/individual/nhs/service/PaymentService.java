@@ -1,7 +1,7 @@
 package com.sonnguyen.individual.nhs.service;
 
 import com.sonnguyen.individual.nhs.constant.TransactionType;
-import com.sonnguyen.individual.nhs.context.Value;
+import com.sonnguyen.individual.nhs.context.annotation.Value;
 import com.sonnguyen.individual.nhs.dao.core.DBTransaction;
 import com.sonnguyen.individual.nhs.dao.idao.IAccountDAO;
 import com.sonnguyen.individual.nhs.dao.idao.ILoanDAO;

@@ -8,6 +8,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="savings" scope="request" type="com.sonnguyen.individual.nhs.model.SavingsInfo"/>
+<fmt:setLocale value="${sessionScope.lang}"  />
+<fmt:setBundle basename="lang"/>
 <div class="row justify-content-center">
     <div class="col-md-6 col-sm-12">
         <div class="card" >

@@ -14,7 +14,7 @@ public interface IAccountService{
     Optional<Account> findBranchPrincipalAccount(int branchId);
 
     Optional<Account> findById(int id);
-    Optional<Account> findByAccountNumber(String username);
+    Optional<Account> findByAccountNumber(String accountNumber);
     Collection<Account> findAllByCustomerId(Integer customerId);
     void createSavingsAccount(Integer customerId, SavingsInfo savingsInfor);
     List<Account> findByStatusAndTypeAndCustomerId(AccountStatus status,AccountType accountType, Integer customerId);

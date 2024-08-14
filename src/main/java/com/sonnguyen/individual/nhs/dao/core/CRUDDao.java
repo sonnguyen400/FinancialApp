@@ -1,6 +1,5 @@
 package com.sonnguyen.individual.nhs.dao.core;
 
-import com.sonnguyen.individual.nhs.context.Value;
 import com.sonnguyen.individual.nhs.utils.EntityMapper;
 
 import java.lang.reflect.InvocationTargetException;

@@ -1,6 +1,11 @@
 <%@ page import="com.sonnguyen.individual.nhs.dto.Message" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lang}"  />
+<fmt:setBundle basename="lang"/>
 <jsp:useBean id="result" scope="request" class="com.sonnguyen.individual.nhs.dto.Result"/>
+
+
 <div class="row justify-content-center">
     <div class="col-sm-12 col-md-4 col-lg-6">
         <div class="card w-100">

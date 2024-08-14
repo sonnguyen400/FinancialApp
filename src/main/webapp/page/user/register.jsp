@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Register</title>
+    <title>HarmonyU</title>
     <link rel='stylesheet'
           href='<c:url value="https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css"/>'>
     <%@include file="/taglib/header.jsp" %>
@@ -17,9 +17,10 @@
 </head>
 <body>
 
-<jsp:useBean id="message" scope="request" class="com.sonnguyen.individual.nhs.dto.Message"/>
-<c:if test="${message!=null&&message.type.name()=='SUCCESS'}">
-    <ex:alert type="SUCCESS" link="Login" href="<c:url/>">jdftftu</ex:alert>
+
+<c:if test="${requestScope.alert!=null}">
+    <jsp:useBean id="alert" scope="request" class="com.sonnguyen.individual.nhs.dto.Alert"/>
+    <ex:alert type="${alert.type}" link="${alert.link}" href="${alert.href}">${alert.message}</ex:alert>
 </c:if>
 
 <div class="d-flex justify-content-center align-items-center" style="height: 100vh">
@@ -125,7 +126,7 @@
                                         class="text-white fi-sr-lock"></i>
                                 </div>
                             </div>
-                            <input id="password" class="form-control" name="password" data-rule="none" type="text"/>
+                            <input id="password"  class="form-control" name="password" data-rule="none" type="password"/>
                         </div>
                         <span class="invalid-feedback"></span>
                     </div>
@@ -137,7 +138,7 @@
                                         class="text-white fi-sr-lock"></i>
                                 </div>
                             </div>
-                            <input id="PIN" class="form-control" name="pin" data-rule="none" type="text"/>
+                            <input id="PIN" class="form-control" name="pin" data-rule="none" type="password"/>
                         </div>
                         <span class="invalid-feedback"></span>
                     </div>

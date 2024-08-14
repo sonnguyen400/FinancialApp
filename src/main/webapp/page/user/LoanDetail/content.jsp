@@ -7,6 +7,8 @@
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<fmt:setLocale value="${sessionScope.lang}"  />
+<fmt:setBundle basename="lang"/>
 
 <jsp:useBean id="loan" scope="request" class="com.sonnguyen.individual.nhs.model.Loan"/>
 <c:forEach var="alert" items="${requestScope.alerts}">

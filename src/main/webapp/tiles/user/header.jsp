@@ -3,8 +3,13 @@
 <%@ page import="com.sonnguyen.individual.nhs.utils.SessionUtils" %>
 <%@ page import="com.sonnguyen.individual.nhs.security.UserDetailImp" %>
 <%UserDetailImp account=SessionUtils.getPrincipal(request);%>
-<fmt:setLocale value="vi"/>
+<fmt:setLocale value="${sessionScope.lang}"  />
 <fmt:setBundle basename="lang"/>
+<%
+    String uri = (String) request.getAttribute("javax.servlet.forward.request_uri");
+    String prmstr = (String) request.getAttribute("javax.servlet.forward.query_string");
+    String url =  uri + "?" + prmstr;
+%>
 <div class="header">
     <div class="header-content clearfix">
 
@@ -26,10 +31,10 @@
                     <div class="drop-down dropdown-language animated fadeIn  dropdown-menu">
                         <div class="dropdown-content-body">
                             <form method="get" action="${pageContext.request.contextPath}/language">
-                                <input type="hidden" name="language_page_uri" value="${pageContext.request.requestURL}">
+                                <input type="hidden" name="language_page_uri" value="<%=url%>">
                                 <ul>
-                                    <li><button name="lang" value="vi">Vietnamese</button></li>
-                                    <li><button name="lang" value="en">English</button></li>
+                                    <li><button style="border: none;background-color: transparent" name="lang" value="vi">Vietnamese</button></li>
+                                    <li><button style="border: none;background-color: transparent" name="lang" value="en">English</button></li>
                                 </ul>
                             </form>
                         </div>

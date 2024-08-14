@@ -2,6 +2,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="com.sonnguyen.individual.nhs.model.Account" %>
 <%@ page import="java.util.List" %>
+<fmt:setLocale value="${sessionScope.lang}"  />
+<fmt:setBundle basename="lang"/>
 <%!
 Object receiver_name;
 %>
@@ -41,7 +43,7 @@ Object receiver_name;
                                 <div class="card-body p-2">
                                     <div class="form-group col">
                                         <label for="account_number" class="col-form-label">
-                                            <span>Receiver account number</span>
+                                            <span><fmt:message key="receiver.account.number"/> </span>
                                             <span class="text-danger">*</span>
                                         </label>
                                         <input type="text" data-rule="none" name="account_number" class="form-control input-default"
@@ -50,7 +52,7 @@ Object receiver_name;
                                     </div>
                                     <div class="form-group col">
                                         <label for="amount" class="col-form-label">
-                                            <span>Amount</span>
+                                            <span><fmt:message key="amount"/></span>
                                             <span class="text-danger">*</span>
                                         </label>
                                         <input type="number" data-rule="required" min=0 name="amount" class="form-control input-default"
@@ -58,7 +60,7 @@ Object receiver_name;
                                     </div>
                                     <div class="form-group col">
                                         <label for="message" class="col-form-label">
-                                            <span>Message</span>
+                                            <span><fmt:message key="message"/> </span>
                                             <span class="text-danger">*</span>
                                         </label>
                                         <input type="text" data-rule="none" name="message" class="form-control input-default"
@@ -74,7 +76,7 @@ Object receiver_name;
                                 <div class="card-body p-2">
                                     <form id="form2">
                                         <div class="form-group col">
-                                            <label id="current-balance col-form-label">Receiver Information</label>
+                                            <label id="current-balance col-form-label"><fmt:message key="receiver.information"/></label>
                                             <input data-rule="required" style="font-size: 18px;color: gray;text-transform: uppercase;letter-spacing: 2px" class="input-default form-control"   disabled id="receiver_name">
                                         </div>
                                     </form>

@@ -1,9 +1,14 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.sonnguyen.individual.nhs.constant.LoanStatus" %>
+<%@ taglib prefix="ex" uri="/WEB-INF/custom.tld" %>
+<c:if test="${requestScope.alert!=null}">
+    <ex:alert type="${requestScope.alert.type}">${requestScope.alert.message}</ex:alert>
+</c:if>
 <div class="card">
     <div class="card-body">
         <h4 class="card-title">Default Tab</h4>
         <!-- Nav tabs -->
-        <div class="default-tab">
+        <form method="post" class="default-tab">
             <ul class="nav nav-tabs mb-3" id="loans" role="tablist">
                 <li class="nav-item"><a class="nav-link active" data-toggle="tab" data-status="<%=LoanStatus.PENDING%>" href="#<%=LoanStatus.PENDING%>"><%=LoanStatus.PENDING%></a>
                 </li>
@@ -65,6 +70,6 @@
                     </table>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>

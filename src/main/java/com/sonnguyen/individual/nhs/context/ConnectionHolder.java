@@ -1,5 +1,7 @@
 package com.sonnguyen.individual.nhs.context;
 
+import com.sonnguyen.individual.nhs.context.annotation.Value;
+
 import javax.enterprise.inject.Model;
 import java.sql.Connection;
 
