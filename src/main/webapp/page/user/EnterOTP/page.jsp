@@ -4,7 +4,6 @@
 
 <tiles:definition name="cur.page" extends="page">
     <tiles:putAttribute name="title" value="HarmonyU"/>
-    <title:putAttribute name="css" value="transfer_page_css"/>
     <tiles:putAttribute name="body">
         <tiles:definition extends="main-wrapper">
             <tiles:putAttribute name="content" value="/page/user/EnterOTP/content.jsp">

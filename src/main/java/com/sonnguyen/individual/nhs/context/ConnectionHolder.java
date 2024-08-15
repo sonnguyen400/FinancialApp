@@ -2,10 +2,12 @@ package com.sonnguyen.individual.nhs.context;
 
 import com.sonnguyen.individual.nhs.context.annotation.Value;
 
-import javax.enterprise.inject.Model;
+import javax.enterprise.context.ApplicationScoped;
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
-@Model
+@ApplicationScoped
 public class ConnectionHolder {
     private static DBConnection connection;
     @Value(name="com.data.mysql.driver")
@@ -16,11 +18,12 @@ public class ConnectionHolder {
     private String username;
     @Value(name = "com.data.mysql.password")
     private String password;
-    public void getDBConnection() {
-        connection=new DBConnection(driver, url, username, password);
-    }
     public Connection getConnection() {
-        if(connection==null) getDBConnection();
-        return connection.getConnection();
+        try {
+            Class.forName(driver);
+            return DriverManager.getConnection(url,username, password);
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

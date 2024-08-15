@@ -7,7 +7,6 @@ import com.sonnguyen.individual.nhs.dto.Message;
 import com.sonnguyen.individual.nhs.dto.Result;
 import com.sonnguyen.individual.nhs.model.Customer;
 import com.sonnguyen.individual.nhs.model.Loan;
-import com.sonnguyen.individual.nhs.model.Login;
 import com.sonnguyen.individual.nhs.model.Membership;
 import com.sonnguyen.individual.nhs.security.UserDetailImp;
 import com.sonnguyen.individual.nhs.security.core.SecurityContextHolder;
@@ -24,7 +23,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Objects;
 
 @WebServlet(name = "loan/create", urlPatterns = "/app/loan/create")
 public class CreateLoanController extends HttpServlet {
@@ -65,7 +63,7 @@ public class CreateLoanController extends HttpServlet {
             loan.setCustomerId(userDetailImp.getCustomerId());
             loan.setBranchId(DefaultBrand.ID.value);
             loanService.save(loan);
-            req.setAttribute("result",new Result(Message.Type.SUCCESS,"Your loan is in processing! Please pantient until received formal email",1));
+            req.setAttribute("result",new Result(Message.Type.SUCCESS,"Your loan is in processing! Please be patient until you received formal email",1));
             req.getRequestDispatcher("/page/user/Result/page.jsp").forward(req, resp);
             return;
         }

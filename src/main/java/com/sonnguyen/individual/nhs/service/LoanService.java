@@ -3,8 +3,8 @@ package com.sonnguyen.individual.nhs.service;
 import com.sonnguyen.individual.nhs.constant.DefaultBrand;
 import com.sonnguyen.individual.nhs.constant.LoanStatus;
 import com.sonnguyen.individual.nhs.constant.TransactionType;
-import com.sonnguyen.individual.nhs.dao.idao.ILoanDAO;
 import com.sonnguyen.individual.nhs.dao.core.DBTransaction;
+import com.sonnguyen.individual.nhs.dao.idao.ILoanDAO;
 import com.sonnguyen.individual.nhs.model.Account;
 import com.sonnguyen.individual.nhs.model.Loan;
 import com.sonnguyen.individual.nhs.model.Transaction;
@@ -79,7 +79,7 @@ public class LoanService implements ILoanService {
         Loan loan=loanDAO.findById(id).orElseThrow(()->new NotFoundException("Could not find"));
         Account account=accountService.findByAccountNumber(loan.getDisbursementAccountNumber()).orElseThrow(()->new NotFoundException("Could not find"));
         if(loan.getStatus()==LoanStatus.REJECTED.value||loan.getStatus()==LoanStatus.APPROVED.value) throw new IllegalArgumentException("Illegal loan status");
-        return dbTransaction.startTransaction(Loan.class,connection -> {
+        String refnumber= dbTransaction.startTransaction(String.class,connection -> {
             Transaction transaction=new Transaction();
             transaction.setAmount(loan.getAmount());
             transaction.setAccountId(1);
@@ -89,10 +89,13 @@ public class LoanService implements ILoanService {
             transfer.setMessage("Disburse for loan");
             transfer.setAccountId(account.getId());
             transfer.setTransaction(transaction);
-            loanDAO.approveLoanById(connection,loan.getId());
-            transferService.transferCommit( transferService.init(connection,transfer));
             loan.setStatus(LoanStatus.APPROVED.value);
-            return loan;
+            return transferService.init(connection,transfer);
         });
+        return dbTransaction.startTransaction(null,(connection -> {
+            loanDAO.approveLoanById(connection,loan.getId());
+            transferService.transferCommit(refnumber );
+            return null;
+        }));
     }
 }

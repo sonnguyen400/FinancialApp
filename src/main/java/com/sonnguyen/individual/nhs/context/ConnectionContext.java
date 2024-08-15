@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 @Model
+@Deprecated
 public class ConnectionContext {
     @Inject
     ServletContext servletContext;

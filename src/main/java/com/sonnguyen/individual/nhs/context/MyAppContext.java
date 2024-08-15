@@ -9,6 +9,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 @ApplicationScoped
+@Deprecated
 public class MyAppContext implements ServletContextListener {
     @Inject
     BeanManager beanManager;
