@@ -1,4 +1,4 @@
-#### Love it ? Let this project have one more star
+#### Love it? Let this project have one more star
 
 
 
@@ -7,7 +7,7 @@ This project simulates a banking app and mimics basic functions. A part of my ma
 ## Function
 - Register, login, transfer money, receive money
 - Creating savings (Fixed rate), managing savings
-- Creating loans (Fixed rate), managing loans, loan payments  , [loan-policy](#loan-policy) 
+- Creating loans (Fixed rate), managing loans, loan payments, [loan-policy](#loan-policy) 
 - Automatically sending warning emails at the loan payment date (default 3 days before the payment date) </li>
 - Automatically maturing or making rollover for Savings Account 
 - Authentication (PIN, received OTP via email)
@@ -20,12 +20,12 @@ This project simulates a banking app and mimics basic functions. A part of my ma
 - DAO
 
 ## Technology
-- Java servlet,Argon (Password Encoder),  Quartz and DeltaSpike,, JSP, Java bean, Weld (CDI), Jackson, Apache tiles (Template Engine), Sendgrid(Mail Service)
+- Java servlet, Argon (Password Encoder),  Quartz and DeltaSpike, JSP, Java bean, Weld (CDI), Jackson, Apache tiles (Template Engine), Sendgrid(Mail Service)
 - Bootstrap (Quixlab theme), JQuery
 
 ## Configuration
 
-Editing `application.properties` located in `/src/main/resource/application.properties` can allow you to config some properties. You then can read values inside by using annotation @Value 
+Editing `application.properties` located in `/src/main/resource/application.properties` can allow you to configure some properties. You then can read values inside by using annotation @Value 
 
 
 ```java
@@ -37,28 +37,28 @@ private String driver;
 
 | Property                 | Type    | Default                  | Description                                                                                  |
 |--------------------------|---------|--------------------------|----------------------------------------------------------------------------------------------|
-| com.data.mysql.driver    | String  | com.mysql.cj.jdbc.Driver | Database Driver <br/>This project are only designed to work with mysql database              |
+| com.data.mysql.driver    | String  | com.mysql.cj.jdbc.Driver | Database Driver <br/>This project is only designed to work with MySQL database              |
 | com.data.mysql.url       | String  |                          | Database URL                                                                                 |
 | com.data.mysql.username  | String  | root                     | Database Username                                                                            |
 | com.data.mysql.password  | String  |                          | Database password                                                                            |
-| application.debug        | String  | true                     | if enabled whole executed query in runtime process will be shown in console                  |
-| service.loan.warn.mail   | Integer | 3                        | Warning notification of loan payment will be send to client's email before 3 days            |
-| service.loan.late.charge | Integer | 4                        | Fine applied when client making late loan payment. For more, reading    [Loan Policy](#loan) |
+| application.debug        | String  | true                     | If enabled whole executed query in runtime process will be shown in console                  |
+| service.loan.warn.mail   | Integer | 3                        | Warning notification of loan payment will be sent to client's email before 3 days            |
+| service.loan.late.charge | Integer | 4                        | Fine applied when a client makes a late loan payment. For more, reading    [Loan Policy](#loan) |
 
 
 # Function Explanation
 ## Loan Policy
 ### Create Loan
 
-In Loan creation page, customer must enter some information include:
+In Loan creation page, the customer must enter some information including:
 - Disbursement Account Number (Beneficiary Account). Account received money once loan is approved
 - Term 
 - Amount (Limitation depends on customer's Membership)
 
 ### Approve Loan
-After client creates their loan. Admin can approve or reject them.
+After clients create their loan. Admin can approve or reject them.
 
-If loan is approved, there will have a transaction transferring amount from branch account to Beneficiary Account based on information provided by user before.
+If loan is approved, there will be a transaction transferring money from the branch account to the Beneficiary Account based on information provided by the user before.
 
 If loan is rejected, there will 
 
@@ -78,16 +78,16 @@ MonthlyPayment= ( initialAmount * interestRate / term ) + ( initialAmount / term
 - Rollover: Select rollover
 - Beneficiary Account: Up to your selected rollover type, money will automatically be transferred to this account.
 
-_**A savings can be early finished than expected if customer want to. Aware it is term deposit. Customers can't be received any profit if they finish savings before the date**_
+_**A savings can be early finished than expected if customers want to. Aware it is a term deposit. Customers can't receive any profit if they finish savings before the date**_
 
 ### Rollover
 
-Rollover executed automatically by scheduler. If the worst case of absence of any incident, customer may have to withdrawal all money from savings account manually.
+Rollover is executed automatically by scheduler. In the worst case of the absence of any incident, customer may have to withdraw all money from the savings account manually.
 
 ## Scheduler Service
 
 Powered by apache deltaspike module. Time can be changed by editing [cronExpression](https://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html).
-All scheduler put in scheduler package
+All schedulers put in scheduler package
 - Savings Rollover Scheduler
 - Loan Payment Warning Scheduler
 
@@ -95,29 +95,29 @@ All scheduler put in scheduler package
 ### Authentication Mechanism
 Security Service include three primary [SecurityContextHolder](), [UserDetailService]() ,[UserDetail Interface](), [PasswordEncoder]()
 #### UserDetail Interface
-Providing implement of methods:
-- getUsername() return name of authorized object
-- getPassword() return password of authorized object
+Providing implementation of methods:
+- getUsername() returns name of authorized object
+- getPassword() returns password of authorized object
 - getAuthorities() return roles or authorities of authorized object
 
 #### UserDetailService
-Its duty is retrieving user information from database to get  of UserDetail through Username
+Its duty is to retrieve user information from database to get  UserDetail through Username
 
 #### SecurityContextHolder
-SecurityContextHolder encompasses authorized object (implement from UserDetail) and authenticate method.
+SecurityContextHolder encompasses authorized object (implemented from UserDetail) and authenticate method.
 
 The "authenticate" method receives a parameter implemented from UserDetail Interface.
 
-The mechanism behinds authenticate is relatively simple. It will compare password got from argument and password from User got from  UserDetailService implement.
+The mechanism behind authenticating is relatively simple. It will compare the password obtained from the argument and the password from User got from  UserDetailService implementation.
 
-If Implementation of UserDetailService doesn't find any user from provided username or the passwords doesn't match, it will throw an AuthenticationException.
+If the Implementation of UserDetailService doesn't find any user from and username or the passwords don't match, it will throw an AuthenticationException.
 
 ### PasswordEncoder
-Every Password encoder must be implemented from interface com.sonnguyen.individual.nhs.security.core.PasswordEncoder and annotated as @Model that make it can be managed by CDI.
+Every Password encoder must be implemented from interface com.sonnguyen.individual.nhs.security.core.PasswordEncoder and annotated as @Model make it can be managed by CDI.
 
 NoPasswordEncoder will be used if CDI doesn't find any appropriate PasswordEncoder.
 
-In this project, I'm using Argon as default PasswordEncoder.
+In this project, I'm using Argon as the default PasswordEncoder.
 
 ### Two-Factor Authentication {2FA}
 #### PIN
