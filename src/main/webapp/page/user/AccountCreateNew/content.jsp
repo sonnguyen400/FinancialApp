@@ -8,21 +8,21 @@
     <div class="col-sm-12 col-md-8 col-lg-6">
         <div class="card">
             <div class="card-body">
-                <div class="card-title">New Account</div>
+                <div class="card-title"><fmt:message key="account.new"/></div>
                 <form method="post" >
                     <div class="form-group">
-                        <label>Account Number</label>
+                        <label><fmt:message key="account.number"/> </label>
                         <input class="form-control" name="accountNumber">
                     </div>
                     <div class="form-group">
                         <label>Account Type</label>
                         <select class="form-control" name="accountType">
-                            <option value="<%=AccountType.PRIMARY.value%>">Standard Account</option>
-                            <option value="<%=AccountType.INCORPORATE.value%>">Co-op Account</option>
+                            <option value="<%=AccountType.PRIMARY.value%>"><fmt:message key="account.standard"/> </option>
+                            <option value="<%=AccountType.INCORPORATE.value%>"><fmt:message key="account.coop"/> </option>
                         </select>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <button class="btn btn-primary" type="submit">Continue</button>
+                        <button class="btn btn-primary" type="submit"><fmt:message key="continue"/> </button>
                     </div>
                 </form>
             </div>

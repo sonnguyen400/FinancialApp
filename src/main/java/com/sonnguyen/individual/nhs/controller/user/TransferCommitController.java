@@ -14,24 +14,26 @@ import java.util.Objects;
 
 import static com.sonnguyen.individual.nhs.utils.RequestUtils.ERROR_MESSAGE;
 
-@WebServlet("/transfer/commit")
+@WebServlet(name = "transfer /commit",urlPatterns = "/app/transfer/commit")
 public class TransferCommitController extends HttpServlet {
     @Inject
     ITransferService transferService;
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(!req.getRequestURI().equals(req.getContextPath()+"/app/otp")){
-            resp.sendRedirect(req.getContextPath()+"/");
+        if( req.getAttribute("OTP")!=null&&req.getAttribute("OTP").equals("VALID")){
+            String refNumber= (String) SessionUtils.getSession(req,"refNumber");
+            try{
+                req.setAttribute("transfer",transferService.transferCommit(refNumber));
+            }catch (Exception e){
+                req.setAttribute(ERROR_MESSAGE,e.getMessage());
+                req.getRequestDispatcher("/app/transfer").include(req,resp);
+                return;
+            }
+            req.getRequestDispatcher("/page/user/Bill/page.jsp").forward(req,resp);
             return;
         }
-        String refNumber= (String) SessionUtils.getSession(req,"refNumber");
-        try{
-            req.setAttribute("transfer",transferService.transferCommit(refNumber));
-        }catch (Exception e){
-            req.setAttribute(ERROR_MESSAGE,e.getMessage());
-            req.getRequestDispatcher("/app/transfer").include(req,resp);
-            return;
-        }
-        req.getRequestDispatcher("/page/user/Bill/page.jsp").forward(req,resp);
+        resp.sendRedirect(req.getContextPath()+"/");
+        return;
+
     }
 }

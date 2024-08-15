@@ -53,7 +53,7 @@ public class TransferController extends HttpServlet {
         String transactionRefNumber=transferService.init(transfer);
 
         SessionUtils.setSession(req,"refNumber",transactionRefNumber);
-        SessionUtils.setSession(req,"endpoint","/app/transfer/commit");
+        SessionUtils.setSession(req,"endpoint",req.getContextPath()+"/app/transfer/commit");
         req.getRequestDispatcher("/app/pin").include(req,resp);
     }
 

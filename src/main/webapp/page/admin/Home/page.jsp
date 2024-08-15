@@ -1,5 +1,7 @@
-<tiles:insertDefinition name="admin-loan-manage.page">
-    <tiles:definition name="admin-loan-manage.page" extends="page">
+<%@ taglib prefix="title" uri="http://tiles.apache.org/tags-tiles" %>
+<%@include file="/taglib/taglib.jsp"%>
+<tiles:insertDefinition name="cur.page">
+    <tiles:definition name="cur.page" extends="page">
         <tiles:putAttribute name="title" value="LoanManage"/>
         <tiles:putAttribute name="body">
             <tiles:definition extends="main-wrapper">
@@ -8,13 +10,6 @@
                         <tiles:putAttribute name="content" value="/page/admin/Home/content.jsp"/>
                     </tiles:definition>
                 </tiles:putAttribute>
-            </tiles:definition>
-        </tiles:putAttribute>
-        <tiles:putAttribute name="script">
-            <tiles:definition extends="script">
-                <tiles:putListAttribute inherit="true" name="script">
-                    <tiles:addAttribute value="/resources/js/gleek.js"/>
-                </tiles:putListAttribute>
             </tiles:definition>
         </tiles:putAttribute>
         <tiles:putAttribute name="inline-script" value="/page/admin/LoanManage/script.jsp"/>

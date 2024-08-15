@@ -33,7 +33,9 @@ public class OTPUtils {
         return otp;
     }
     public OTPUtils sendToEmail(String dest){
-        iEmailService.sendEmail(dest,otp.getCode(),
+        iEmailService.sendEmail(dest,
+                "<div style='padding:16px 0px'>Your code is: "+otp.getCode()+"</div>"
+                ,
                 "This is verification code sent from System! Please don't share this email with anyone").thenRun(()->{
         });
         return this;

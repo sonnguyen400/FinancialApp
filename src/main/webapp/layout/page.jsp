@@ -4,17 +4,19 @@
 <%@ taglib prefix="ex" uri="/WEB-INF/custom.tld" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@include file="/taglib/taglib.jsp"%>
+<fmt:setLocale value="${pageContext.request.localName}"  />
+<fmt:setBundle basename="lang"/>
 <%
     if(session.getAttribute("lang")==null){
-        session.setAttribute("lang",request.getLocalName());
+        session.setAttribute("lang",request.getLocale().getLanguage());
     }
 %>
+
 <%@page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title><tiles:insertAttribute name="title"/></title>
     <tiles:insertAttribute name="css"/>

@@ -21,4 +21,8 @@ public class SavingsSettingService implements ISavingsSettingService {
     public Optional<SavingsSetting> findByTerm(Integer term) {
         return savingSettingDAO.findByTerm(term);
     }
+    @Override
+    public Optional<SavingsSetting> findById(Integer id){
+        return savingSettingDAO.findById(id);
+    }
 }

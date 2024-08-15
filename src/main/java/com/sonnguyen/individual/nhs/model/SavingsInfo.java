@@ -83,6 +83,7 @@ public class SavingsInfo {
                 ", term=" + term +
                 ", accountId=" + accountId +
                 ", updateAt=" + updateAt +
+                ", term_id=" + term_id +
                 ", beneficiary_account_id=" + beneficiary_account_id +
                 ", account=" + account +
                 ", amount=" + amount +
@@ -160,17 +161,6 @@ public class SavingsInfo {
 
     public void setInterestRate(BigDecimal interestRate) {
         this.interestRate = interestRate;
-    }
-    public double getProcess(){
-        try{
-            LocalDateTime localDateTime=LocalDateTime.ofInstant(Instant.ofEpochMilli(account.getOpenDate().getTime()), ZoneId.of("GMT+7"));
-            long currentDays=ChronoUnit.DAYS.between(localDateTime,LocalDateTime.now(ZoneId.of("GMT+7")));
-            long  maturityDays= ChronoUnit.DAYS.between(localDateTime,localDateTime.plusMonths(term));
-            return currentDays*100.0/maturityDays;
-        }catch (Exception e){
-            return 0;
-        }
-
     }
     public boolean isMature(){
         Calendar now=Calendar.getInstance();

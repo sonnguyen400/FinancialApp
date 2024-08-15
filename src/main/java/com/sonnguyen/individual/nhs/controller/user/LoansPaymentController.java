@@ -52,25 +52,26 @@ public class LoansPaymentController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(!req.getRequestURI().equals(req.getContextPath()+"/app/otp")) {
-            SessionUtils.setSession(req, "id",Integer.valueOf(req.getParameter("id")));
-            SessionUtils.setSession(req,"account_id",Integer.valueOf(req.getParameter("account_id")));
-            SessionUtils.setSession(req, "endpoint", "/app/loan/payment");
-            resp.sendRedirect(req.getContextPath() + "/app/pin");
+        if(req.getAttribute("OTP")!=null&&req.getAttribute("OTP").equals("VALID")) {
+            int loanId=(int) SessionUtils.getSession(req,"id");
+            int account_id=(int) SessionUtils.getSession(req,"account_id");
+            try{
+                Payment payment= paymentService.createPayment(loanId,account_id);
+                System.out.println(payment);
+                req.setAttribute("result", new Result(Message.Type.SUCCESS,"Payment was successful",500));
+                req.getRequestDispatcher("/page/user/Result/page.jsp").forward(req, resp);
+            } catch (Exception e) {
+                e.printStackTrace();
+                req.setAttribute("result", new Result(Message.Type.ERROR,e.getMessage(),500));
+                req.getRequestDispatcher("/page/user/Result/page.jsp").forward(req, resp);
+            }
             return;
         }
-        int loanId=(int) SessionUtils.getSession(req,"id");
-        int account_id=(int) SessionUtils.getSession(req,"account_id");
-        try{
-            Payment payment= paymentService.createPayment(loanId,account_id);
-            System.out.println(payment);
-            req.setAttribute("result", new Result(Message.Type.SUCCESS,"Payment was successful",500));
-            req.getRequestDispatcher("/page/user/Result/page.jsp").forward(req, resp);
-        } catch (Exception e) {
-            e.printStackTrace();
-            req.setAttribute("result", new Result(Message.Type.ERROR,e.getMessage(),500));
-            req.getRequestDispatcher("/page/user/Result/page.jsp").forward(req, resp);
-        }
+        SessionUtils.setSession(req, "id",Integer.valueOf(req.getParameter("id")));
+        SessionUtils.setSession(req,"account_id",Integer.valueOf(req.getParameter("account_id")));
+        SessionUtils.setSession(req, "endpoint", "/app/loan/payment");
+        resp.sendRedirect(req.getContextPath() + "/app/pin");
+        return;
 
     }
 }

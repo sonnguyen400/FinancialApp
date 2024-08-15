@@ -42,18 +42,4 @@ public class LoanManageController extends HttpServlet {
         req.setAttribute("membership",membershipService.findById(customer.getMembershipID()).orElse(new Membership()));
         req.getRequestDispatcher("/page/user/LoanManage/page.jsp").forward(req, resp);
     }
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Map<String,String> map=RequestUtils.getParameterMap(req);
-        Integer id=Integer.parseInt(map.get("id"));
-        try{
-            if(LoanStatus.valueOf(map.get("status"))==LoanStatus.APPROVED){
-                loanService.approveLoan(id);
-            }else{
-                loanService.updateStatusById(id, LoanStatus.valueOf(map.get("status")));
-            }
-        } catch (SQLException | NotFoundException e) {
-            resp.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-        }
-    }
 }

@@ -24,7 +24,8 @@
     </filter-mapping>
     <filter-mapping>
         <filter-name>EncodeFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/app/*</url-pattern>
+        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
 
 

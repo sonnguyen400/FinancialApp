@@ -11,6 +11,7 @@ import com.sonnguyen.individual.nhs.context.annotation.Value;
 import com.sonnguyen.individual.nhs.service.iservice.IEmailService;
 
 import javax.enterprise.inject.Model;
+import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 @Model
@@ -24,7 +25,7 @@ public class SendGridEmailService implements IEmailService {
         Email from=new Email(fromAddress);
         return CompletableFuture.runAsync(()->{
             Email to=new Email(dest);
-            Content content1=new Content("text/plain", content);
+            Content content1=new Content(MediaType.TEXT_HTML, content);
             Mail mail=new Mail(from,subject,to,content1);
             SendGrid sendGrid=new SendGrid(apiKey);
             Request request = new Request();

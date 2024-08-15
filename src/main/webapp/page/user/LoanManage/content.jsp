@@ -71,7 +71,18 @@
                                 <td><fmt:formatNumber value="${loan_.amount}" type="currency" /> </td>
                                 <td>${loan_.term}</td>
                                 <td>${loan_.interestRate}</td>
-                                <td>${loan_.status}</td>
+                                <td>
+                                    <c:if test="${loan_.status==2}">
+                                        <div class='rounded text-ssm-2 bg-blue-100 text-blue-700 border-blue-700 px-1'>Pending</div >
+                                    </c:if>
+                                    <c:if test="${loan_.status==1}">
+                                        <div class="rounded text-ssm-2 bg-green-100 text-green-700 border-blue-700 px-1">Approved</div>
+                                    </c:if>
+                                    <c:if test="${loan_.status==0}">
+                                        <div class="rounded text-ssm-2 bg-red-100 text-green-700 border-blue-700 px-1">Rejected</div>
+                                    </c:if>
+
+                                </td>
                                 <td>
                                     <c:if test="${loan_.status==1}">
                                         <a href="<%=request.getContextPath()%>/app/loan/detail?id=${loan_.id}" class="link-1">Details</a>

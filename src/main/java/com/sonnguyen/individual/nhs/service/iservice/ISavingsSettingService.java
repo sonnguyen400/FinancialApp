@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface ISavingsSettingService {
     List<SavingsSetting> findAll();
     Optional<SavingsSetting> findByTerm(Integer term);
+
+    Optional<SavingsSetting> findById(Integer id);
 }

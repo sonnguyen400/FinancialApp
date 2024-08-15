@@ -13352,6 +13352,11 @@ table.dataTable thead .sorting::after {
 
 .select-custom select {
   display: none;
+  max-height: 40vh;
+  overflow-y:scroll;
+}
+.select-custom select::-webkit-scrollbar {
+  width: 6px;
 }
 
 .select-custom .select {

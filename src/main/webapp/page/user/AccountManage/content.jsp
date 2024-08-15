@@ -18,19 +18,18 @@
         <div class="card">
             <div class="card-body">
                 <div class="card-title">
-                    Personal Account
+                    <fmt:message key="account.personal"/>
                 </div>
                 <div class="row">
                     <c:forEach var="account" items="${requestScope.accounts}">
                         <div class="col-lg-6 col-sm-12 gutter-sm-2 gutter-md-2 gutter-lg-4">
                             <div class="border-solid border-white-gray pt-3 pb-2 px-2 radius">
                                 <div class="p-2">
-                                    <h4 class="card-subtitle text-secondary">Principle Account</h4>
                                     <h5 class="text-blue-700 py-3">${account.accountNumber}</h5>
                                     <div class="divider"></div>
                                     <div class="d-flex justify-content-between">
                                         <h4 class="text-primary"><fmt:formatNumber value="${account.balance}" currencyCode="," currencySymbol="vnd"/></h4>
-                                        <a href="<%=request.getContextPath()%>/app/account?id=${account.id}" class="btn btn-rounded bg-primary text-white">Detail</a>
+                                        <a href="<%=request.getContextPath()%>/app/account?id=${account.id}" class="btn btn-rounded bg-primary text-white"><fmt:message key="detail"/></a>
                                     </div>
                                 </div>
                             </div>
@@ -41,7 +40,7 @@
                             <div class="p-2">
                                 <div class="d-flex flex-column align-items-center">
                                     <div style="font-size: 4rem"><i class="fi fi-sr-square-plus"></i></div>
-                                    <div>Create new Account</div>
+                                    <div><fmt:message key="account.create.new"/> </div>
                                 </div>
                             </div>
                         </a>
@@ -49,7 +48,7 @@
                 </div>
                 <c:if test="${requestScope.coopAccounts.size()>0}">
                     <div class="card-title">
-                        Coop Accounts
+                        <fmt:message key="account.coop"/>
                     </div>
                     <div class="row gutter-sm-2 gutter-md-2 gutter-lg-4">
                         <c:forEach var="account" items="${requestScope.coopAccounts}">
@@ -61,7 +60,7 @@
                                         <div class="divider"></div>
                                         <div class="d-flex justify-content-between">
                                             <h4 class="text-primary"><fmt:formatNumber value="${account.balance}" currencyCode="," currencySymbol="vnd"/></h4>
-                                            <a href="<%=request.getContextPath()%>/app/account?id=${account.id}" class="btn btn-rounded bg-primary text-white">Detail</a>
+                                            <a href="<%=request.getContextPath()%>/app/account?id=${account.id}" class="btn btn-rounded bg-primary text-white"><fmt:message key="detail"/></a>
                                         </div>
                                     </div>
                                 </div>
@@ -71,7 +70,7 @@
                 </c:if>
                 <c:if test="${requestScope.freezes.size()>0}">
                     <div class="card-title">
-                        Frozen Account
+                        <fmt:message key="account.status.frozen"/>
                     </div>
                     <div class="row gutter-sm-2 gutter-md-2 gutter-lg-4">
                         <c:forEach var="account" items="${requestScope.freezes}">
@@ -83,7 +82,7 @@
                                         <div class="divider"></div>
                                         <div class="d-flex justify-content-between">
                                             <h4 class="text-primary"><fmt:formatNumber value="${account.balance}" currencyCode="," currencySymbol="vnd"/></h4>
-                                            <a href="<%=request.getContextPath()%>/app/account?id=${account.id}" class="btn btn-rounded bg-primary text-white">Detail</a>
+                                            <a href="<%=request.getContextPath()%>/app/account?id=${account.id}" class="btn btn-rounded bg-primary text-white"><fmt:message key="detail"/></a>
                                         </div>
                                     </div>
                                 </div>

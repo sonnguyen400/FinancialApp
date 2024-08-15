@@ -53,24 +53,26 @@ public class CreateLoanController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (!req.getRequestURI().equalsIgnoreCase(req.getContextPath()+"/app/otp")) {
-            SessionUtils.setSession(req,"loan",RequestUtils.parseEntity(req, Loan.class));
-            req.getSession().setAttribute("endpoint", "/app/loan/create");
-            resp.sendRedirect(req.getContextPath()+"/app/pin");
+        if (req.getAttribute("OTP")!=null&&req.getAttribute("OTP").equals("VALID")) {
+            UserDetailImp userDetailImp= (UserDetailImp) securityContextHolder.getPrincipal();
+            Loan loan = (Loan) SessionUtils.getSession(req,"loan");
+            loanSettingService.findById(loan.getTerm_id()).ifPresentOrElse(loanSetting -> {
+                loan.setInterestRate(BigDecimal.valueOf(loanSetting.getInterestRate()));
+                loan.setTerm(loanSetting.getTerm());
+            },()->{
+                throw new IllegalArgumentException("Setting not found");
+            });
+            loan.setCustomerId(userDetailImp.getCustomerId());
+            loan.setBranchId(DefaultBrand.ID.value);
+            loanService.save(loan);
+            req.setAttribute("result",new Result(Message.Type.SUCCESS,"Your loan is in processing! Please pantient until received formal email",1));
+            req.getRequestDispatcher("/page/user/Result/page.jsp").forward(req, resp);
             return;
         }
-        UserDetailImp userDetailImp= (UserDetailImp) securityContextHolder.getPrincipal();
-        Loan loan = (Loan) SessionUtils.getSession(req,"loan");
-        loanSettingService.findById(loan.getTerm_id()).ifPresentOrElse(loanSetting -> {
-            loan.setInterestRate(BigDecimal.valueOf(loanSetting.getInterestRate()));
-            loan.setTerm(loanSetting.getTerm());
-        },()->{
-            throw new IllegalArgumentException("Setting not found");
-        });
-        loan.setCustomerId(userDetailImp.getCustomerId());
-        loan.setBranchId(DefaultBrand.ID.value);
-        loanService.save(loan);
-        req.setAttribute("result",new Result(Message.Type.SUCCESS,"Your loan is in processing! Please pantient until received formal email",1));
-        req.getRequestDispatcher("/page/user/Result/page.jsp").forward(req, resp);
+        SessionUtils.setSession(req,"loan",RequestUtils.parseEntity(req, Loan.class));
+        req.getSession().setAttribute("endpoint", "/app/loan/create");
+        resp.sendRedirect(req.getContextPath()+"/app/pin");
+        return;
+
     }
 }

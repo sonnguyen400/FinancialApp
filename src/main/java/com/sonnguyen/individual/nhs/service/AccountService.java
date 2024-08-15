@@ -69,7 +69,9 @@ public class AccountService implements IAccountService {
             account.setBranchID(DefaultBrand.ID.value);
             account.setStatus(AccountStatus.PENDING.value);
             account.setOpenDate(Date.valueOf(LocalDate.now()));
+            account.setTierID(AccountTier.SILVER.id);
             Integer accountId = accountDao.executeInsert(connection, account);
+
             //Create account holder
             AccountHolder holder = new AccountHolder(accountId, customerId);
             accountHolderDAO.executeInsert(connection, holder);

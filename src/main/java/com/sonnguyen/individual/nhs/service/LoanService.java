@@ -90,7 +90,7 @@ public class LoanService implements ILoanService {
             transfer.setAccountId(account.getId());
             transfer.setTransaction(transaction);
             loanDAO.approveLoanById(connection,loan.getId());
-            transferService.startTransfer(connection,transfer);
+            transferService.transferCommit( transferService.init(connection,transfer));
             loan.setStatus(LoanStatus.APPROVED.value);
             return loan;
         });

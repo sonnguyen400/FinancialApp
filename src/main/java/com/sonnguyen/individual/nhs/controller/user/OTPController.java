@@ -23,9 +23,10 @@ public class OTPController extends HttpServlet {
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(req.getParameter(OTP) != null){
+        if(req.getParameter("otp") != null){
             if(OTPUtils.isValid(req)){
-                req.getRequestDispatcher((String) SessionUtils.getSession(req,"endpoint")).include(req,resp);
+                req.setAttribute("OTP","VALID");
+                req.getRequestDispatcher((String) SessionUtils.getSession(req,"endpoint")).forward(req,resp);
             }else {
                 System.out.println("Invalid OTP");
                 req.setAttribute(ERROR_MESSAGE,"Invalid OTP");

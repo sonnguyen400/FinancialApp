@@ -25,6 +25,13 @@ public class Tier {
     @Column(name = "limit_transaction", length = 45)
     private BigDecimal limitTransaction;
 
+    public Tier() {
+    }
+
+    public Tier(Integer id) {
+        this.id = id;
+    }
+
     public Integer getId() {
         return id;
     }

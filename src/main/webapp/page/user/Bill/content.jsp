@@ -15,14 +15,14 @@
                 <div class="pt-5 pb-1 px-3">
                     <table class="invoice-infor table">
                         <tr>
-                            <td>Destination Account</td>
+                            <td><fmt:message key="account.des"/>/td>
                             <td>
                                 <span>${transfer.accountId}</span><br>
                                 <span>Harmony</span>
                             </td>
                         </tr>
                         <tr>
-                            <td>Source Account</td>
+                            <td><fmt:message key="source.account"/> </td>
                             <td>${transfer.transaction.accountId}</td>
                         </tr>
                         <tr>

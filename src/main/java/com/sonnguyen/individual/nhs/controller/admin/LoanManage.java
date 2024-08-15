@@ -25,10 +25,12 @@ public class LoanManage extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         try {
             if(req.getParameter("approve") != null) {
                 loanService.approveLoan(Integer.valueOf(req.getParameter("approve")));
+            }
+            if(req.getParameter("reject") != null) {
+                loanService.approveLoan(Integer.valueOf(req.getParameter("reject")));
             }
             req.setAttribute("alert",new Alert(Message.Type.SUCCESS,"Success"));
             doGet(req, resp);

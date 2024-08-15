@@ -2,6 +2,7 @@ package com.sonnguyen.individual.nhs.controller.user;
 
 import com.sonnguyen.individual.nhs.constant.AccountStatus;
 import com.sonnguyen.individual.nhs.constant.AccountType;
+import com.sonnguyen.individual.nhs.dto.Alert;
 import com.sonnguyen.individual.nhs.dto.Message;
 import com.sonnguyen.individual.nhs.dto.Result;
 import com.sonnguyen.individual.nhs.model.*;
@@ -61,27 +62,12 @@ public class CreateSavingsController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(!req.getRequestURI().equalsIgnoreCase(req.getContextPath()+"/app/otp")){
-            SavingsInfo savingsInfo=RequestUtils.parseEntity(req,SavingsInfo.class);
-            System.out.println(savingsInfo);
-            try(ValidatorFactory factory= Validation.buildDefaultValidatorFactory();) {
-                Validator validator=factory.getValidator();
-                Set<ConstraintViolation<SavingsInfo>> constraintViolationSet=validator.validate(savingsInfo);
-                if(!constraintViolationSet.isEmpty()){
-                    constraintViolationSet.forEach(System.out::println);
-                    req.setAttribute(ERROR_MESSAGE, new ArrayList<>(constraintViolationSet).get(0).getMessage());
-                    doGet(req,resp);
-                    return;
-                }
-            }
-            SessionUtils.setSession(req,"savingsInfo",savingsInfo);
-            SessionUtils.setSession(req,"endpoint","/app/saving/create");
-            req.getRequestDispatcher("/app/pin").include(req,resp);
-        }else{
+        if(req.getAttribute("OTP")!=null&&req.getAttribute("OTP").equals("VALID")){
             UserDetailImp login= (UserDetailImp) securityContextHolder.getPrincipal();
             try{
                 SavingsInfo savingsInfo= (SavingsInfo) SessionUtils.getSession(req,"savingsInfo");
-                savingsSettingService.findByTerm(savingsInfo.getTerm()).ifPresentOrElse(savingsSetting -> {
+                System.out.println(savingsInfo);
+                savingsSettingService.findById(savingsInfo.getTerm_id()).ifPresentOrElse(savingsSetting -> {
                     savingsInfo.setInterestRate(BigDecimal.valueOf(savingsSetting.getInterestRate()));
                     savingsInfo.setTerm(savingsSetting.getTerm());
                 },()->{
@@ -92,9 +78,15 @@ public class CreateSavingsController extends HttpServlet {
                 req.getRequestDispatcher("/page/user/Result/page.jsp").forward(req,resp);
             }catch (Exception e){
                 e.printStackTrace();
-                req.setAttribute(ERROR_MESSAGE,e.getMessage());
-                doGet(req,resp);
+                req.setAttribute("result",new Result(Message.Type.ERROR,"Error",HttpStatus.SC_OK ));
+                req.getRequestDispatcher("/page/user/Result/page.jsp").forward(req,resp);
             }
+            return;
         }
+        SavingsInfo savingsInfo=RequestUtils.parseEntity(req,SavingsInfo.class);
+        SessionUtils.setSession(req,"savingsInfo",savingsInfo);
+        SessionUtils.setSession(req,"endpoint","/app/saving/create");
+        resp.sendRedirect(req.getContextPath()+"/app/pin");
+        return;
     }
 }

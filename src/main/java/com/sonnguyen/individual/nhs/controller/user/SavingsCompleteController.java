@@ -57,27 +57,25 @@ public class SavingsCompleteController extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (!req.getRequestURI().contains("/app/otp")) {
-            SessionUtils.setSession(req, "beneficiary_account_id", req.getParameter("beneficiary_account_id"));
-            SessionUtils.setSession(req, "savings_id", req.getParameter("savings_id"));
-            SessionUtils.setSession(req, "endpoint", req.getContextPath() + "/app/saving/complete");
-            resp.sendRedirect(req.getContextPath() + "/app/pin");
-            return;
+        if ( req.getAttribute("OTP")!=null&&req.getAttribute("OTP").equals("VALID")) {
+            try {
+                int beneficiary_account_id = Integer.parseInt((String) SessionUtils.getSession(req, "beneficiary_account_id"));
+                SavingsInfo savingsInfo = savingInfoService.findById(Integer.parseInt((String) SessionUtils.getSession(req, "savings_id"))).orElseThrow(() -> new ResourceNotFoundException("Can't not found resource name savings"));
+                savingInfoService.completeSavings(savingsInfo, beneficiary_account_id);
+                req.setAttribute("result", new Result(Message.Type.SUCCESS, "Success", HttpStatus.SC_OK));
+                req.getRequestDispatcher("/page/user/Result/page.jsp").forward(req, resp);
+                return;
+            } catch (Exception exception) {
+                exception.printStackTrace();
+                req.setAttribute("result", new Result(Message.Type.ERROR, exception.getMessage(), HttpStatus.SC_OK));
+                req.getRequestDispatcher("/page/user/Result/page.jsp").forward(req, resp);
+                return;
+            }
         }
-        try {
-            int beneficiary_account_id = Integer.parseInt((String) SessionUtils.getSession(req, "beneficiary_account_id"));
-            SavingsInfo savingsInfo = savingInfoService.findById(Integer.parseInt((String) SessionUtils.getSession(req, "savings_id"))).orElseThrow(() -> new ResourceNotFoundException("Can't not found resource name savings"));
-            savingInfoService.completeSavings(savingsInfo, beneficiary_account_id);
-            req.setAttribute("result", new Result(Message.Type.SUCCESS, "Success", HttpStatus.SC_OK));
-            req.getRequestDispatcher("/page/user/Result/page.jsp").forward(req, resp);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            req.setAttribute("result", new Result(Message.Type.ERROR, exception.getMessage(), HttpStatus.SC_OK));
-            req.getRequestDispatcher("/page/user/Result/page.jsp").forward(req, resp);
-            return;
-        }
-
-
+        SessionUtils.setSession(req, "beneficiary_account_id", req.getParameter("beneficiary_account_id"));
+        SessionUtils.setSession(req, "savings_id", req.getParameter("savings_id"));
+        SessionUtils.setSession(req, "endpoint", req.getContextPath() + "/app/saving/complete");
+        resp.sendRedirect(req.getContextPath() + "/app/pin");
     }
 
 

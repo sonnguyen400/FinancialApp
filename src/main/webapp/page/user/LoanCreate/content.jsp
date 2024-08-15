@@ -48,7 +48,7 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="DisbursementAccount">Disbursement Account</label>
+                                <label for="DisbursementAccount"><fmt:message key="beneficiary.account"/></label>
                                 <select name="disbursementAccountNumber" id="DisbursementAccount" class="form-control input-default">
                                     <c:forEach items="${requestScope.accounts}" var="account">
                                         <option value="${account.accountNumber}">${account.accountNumber}</option>
@@ -56,7 +56,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="term">Term</label>
+                                <label for="term"><fmt:message key="term"/> </label>
                                 <select class="form-control" name="term_id" >
                                     <c:forEach var="setting" items="${requestScope.loanSettings}">
                                         <option value="${setting.id}">${setting.term} Month</option>
@@ -66,13 +66,13 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="amount">Amount</label>
+                                <label for="amount"><fmt:message key="amount"/> </label>
                                 <input type="number" name="amount" max="${membership.loan_limit}" min="100000" value="0" class="form-control">
                                 <input name="LoanCreate" value="" type="hidden">
                                 <input name="interestRate" value="10" type="hidden">
                                 <div class="d-flex justify-content-end pt-3">
                                     <button type="submit" class="btn btn-primary">
-                                        Continue
+                                        <fmt:message key="continue"/>
                                     </button>
                                 </div>
                             </div>

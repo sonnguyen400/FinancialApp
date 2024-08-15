@@ -41,30 +41,33 @@ public class AccountDetailController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(!req.getRequestURI().equals(req.getContextPath()+"/app/otp")){
-            SessionUtils.setSession(req,"endpoint",req.getContextPath()+"/app/account");
-            if(req.getParameter("freeze") != null) {
-                SessionUtils.setSession(req,"freeze",Integer.parseInt(req.getParameter("freeze")));
+        if(req.getAttribute("OTP")!=null&&req.getAttribute("OTP").equals("VALID")){
+            String[] info=((String) SessionUtils.getSession(req,"update_status")).split("_");
+            if(info[0].equals("freeze")) {
+                accountService.freezeAccount(Integer.parseInt(info[1]));
             }
-            if(req.getParameter("inactive") != null) {
-                SessionUtils.setSession(req,"inactive",Integer.parseInt(req.getParameter("inactive")));
+            if(info[0].equals("inactive")) {
+                accountService.inactiveAccount(Integer.parseInt(info[1]));
             }
-            if(req.getParameter("unfreeze") != null) {
-                SessionUtils.setSession(req,"unfreeze",Integer.parseInt(req.getParameter("unfreeze")));
+            if(info[0].equals("unfreeze")) {
+                accountService.openAccount(Integer.parseInt(info[1]));
             }
-            resp.sendRedirect(req.getContextPath()+"/app/pin");
+            req.setAttribute("result",new Result(Message.Type.SUCCESS,"Success",HttpStatus.SC_OK));
+            req.getRequestDispatcher("/page/user/Result/page.jsp").forward(req, resp);
             return;
         }
-        if(SessionUtils.getSession(req,"freeze") != null) {
-            accountService.freezeAccount((Integer) SessionUtils.getSession(req,"freeze"));
-        }
-        if(SessionUtils.getSession(req,"inactive") != null) {
-            accountService.inactiveAccount((Integer) SessionUtils.getSession(req,"inactive"));
-        }
-        if(SessionUtils.getSession(req,"unfreeze") != null) {
-            accountService.openAccount((Integer) SessionUtils.getSession(req,"unfreeze"));
-        }
-        req.setAttribute("result",new Result(Message.Type.SUCCESS,"Success",HttpStatus.SC_OK));
-        req.getRequestDispatcher("/page/user/Result/page.jsp").forward(req, resp);
+        SessionUtils.setSession(req,"endpoint",req.getContextPath()+"/app/account");
+        SessionUtils.setSession(req,"update_status",req.getParameter("update_status"));
+//        if(req.getParameter("freeze") != null) {
+//            SessionUtils.setSession(req,"freeze",Integer.parseInt(req.getParameter("freeze")));
+//        }
+//        if(req.getParameter("inactive") != null) {
+//            SessionUtils.setSession(req,"inactive",Integer.parseInt(req.getParameter("inactive")));
+//        }
+//        if(req.getParameter("unfreeze") != null) {
+//            SessionUtils.setSession(req,"unfreeze",Integer.parseInt(req.getParameter("unfreeze")));
+//        }
+        resp.sendRedirect(req.getContextPath()+"/app/pin");
+
     }
 }

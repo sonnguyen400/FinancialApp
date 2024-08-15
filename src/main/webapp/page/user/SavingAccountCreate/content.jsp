@@ -6,7 +6,10 @@
 <fmt:setLocale value="${sessionScope.lang}"  />
 <fmt:setBundle basename="lang"/>
 <jsp:useBean id="membership" scope="request" class="com.sonnguyen.individual.nhs.model.Membership"/>
-
+<c:if test="${requestScope.alert!=null}">
+    <jsp:useBean id="alert" scope="request" class="com.sonnguyen.individual.nhs.dto.Alert"/>
+    <ex:alert type="${alert.type}" link="${alert.link}" href="${alert.href}">${alert.message}</ex:alert>
+</c:if>
 <div class="row justify-content-center">
     <div class="col col-sm-12 col-md-12 col-lg-6 col-xl-4">
         <div class="row">
@@ -44,14 +47,15 @@
                                     <div class="form-group">
                                         <label for="sourceAccount">Source Account</label>
                                         <div class="form-control h-fit">
-                                            <div  class="select-custom" data-name="accountId">
-                                                <div  class="select d-none">
-                                                    <div class="list-group list-group-flush">
+                                            <div  class="select-custom" data-name="sourceAccount">
+                                                <div  class="select card d-none">
+                                                    <div class="list-group card-body list-group-flush">
                                                         <c:forEach items="${requestScope.accounts}" var="account">
                                                             <div class="option list-group-flush" data-value="${account.id}">
-                                                                <div class="text-black-50">${account.accountNumber}</div>
-                                                                <div class="text-sm-10 text-md-11 text-lg-10 text-primary"><fmt:formatNumber value="${account.balance}" currencyCode="."/> </div>
+                                                                <div class="text-primary">${account.accountNumber}</div>
+                                                                <div class="text-black-50"><fmt:formatNumber value="${account.balance}" currencyCode="."/> </div>
                                                             </div>
+                                                            <hr>
                                                         </c:forEach>
                                                     </div>
                                                 </div>
@@ -67,15 +71,16 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="term">Term</label>
-                                        <div class="form-control" data-name="term_id">
-                                            <div class="select-custom">
-                                                <div  class="select d-none">
-                                                    <div class="list-group list-group-flush">
+                                        <div class="form-control h-fit" >
+                                            <div class="select-custom" data-name="term_id">
+                                                <div  class="select card d-none">
+                                                    <div class="list-group card-body list-group-flush">
                                                         <c:forEach items="${requestScope.savingsSettings}" var="savings">
                                                             <div class="option list-group-flush" data-value="${savings.id}">
-                                                                <div class="text-black-50">${savings.term}</div>
-                                                                <div class="text-sm-10 text-md-11 text-lg-10 text-primary">${savings.interestRate}% per Year</div>
+                                                                <div class="text-primary">${savings.term}</div>
+                                                                <div class="text-black-50">${savings.interestRate}% per Year</div>
                                                             </div>
+                                                            <hr>
                                                         </c:forEach>
                                                     </div>
                                                 </div>
