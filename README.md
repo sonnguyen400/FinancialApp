@@ -1,6 +1,10 @@
 #### Love it? Let this project have one more star
 
+# DEMO
 
+This video DOESN'T adequately cover all features of this project.
+
+https://youtu.be/Zv94hqYWBx4?si=FrjPXIWSTKEoU0Un
 
 # Bank Simulator
 This project simulates a banking app and mimics basic functions. A part of my major assignment
@@ -11,6 +15,7 @@ This project simulates a banking app and mimics basic functions. A part of my ma
 - Automatically sending warning emails at the loan payment date (default 3 days before the payment date) </li>
 - Automatically maturing or making rollover for Savings Account 
 - Authentication (PIN, received OTP via email)
+- Creating multiple accounts for customer
 - For admin, due to limited working time, this project only allows approving a loan for the admin side
 
 
@@ -23,10 +28,13 @@ This project simulates a banking app and mimics basic functions. A part of my ma
 - Java servlet, Argon (Password Encoder),  Quartz and DeltaSpike, JSP, Java bean, Weld (CDI), Jackson, Apache tiles (Template Engine), Sendgrid(Mail Service)
 - Bootstrap (Quixlab theme), JQuery
 
+## Database
+![ecore](https://github.com/user-attachments/assets/10a89209-aa7e-4d90-82ee-fac8ce3922d2)
+
+
 ## Configuration
 
 Editing `application.properties` located in `/src/main/resource/application.properties` can allow you to configure some properties. You then can read values inside by using annotation @Value 
-
 
 ```java
 //Example
@@ -130,11 +138,7 @@ OTP sent via Email or can be observed by console (<span style="color: greenyello
 
 Store in database alongside login data.
 
-# DEMO
 
-This video DOESN'T adequately cover all features of this project.
-
-https://youtu.be/Zv94hqYWBx4?si=FrjPXIWSTKEoU0Un
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Zv94hqYWBx4?si=HO5nFbI4-nHmZbcV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
