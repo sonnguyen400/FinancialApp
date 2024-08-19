@@ -11,7 +11,7 @@ This project simulates a banking app and mimics basic functions. A part of my ma
 ## Function
 - Register, login, transfer money, receive money
 - Creating savings (Fixed rate), managing savings
-- Creating loans (Fixed rate), managing loans, loan payments, [loan-policy](#loan-policy) 
+- Creating loans (Fixed rate), managing loans, loan payments
 - Automatically sending warning emails at the loan payment date (default 3 days before the payment date) </li>
 - Automatically maturing or making rollover for Savings Account 
 - Authentication (PIN, received OTP via email)
