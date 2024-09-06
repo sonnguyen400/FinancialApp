@@ -8,7 +8,6 @@ import com.sonnguyen.individual.nhs.service.iservice.ICustomerService;
 import com.sonnguyen.individual.nhs.service.iservice.IMembershipService;
 import org.apache.velocity.exception.ResourceNotFoundException;
 
-import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

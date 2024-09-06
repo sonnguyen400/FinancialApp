@@ -4,7 +4,6 @@ import com.sonnguyen.individual.nhs.dao.core.GeneralDAO;
 import com.sonnguyen.individual.nhs.model.Transfer;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Optional;
 
 public interface ITransferDAO extends GeneralDAO<Transfer,Integer> {

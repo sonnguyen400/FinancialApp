@@ -1,12 +1,9 @@
 package com.sonnguyen.individual.nhs.controller.user;
 
 import com.sonnguyen.individual.nhs.model.Account;
-import com.sonnguyen.individual.nhs.model.Login;
 import com.sonnguyen.individual.nhs.security.UserDetailImp;
 import com.sonnguyen.individual.nhs.security.core.SecurityContextHolder;
 import com.sonnguyen.individual.nhs.service.iservice.IAccountService;
-import com.sonnguyen.individual.nhs.service.iservice.ICustomerService;
-import com.sonnguyen.individual.nhs.utils.SessionUtils;
 import org.jboss.logging.Logger;
 
 import javax.inject.Inject;

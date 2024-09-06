@@ -6,7 +6,6 @@ import com.sonnguyen.individual.nhs.dto.Message;
 import com.sonnguyen.individual.nhs.dto.Result;
 import com.sonnguyen.individual.nhs.model.Account;
 import com.sonnguyen.individual.nhs.model.Loan;
-import com.sonnguyen.individual.nhs.model.Login;
 import com.sonnguyen.individual.nhs.model.Payment;
 import com.sonnguyen.individual.nhs.security.UserDetailImp;
 import com.sonnguyen.individual.nhs.security.core.SecurityContextHolder;
@@ -15,7 +14,6 @@ import com.sonnguyen.individual.nhs.service.iservice.ILoanService;
 import com.sonnguyen.individual.nhs.service.iservice.IPaymentService;
 import com.sonnguyen.individual.nhs.utils.SessionUtils;
 import io.lettuce.core.RedisNoScriptException;
-import javassist.NotFoundException;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;

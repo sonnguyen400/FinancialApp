@@ -1,7 +1,7 @@
 package com.sonnguyen.individual.nhs.dao.impl;
 
-import com.sonnguyen.individual.nhs.dao.idao.ITransactionDAO;
 import com.sonnguyen.individual.nhs.dao.core.AbstractDAO;
+import com.sonnguyen.individual.nhs.dao.idao.ITransactionDAO;
 import com.sonnguyen.individual.nhs.model.Transaction;
 
 import javax.enterprise.inject.Model;

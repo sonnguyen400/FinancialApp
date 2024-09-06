@@ -4,8 +4,6 @@ import com.sonnguyen.individual.nhs.constant.LoanStatus;
 import com.sonnguyen.individual.nhs.model.Loan;
 import javassist.NotFoundException;
 
-import java.math.BigDecimal;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;

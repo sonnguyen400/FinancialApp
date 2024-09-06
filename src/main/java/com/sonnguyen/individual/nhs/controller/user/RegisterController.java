@@ -2,12 +2,12 @@ package com.sonnguyen.individual.nhs.controller.user;
 
 
 import com.sonnguyen.individual.nhs.dto.Alert;
+import com.sonnguyen.individual.nhs.dto.Message;
 import com.sonnguyen.individual.nhs.model.Account;
 import com.sonnguyen.individual.nhs.model.Customer;
 import com.sonnguyen.individual.nhs.model.Login;
 import com.sonnguyen.individual.nhs.service.iservice.ICustomerService;
 import com.sonnguyen.individual.nhs.service.iservice.IRegisterService;
-import com.sonnguyen.individual.nhs.dto.Message;
 import com.sonnguyen.individual.nhs.utils.OTPUtils;
 import com.sonnguyen.individual.nhs.utils.RequestUtils;
 import com.sonnguyen.individual.nhs.utils.SessionUtils;

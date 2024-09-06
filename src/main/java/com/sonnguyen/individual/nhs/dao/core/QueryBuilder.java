@@ -1,17 +1,17 @@
 package com.sonnguyen.individual.nhs.dao.core;
 
 
-import com.sonnguyen.individual.nhs.utils.EntityUtils;
 import com.sonnguyen.individual.nhs.exception.EntityIntegrityException;
+import com.sonnguyen.individual.nhs.utils.EntityUtils;
 
 import javax.persistence.Column;
 import javax.persistence.Transient;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.sql.*;
-import java.sql.Date;
 import java.time.Instant;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 
 public class QueryBuilder {
 

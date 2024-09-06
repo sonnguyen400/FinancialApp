@@ -1,6 +1,5 @@
 package com.sonnguyen.individual.nhs.security.core;
 
-import javax.annotation.Priority;
 import javax.enterprise.inject.Alternative;
 import javax.enterprise.inject.Model;
 

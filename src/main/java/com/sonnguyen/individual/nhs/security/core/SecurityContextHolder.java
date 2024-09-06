@@ -5,6 +5,10 @@ import com.sonnguyen.individual.nhs.exception.AuthenticationException;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.Hashtable;
+import java.util.Map;
 
 @SessionScoped
 public class SecurityContextHolder implements Serializable {

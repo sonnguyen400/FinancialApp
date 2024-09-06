@@ -1,10 +1,8 @@
 package com.sonnguyen.individual.nhs.controller.user;
 
-import com.sonnguyen.individual.nhs.security.core.SecurityContextHolder;
 import com.sonnguyen.individual.nhs.utils.OTPUtils;
 import com.sonnguyen.individual.nhs.utils.SessionUtils;
 
-import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.sonnguyen.individual.nhs.utils.Constants.OTP;
 import static com.sonnguyen.individual.nhs.utils.RequestUtils.ERROR_MESSAGE;
 
 @WebServlet(name = "otp-validate",urlPatterns = "/app/otp")

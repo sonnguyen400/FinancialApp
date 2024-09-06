@@ -4,7 +4,6 @@ import com.sonnguyen.individual.nhs.constant.AccountStatus;
 import com.sonnguyen.individual.nhs.constant.AccountType;
 import com.sonnguyen.individual.nhs.model.Account;
 import com.sonnguyen.individual.nhs.model.Customer;
-import com.sonnguyen.individual.nhs.model.Login;
 import com.sonnguyen.individual.nhs.model.Membership;
 import com.sonnguyen.individual.nhs.security.UserDetailImp;
 import com.sonnguyen.individual.nhs.security.core.SecurityContextHolder;
@@ -12,7 +11,6 @@ import com.sonnguyen.individual.nhs.service.iservice.IAccountService;
 import com.sonnguyen.individual.nhs.service.iservice.ICustomerService;
 import com.sonnguyen.individual.nhs.service.iservice.ILoginService;
 import com.sonnguyen.individual.nhs.service.iservice.IMembershipService;
-import com.sonnguyen.individual.nhs.utils.SessionUtils;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;

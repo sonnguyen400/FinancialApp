@@ -1,6 +1,5 @@
 package com.sonnguyen.individual.nhs.security.Filter;
 
-import com.sonnguyen.individual.nhs.model.Login;
 import com.sonnguyen.individual.nhs.security.UserDetailImp;
 import com.sonnguyen.individual.nhs.security.core.SecurityContextHolder;
 import com.sonnguyen.individual.nhs.service.iservice.IAccountService;
@@ -9,14 +8,12 @@ import org.jboss.logging.Logger;
 import org.springframework.http.HttpStatus;
 
 import javax.enterprise.inject.Model;
-import javax.enterprise.inject.spi.*;
+import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
-import javax.security.enterprise.SecurityContext;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.lang.reflect.Type;
 
 import static com.sonnguyen.individual.nhs.utils.RequestUtils.ERROR_MESSAGE;
 

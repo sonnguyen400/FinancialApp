@@ -3,9 +3,7 @@ package com.sonnguyen.individual.nhs.ajax;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.sonnguyen.individual.nhs.model.Customer;
-import com.sonnguyen.individual.nhs.service.iservice.IAccountService;
 import com.sonnguyen.individual.nhs.service.iservice.ICustomerService;
-import jdk.jfr.ContentType;
 import org.apache.http.HttpStatus;
 
 import javax.inject.Inject;
@@ -16,8 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.util.List;
 import java.util.Optional;
 
 @WebServlet(name = "/ajax/get/customers/email",urlPatterns = "/app/ajax/customer/email")

@@ -1,6 +1,5 @@
 package com.sonnguyen.individual.nhs.utils;
 
-import com.sonnguyen.individual.nhs.model.Login;
 import com.sonnguyen.individual.nhs.security.UserDetailImp;
 
 import javax.servlet.http.HttpServletRequest;

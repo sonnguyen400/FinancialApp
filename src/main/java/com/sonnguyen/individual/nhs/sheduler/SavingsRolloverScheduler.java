@@ -3,7 +3,6 @@ package com.sonnguyen.individual.nhs.sheduler;
 import com.sonnguyen.individual.nhs.constant.Rollover;
 import com.sonnguyen.individual.nhs.model.Account;
 import com.sonnguyen.individual.nhs.model.SavingsInfo;
-import com.sonnguyen.individual.nhs.service.AccountService;
 import com.sonnguyen.individual.nhs.service.SendGridEmailService;
 import com.sonnguyen.individual.nhs.service.iservice.IAccountService;
 import com.sonnguyen.individual.nhs.service.iservice.ISavingsInfoService;
@@ -13,7 +12,6 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;

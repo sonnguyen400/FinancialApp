@@ -1,13 +1,11 @@
 package com.sonnguyen.individual.nhs.controller.user;
 
 import com.sonnguyen.individual.nhs.model.Account;
-import com.sonnguyen.individual.nhs.model.Login;
 import com.sonnguyen.individual.nhs.model.Transaction;
 import com.sonnguyen.individual.nhs.security.UserDetailImp;
 import com.sonnguyen.individual.nhs.security.core.SecurityContextHolder;
 import com.sonnguyen.individual.nhs.service.iservice.IAccountService;
 import com.sonnguyen.individual.nhs.service.iservice.ITransactionService;
-import com.sonnguyen.individual.nhs.utils.SessionUtils;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;

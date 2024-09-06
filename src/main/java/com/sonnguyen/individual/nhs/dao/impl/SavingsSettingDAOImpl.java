@@ -2,7 +2,6 @@ package com.sonnguyen.individual.nhs.dao.impl;
 
 import com.sonnguyen.individual.nhs.dao.core.AbstractDAO;
 import com.sonnguyen.individual.nhs.dao.idao.ISavingSettingDAO;
-import com.sonnguyen.individual.nhs.model.LoanSetting;
 import com.sonnguyen.individual.nhs.model.SavingsSetting;
 
 import javax.enterprise.inject.Model;

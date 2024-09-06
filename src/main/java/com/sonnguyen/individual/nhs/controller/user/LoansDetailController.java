@@ -1,11 +1,9 @@
 package com.sonnguyen.individual.nhs.controller.user;
 
-import com.mysql.cj.util.TimeUtil;
 import com.sonnguyen.individual.nhs.constant.LoanStatus;
 import com.sonnguyen.individual.nhs.dto.Alert;
 import com.sonnguyen.individual.nhs.dto.Message;
 import com.sonnguyen.individual.nhs.model.Loan;
-import com.sonnguyen.individual.nhs.service.PaymentService;
 import com.sonnguyen.individual.nhs.service.iservice.ILoanService;
 import com.sonnguyen.individual.nhs.service.iservice.IPaymentService;
 import org.apache.velocity.exception.ResourceNotFoundException;
@@ -18,8 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
-import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;

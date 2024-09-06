@@ -1,8 +1,8 @@
 package com.sonnguyen.individual.nhs.dao.impl;
 
 import com.sonnguyen.individual.nhs.constant.LoanStatus;
-import com.sonnguyen.individual.nhs.dao.idao.ILoanDAO;
 import com.sonnguyen.individual.nhs.dao.core.AbstractDAO;
+import com.sonnguyen.individual.nhs.dao.idao.ILoanDAO;
 import com.sonnguyen.individual.nhs.model.Customer;
 import com.sonnguyen.individual.nhs.model.Loan;
 

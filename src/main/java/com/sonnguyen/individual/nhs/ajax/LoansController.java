@@ -15,10 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @WebServlet(name = "admin/ajax/loans",value = "/ajax/loans")
 public class LoansController extends HttpServlet {

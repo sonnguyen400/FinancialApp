@@ -5,7 +5,6 @@ import com.sonnguyen.individual.nhs.constant.AccountType;
 import com.sonnguyen.individual.nhs.dto.Message;
 import com.sonnguyen.individual.nhs.dto.Result;
 import com.sonnguyen.individual.nhs.model.Account;
-import com.sonnguyen.individual.nhs.model.Login;
 import com.sonnguyen.individual.nhs.model.SavingsInfo;
 import com.sonnguyen.individual.nhs.security.UserDetailImp;
 import com.sonnguyen.individual.nhs.security.core.SecurityContextHolder;

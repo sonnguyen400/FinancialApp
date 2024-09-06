@@ -3,7 +3,6 @@ package com.sonnguyen.individual.nhs.security;
 import com.sonnguyen.individual.nhs.security.core.PasswordEncoder;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 
-import javax.enterprise.inject.Alternative;
 import javax.enterprise.inject.Model;
 @Model
 public class PasswordEncoderArgon2 implements PasswordEncoder {

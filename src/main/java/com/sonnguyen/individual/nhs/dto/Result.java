@@ -1,8 +1,6 @@
 package com.sonnguyen.individual.nhs.dto;
 
 
-import org.apache.http.HttpStatus;
-
 public class Result extends Message{
     private int httpStatus;
 

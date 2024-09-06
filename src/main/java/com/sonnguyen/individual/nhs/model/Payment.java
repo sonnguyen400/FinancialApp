@@ -6,7 +6,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.time.Instant;
 import java.time.temporal.ChronoField;
 

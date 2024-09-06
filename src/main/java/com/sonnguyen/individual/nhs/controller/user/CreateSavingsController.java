@@ -2,7 +2,6 @@ package com.sonnguyen.individual.nhs.controller.user;
 
 import com.sonnguyen.individual.nhs.constant.AccountStatus;
 import com.sonnguyen.individual.nhs.constant.AccountType;
-import com.sonnguyen.individual.nhs.dto.Alert;
 import com.sonnguyen.individual.nhs.dto.Message;
 import com.sonnguyen.individual.nhs.dto.Result;
 import com.sonnguyen.individual.nhs.model.*;
@@ -23,17 +22,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
-import static com.sonnguyen.individual.nhs.utils.RequestUtils.ERROR_MESSAGE;
 @Model
 @WebServlet(name = "savings/create",urlPatterns = "/app/saving/create")
 public class CreateSavingsController extends HttpServlet {

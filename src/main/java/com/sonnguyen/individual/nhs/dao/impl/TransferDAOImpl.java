@@ -1,7 +1,7 @@
 package com.sonnguyen.individual.nhs.dao.impl;
 
-import com.sonnguyen.individual.nhs.dao.idao.ITransferDAO;
 import com.sonnguyen.individual.nhs.dao.core.AbstractDAO;
+import com.sonnguyen.individual.nhs.dao.idao.ITransferDAO;
 import com.sonnguyen.individual.nhs.model.Transfer;
 
 import javax.enterprise.inject.Model;
