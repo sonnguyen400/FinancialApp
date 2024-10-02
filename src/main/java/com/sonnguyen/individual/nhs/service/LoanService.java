@@ -4,7 +4,6 @@ import com.sonnguyen.individual.nhs.constant.DefaultBrand;
 import com.sonnguyen.individual.nhs.constant.LoanStatus;
 import com.sonnguyen.individual.nhs.constant.TransactionType;
 import com.sonnguyen.individual.nhs.dao.idao.ILoanDAO;
-import com.sonnguyen.individual.nhs.dao.impl.LoanDAOImpl;
 import com.sonnguyen.individual.nhs.dao.core.DBTransaction;
 import com.sonnguyen.individual.nhs.model.Account;
 import com.sonnguyen.individual.nhs.model.Loan;
@@ -18,7 +17,6 @@ import org.jboss.logging.Logger;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
@@ -57,9 +55,9 @@ public class LoanService implements ILoanService {
     }
 
     @Override
-    public List<Loan> findAllByNextPaymentDate(Date nextPaymentDate, int diff, boolean nextnewest) {
+    public List<Loan> findAllByNextPaymentDate(int diff) {
         try {
-            return loanDAO.findAllByNextPaymentDate(nextPaymentDate,diff,nextnewest);
+            return loanDAO.findAllByNextPaymentDate(diff);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

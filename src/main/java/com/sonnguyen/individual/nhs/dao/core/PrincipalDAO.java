@@ -1,6 +1,8 @@
 package com.sonnguyen.individual.nhs.dao.core;
 
+import com.sonnguyen.individual.nhs.context.ApplicationConfig;
 import com.sonnguyen.individual.nhs.context.ConnectionHolder;
+import com.sonnguyen.individual.nhs.context.Value;
 import com.sonnguyen.individual.nhs.utils.EntityMapper;
 
 import javax.inject.Inject;
@@ -15,8 +17,12 @@ import java.sql.SQLException;
  * Directly execute query
  */
 public class PrincipalDAO {
+    @Value(name = "application.debug")
+    protected Boolean DEBUG_MODE;
     @Inject
     ConnectionHolder connectionHolder;
+    @Inject
+    ApplicationConfig applicationConfig;
     public Connection getConnection() {
         return connectionHolder.getConnection();
     }

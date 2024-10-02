@@ -4,35 +4,19 @@
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
     <definition name="error.page" template="/layout/base/error.jsp">
-        <put-attribute name="error_code"/>
+        <put-attribute name="error_code" value="500"/>
     </definition>
 
-    <definition name="script" template="/definition/javascript.jsp">
-        <put-list-attribute name="script">
-            <add-attribute value="/resources/plugins/common/common.min.js"/>
-            <add-attribute value="/resources/js/custom.min.js"/>
-            <add-attribute value="/resources/js/settings.js"/>
-            <add-attribute value="/resources/js/styleSwitcher.js"/>
-        </put-list-attribute>
-    </definition>
-    <definition name="head-props" template="/definition/head-props.jsp">
-        <put-list-attribute name="props">
-            <add-attribute type="" value="meta http-equiv='X-UA-Compatible' content='IE=edge'"/>
-        </put-list-attribute>
-    </definition>
-    <definition name="css" template="/definition/css.jsp">
-        <put-list-attribute name="css">
-            <add-attribute value="/resources/css/style.css"/>
-        </put-list-attribute>
+
+    <definition name="page" template="/layout/page.jsp">
+        <put-attribute name="title"/>
+        <put-attribute name="body"/>
+        <put-attribute name="css" value=""/>
+        <put-attribute name="script" value=""/>
+        <put-attribute name="inline-script" value=""/>
     </definition>
 
     <definition name="main-wrapper" template="/layout/base/main-wrapper.jsp">
-        <put-attribute name="content"/>
-        <put-attribute name="class"  value=""/>
-    </definition>
-    <definition name="header-layout" template="/layout/base/header-layout.jsp">
-        <put-attribute name="header"/>
-        <put-attribute name="navheader"/>
         <put-attribute name="content"/>
     </definition>
     <definition name="default-layout" template="/layout/base/default-layout.jsp">
@@ -41,18 +25,6 @@
         <put-attribute name="sidebar"/>
         <put-attribute name="content"/>
     </definition>
-
-
-    <definition name="page" template="/layout/page.jsp">
-        <put-attribute name="title"/>
-        <put-attribute name="css" value="css"/>
-        <put-attribute name="head-props" value="head-props"/>
-        <put-attribute name="body"/>
-        <put-attribute name="script" />
-        <put-attribute name="inline-script" value="default"/>
-    </definition>
-
-
     <definition name="user.default-layout" extends="default-layout">
         <put-attribute name="header" value="/tiles/user/header.jsp"/>
         <put-attribute name="navheader" value="/tiles/user/navheader.jsp"/>
@@ -60,21 +32,16 @@
         <put-attribute name="content"/>
     </definition>
 
+
+    <definition name="header-layout" template="/layout/base/header-layout.jsp">
+        <put-attribute name="header"/>
+        <put-attribute name="navheader"/>
+        <put-attribute name="content"/>
+    </definition>
     <definition name="user.header-layout" extends="header-layout">
         <put-attribute name="header" value="/tiles/user/header.jsp"/>
         <put-attribute name="navheader" value="/tiles/user/navheader.jsp"/>
         <put-attribute name="content"/>
     </definition>
-
-
-    <definition name="user.page" extends="page">
-        <put-attribute name="body">
-            <definition extends="main-wrapper">
-                <put-attribute name="content" value="user.default"/>
-            </definition>
-        </put-attribute>
-    </definition>
-
-
 
 </tiles-definitions>

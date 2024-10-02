@@ -1,5 +1,7 @@
 package com.sonnguyen.individual.nhs.controller.user;
 
+import com.sonnguyen.individual.nhs.constant.AccountStatus;
+import com.sonnguyen.individual.nhs.constant.AccountType;
 import com.sonnguyen.individual.nhs.constant.TransactionType;
 import com.sonnguyen.individual.nhs.model.Customer;
 import com.sonnguyen.individual.nhs.model.Transaction;
@@ -30,7 +32,7 @@ public class TransferController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserDetailImp userDetailImp=(UserDetailImp)securityContextHolder.getPrincipal();
-        req.setAttribute("accounts",accountService.findAllByCustomerId(userDetailImp.getCustomerId()));
+        req.setAttribute("accounts",accountService.findByStatusAndTypeAndCustomerId(AccountStatus.OPEN, AccountType.PRIMARY,userDetailImp.getCustomerId()));
         req.getRequestDispatcher("/page/user/Transfer/page.jsp").forward(req,resp);
     }
 
@@ -40,7 +42,6 @@ public class TransferController extends HttpServlet {
             doGet(req,resp);
             return;
         }
-
         Transfer transfer = RequestUtils.parseEntity(req,Transfer.class);
         Transaction transaction = RequestUtils.parseEntity(req,Transaction.class);
 
@@ -49,7 +50,6 @@ public class TransferController extends HttpServlet {
         });
         transaction.setTransactionType(TransactionType.TRANSFER.value);
         transfer.setTransaction(transaction);
-
         String transactionRefNumber=transferService.init(transfer);
 
         SessionUtils.setSession(req,"refNumber",transactionRefNumber);

@@ -2,8 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="result" scope="request" class="com.sonnguyen.individual.nhs.dto.Result"/>
 <div class="row justify-content-center">
-    <div class="d-flex flex-column justify-content-center">
-        <div class="card">
+    <div class="col-sm-12 col-md-4 col-lg-6">
+        <div class="card w-100">
             <div class="card-body">
                 <h2 class="text-center">
                     <%

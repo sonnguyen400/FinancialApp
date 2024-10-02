@@ -11,7 +11,13 @@ public interface IPaymentService {
     Payment createPayment(int loanId, int srcAccount) throws NotFoundException;
 
     int unpaidMonth(int loanID);
-
+    /**
+     * @Var Interest= amount*rate(%)/term
+     * @Var Principal=amount/term
+     * @Fomula payment= Principal+Interest + (Principal+Interest)*unpaidMonth + (Principal+Interest)*unpaidMonth*latePaymentCharge
+     * @param loan (mandatory: term, amount,id ,interest rate)
+     * @return payment
+     */
     BigDecimal calculateMonthlyPayment(Loan loan);
 
     Date findNextPaymentByLoanId(int loanId);

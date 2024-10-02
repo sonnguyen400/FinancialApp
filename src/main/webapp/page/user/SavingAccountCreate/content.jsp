@@ -2,7 +2,6 @@
 <%@ taglib prefix="ex" uri="/WEB-INF/custom.tld"%>
 <%@ page import="com.sonnguyen.individual.nhs.constant.SavingType" %>
 <%@ page import="com.sonnguyen.individual.nhs.constant.Rollover" %>
-<%@ page import="com.sonnguyen.individual.nhs.constant.MemberShip" %>
 <jsp:useBean id="membership" scope="request" class="com.sonnguyen.individual.nhs.model.Membership"/>
 <div class="row">
     <div class="col-lg-6">
@@ -78,11 +77,11 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="rollover">Roll over</label>
+                                <label for="rollover">Rollover</label>
                                 <select name="rollover" id="rollover" class="form-control input-default">
                                     <option value="<%=Rollover.WITHDRAW_ENTIRE.value%>">Withdraw Entire</option>
                                     <option value="<%=Rollover.ROLLOVER_ALL.value%>">Rollover all</option>
-                                    <option value="<%=Rollover.ROLLOVER_PRINCIPAL.value%>">Demand deposit</option>
+                                    <option value="<%=Rollover.ROLLOVER_PRINCIPAL.value%>">Rollover Principal</option>
                                 </select>
                             </div>
                             <div class="form-group">

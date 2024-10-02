@@ -28,7 +28,8 @@
     <div class="col-md-6 col-sm-12">
         <form method="post" class="card " action="<%=request.getContextPath()+"/app/saving/complete?id="+savings.getId()%>">
             <div style="border-radius: inherit;min-width:365px" class="p-4 bg-primary text-white">
-                <h3 class="text-white">${linkedAccount.balance}
+                <h3 class="text-white">
+                    <fmt:formatNumber value="${linkedAccount.balance}" currencyCode="."/>
                 </h3>
                 <p class="text-white-50">${linkedAccount.openDate}</p>
                 <div class="row">

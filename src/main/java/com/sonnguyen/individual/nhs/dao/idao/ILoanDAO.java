@@ -18,4 +18,6 @@ public interface ILoanDAO extends GeneralDAO<Loan,Integer> {
 
     Integer approveLoanById(Connection connection,Integer id) throws SQLException;
     List<Loan> findAllByNextPaymentDate(Date nextPaymentDate, int diff, boolean nextnewest) throws SQLException;
+
+    List<Loan> findAllByNextPaymentDate(int diff) throws SQLException;
 }

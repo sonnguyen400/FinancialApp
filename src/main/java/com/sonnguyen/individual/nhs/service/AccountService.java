@@ -35,7 +35,8 @@ public class AccountService implements IAccountService {
     @Inject
     private ITransferService transferService;
 
-    public Optional<Account> findBranchPrincipalAccount(int branchId){
+    @Override
+    public Optional<Account> findBranchPrincipalAccount(int branchId) {
         return accountDao.findBranchPrincipalAccount(branchId);
     }
 
@@ -43,8 +44,8 @@ public class AccountService implements IAccountService {
     @Override
     public Optional<Account> findById(int id) {
         return accountDao.findById(id).map(account -> {
-            List<AccountHolder> accountHolders=dbTransaction.startTransaction(List.class,
-                    connection -> accountHolderDAO.findAllByAccountId(connection,account.getId()));
+            List<AccountHolder> accountHolders = dbTransaction.startTransaction(List.class,
+                    connection -> accountHolderDAO.findAllByAccountId(connection, account.getId()));
             account.setAccountHolders(accountHolders);
             return account;
         });
@@ -62,50 +63,49 @@ public class AccountService implements IAccountService {
 
     @Override
     public void createSavingsAccount(Integer customerId, SavingsInfo savingsInfor) {
-        Account savingAccount=dbTransaction.startTransaction(Account.class,connection -> {
+        Account savingAccount = dbTransaction.startTransaction(Account.class, connection -> {
             //Create saving account
-            Account account=new Account();
+            Account account = new Account();
             account.setBalance(BigDecimal.ZERO);
-            account.setAccountNumber(UUID.randomUUID().toString().substring(0,8));
+            account.setAccountNumber(UUID.randomUUID().toString().substring(0, 8));
             account.setAccountType(AccountType.SAVINGS.value);
             account.setBranchID(DefaultBrand.ID.value);
             account.setStatus(AccountStatus.PENDING.value);
             account.setOpenDate(Date.valueOf(LocalDate.now()));
-            Integer accountId=accountDao.executeInsert(connection,account);
+            Integer accountId = accountDao.executeInsert(connection, account);
             //Create account holder
-            AccountHolder holder=new AccountHolder(accountId, customerId);
-            accountHolderDAO.executeInsert(connection,holder);
+            AccountHolder holder = new AccountHolder(accountId, customerId);
+            accountHolderDAO.executeInsert(connection, holder);
             // Create saving information
             savingsInfor.setAccountId(accountId);
-            Integer savingAccId=savingDao.executeInsert(connection,savingsInfor);
+            Integer savingAccId = savingDao.executeInsert(connection, savingsInfor);
             account.setId(accountId);
             return account;
         });
         //Transfer from source to saving account
-        Transaction transaction=new Transaction();
+        Transaction transaction = new Transaction();
         transaction.setTransactionType(TransactionType.TRANSFER.value);
         transaction.setDescription("Transfer amount into saving account");
         transaction.setAmount(savingsInfor.getAmount());
         transaction.setAccountId(savingsInfor.getSourceAccount());
 
-        Transfer transfer=new Transfer();
+        Transfer transfer = new Transfer();
         transfer.setTransaction(transaction);
         transfer.setAccountId(savingsInfor.getAccountId());
         transfer.setMessage("Transfer into for saving account");
         transfer.setTransaction(transaction);
 
-        String refNumber=transferService.init(transfer);
-        dbTransaction.startTransaction(Transfer.class,connection -> {
-            accountDao.updateAccountStatusByAccountId(connection,savingAccount.getId(),AccountStatus.OPEN);
-            return transferService.transferCommit(connection,refNumber);
+        String refNumber = transferService.init(transfer);
+        dbTransaction.startTransaction(Transfer.class, connection -> {
+            accountDao.updateAccountStatusByAccountId(connection, savingAccount.getId(), AccountStatus.OPEN);
+            return transferService.transferCommit(connection, refNumber);
         });
     }
 
 
-
     @Override
-    public List<Account> findByStatusAndTypeAndCustomerId(AccountStatus accountStatus,AccountType type,Integer customerId) {
-        return accountDao.findByStatusAndTypeAndCustomerId(AccountStatus.OPEN, type,customerId );
+    public List<Account> findByStatusAndTypeAndCustomerId(AccountStatus accountStatus, AccountType type, Integer customerId) {
+        return accountDao.findByStatusAndTypeAndCustomerId(AccountStatus.OPEN, type, customerId);
     }
 
     @Override
@@ -115,7 +115,7 @@ public class AccountService implements IAccountService {
 
     @Override
     public List<Account> findPrimaryByCustomerId(Integer customerId) {
-        return accountDao.findByCustomerIdAndType(customerId,AccountType.PRIMARY);
+        return accountDao.findByCustomerIdAndType(customerId, AccountType.PRIMARY);
     }
 
 

@@ -1,11 +1,12 @@
 package com.sonnguyen.individual.nhs.controller.user;
 
-import com.sonnguyen.individual.nhs.model.Login;
+import com.sonnguyen.individual.nhs.model.Customer;
 import com.sonnguyen.individual.nhs.security.UserDetailImp;
 import com.sonnguyen.individual.nhs.security.core.SecurityContextHolder;
+import com.sonnguyen.individual.nhs.service.iservice.ICustomerService;
 import com.sonnguyen.individual.nhs.service.iservice.ILoginService;
 import com.sonnguyen.individual.nhs.utils.OTPUtils;
-import com.sonnguyen.individual.nhs.utils.SessionUtils;
+import org.apache.velocity.exception.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -25,6 +26,8 @@ public class PINController extends HttpServlet {
     @Inject
     OTPUtils otpUtils;
     @Inject
+    ICustomerService customerService;
+    @Inject
     SecurityContextHolder securityContextHolder;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -34,8 +37,9 @@ public class PINController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserDetailImp userDetailImp= (UserDetailImp) securityContextHolder.getPrincipal();
+        Customer customer=customerService.findById(userDetailImp.getCustomerId()).orElseThrow(()->new ResourceNotFoundException("Cannot find customer with id "+userDetailImp.getCustomerId()));
         if(req.getParameter(PIN) != null&&loginService.validatePIN(userDetailImp.getId(), req.getParameter(PIN))){
-            otpUtils.generateOTP().sessionSave(req).sendToEmail("hellohoangson@outlook.com");
+            otpUtils.generateOTP().sessionSave(req).sendToEmail(customer.getEmail());
             req.getRequestDispatcher("/app/otp").include(req,resp);
             return;
         } else if(req.getRequestURI().equalsIgnoreCase("/app/pin")){

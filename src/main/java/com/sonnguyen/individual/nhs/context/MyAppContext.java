@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+
 @ApplicationScoped
 public class MyAppContext implements ServletContextListener {
     @Inject

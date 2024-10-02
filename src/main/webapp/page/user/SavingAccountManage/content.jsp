@@ -25,6 +25,18 @@
             </div>
         </c:forEach>
 
+        <c:if test="${requestScope.accounts.size()<=0}">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <div class="align-items-center opacity-5">
+                            <i class="fi fi-sr-drawer-empty"></i>
+                        </div>
+                    </div>
+                    <h4 class="text-center">Empty</h4>
+                </div>
+            </div>
+        </c:if>
     </div>
     <div class="col-lg-8">
 

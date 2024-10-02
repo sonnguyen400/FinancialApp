@@ -1,6 +1,7 @@
 package com.sonnguyen.individual.nhs.service;
 
 import com.sonnguyen.individual.nhs.constant.TransactionType;
+import com.sonnguyen.individual.nhs.context.Value;
 import com.sonnguyen.individual.nhs.dao.core.DBTransaction;
 import com.sonnguyen.individual.nhs.dao.idao.IAccountDAO;
 import com.sonnguyen.individual.nhs.dao.idao.ILoanDAO;
@@ -13,6 +14,7 @@ import javassist.NotFoundException;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
@@ -29,6 +31,8 @@ public class PaymentService implements IPaymentService {
     private ITransferService transferService;
     @Inject
     private DBTransaction dbTransaction;
+    @Value(name="service.loan.late.charge")
+    private Integer latePaymentCharge;
     @Override
     public Payment createPayment(int loanId, int srcAccount) throws NotFoundException {
         Calendar now = Calendar.getInstance();
@@ -69,12 +73,17 @@ public class PaymentService implements IPaymentService {
     public int unpaidMonth(int loanID) {
         return paymentDAO.unpaidMonth(loanID);
     }
+
+
     @Override
     public BigDecimal calculateMonthlyPayment(Loan loan){
+        BigDecimal interest=loan.getAmount().multiply(loan.getInterestRate()).divide(BigDecimal.valueOf(100),9, RoundingMode.HALF_UP).divide(BigDecimal.valueOf(loan.getTerm()),9, RoundingMode.HALF_UP);
+        BigDecimal principal=loan.getAmount().divide(BigDecimal.valueOf(loan.getTerm()),9, RoundingMode.HALF_UP);
         int unpaidMonth=unpaidMonth(loan.getId());
-        BigDecimal principal=loan.principal().multiply(BigDecimal.valueOf(unpaidMonth));
-        BigDecimal interest=loan.interest();
-        return principal.add(interest);
+        BigDecimal payment=principal.add(interest);
+        BigDecimal complement=payment.multiply(BigDecimal.valueOf(unpaidMonth-1));
+        BigDecimal fine=complement.multiply(BigDecimal.valueOf(latePaymentCharge)).divide(BigDecimal.valueOf(100),9, RoundingMode.HALF_UP);
+        return payment.add(complement).add(fine);
     }
     @Override
     public Date findNextPaymentByLoanId(int loanId){

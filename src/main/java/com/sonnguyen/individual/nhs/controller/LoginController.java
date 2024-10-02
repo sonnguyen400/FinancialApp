@@ -1,13 +1,10 @@
 package com.sonnguyen.individual.nhs.controller;
 
 import com.sonnguyen.individual.nhs.exception.AuthenticationException;
-import com.sonnguyen.individual.nhs.model.Login;
 import com.sonnguyen.individual.nhs.security.UserDetailImp;
 import com.sonnguyen.individual.nhs.security.core.SecurityContextHolder;
-import com.sonnguyen.individual.nhs.service.iservice.IAccountService;
 import com.sonnguyen.individual.nhs.service.iservice.ICustomerService;
 import com.sonnguyen.individual.nhs.service.iservice.ILoginService;
-import com.sonnguyen.individual.nhs.utils.RequestUtils;
 import com.sonnguyen.individual.nhs.utils.SessionUtils;
 
 import javax.inject.Inject;
@@ -20,7 +17,6 @@ import java.io.IOException;
 
 import static com.sonnguyen.individual.nhs.utils.RequestUtils.ERROR_MESSAGE;
 import static com.sonnguyen.individual.nhs.utils.SessionUtils.LOGIN_SESSION;
-
 @WebServlet(name = "login",urlPatterns = {"/login","/logout"})
 public class LoginController extends HttpServlet {
     @Inject
@@ -42,7 +38,6 @@ public class LoginController extends HttpServlet {
             userDetailImp.setCustomer(customerService.findById(userDetailImp.getCustomerId()).get());
             SessionUtils.setSession(req,LOGIN_SESSION,userDetailImp);
             resp.sendRedirect(req.getContextPath()+"/");
-            return;
         } catch (AuthenticationException e) {
             req.setAttribute(ERROR_MESSAGE,e.getMessage());
             doGet(req,resp);

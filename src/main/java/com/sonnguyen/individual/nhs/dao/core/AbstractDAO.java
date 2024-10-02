@@ -1,5 +1,6 @@
 package com.sonnguyen.individual.nhs.dao.core;
 
+import com.sonnguyen.individual.nhs.context.Value;
 import com.sonnguyen.individual.nhs.utils.EntityUtils;
 
 import javax.persistence.Column;
@@ -21,7 +22,7 @@ public abstract class AbstractDAO<T,ID> extends CRUDDao implements GeneralDAO<T,
         try(Connection connection=getConnection()){
             StringBuilder builder=new StringBuilder("select * from ");
             builder.append(getEntityType().getSimpleName());
-            System.out.println(builder);
+            if(applicationConfig.debugEnable()) System.out.println(builder);
             ps=connection.prepareStatement(builder.toString());
             return executeSelect(ps,getEntityType());
         } catch (SQLException e) {
@@ -62,7 +63,7 @@ public abstract class AbstractDAO<T,ID> extends CRUDDao implements GeneralDAO<T,
             builder.append(" from ");
             builder.append(EntityUtils.getTableName(getEntityType()));
             builder.append(" where id=?");
-            System.out.println(builder);
+            if(applicationConfig.debugEnable()) System.out.println(builder);
             ps=connection.prepareStatement(builder.toString());
             List<T> result=executeSelect(ps,getEntityType(),id);
             if(result.size()==1) return Optional.of(result.get(0));
@@ -84,6 +85,7 @@ public abstract class AbstractDAO<T,ID> extends CRUDDao implements GeneralDAO<T,
     public ID executeInsert(Connection connection,T object){
         LinkedHashMap<Field,Object> objectMap=EntityUtils.toMap(object,getEntityType());
         String insertQuery= QueryBuilder.insert(getEntityType());
+        if(applicationConfig.debugEnable()) System.out.println(insertQuery);
         List<Object> param=new ArrayList<>();
         objectMap.forEach((field,value)->{
             Column column=field.getDeclaredAnnotation(Column.class);
@@ -91,7 +93,6 @@ public abstract class AbstractDAO<T,ID> extends CRUDDao implements GeneralDAO<T,
                 param.add(value);
             }
         });
-        System.out.println(insertQuery);
         try(PreparedStatement preparedStatement=connection.prepareStatement(insertQuery,PreparedStatement.RETURN_GENERATED_KEYS)){
             return executeInsert(preparedStatement,getIdType(), param.toArray());
         } catch (SQLException e) {
@@ -102,6 +103,7 @@ public abstract class AbstractDAO<T,ID> extends CRUDDao implements GeneralDAO<T,
     public ID executeInsert(T object){
         LinkedHashMap<Field,Object> objectMap=EntityUtils.toMap(object,getEntityType());
         String insertQuery= QueryBuilder.insert(getEntityType());
+        if(applicationConfig.debugEnable()) System.out.println(insertQuery);
         List<Object> param=new ArrayList<>();
         objectMap.forEach((field,value)->{
             Column column=field.getDeclaredAnnotation(Column.class);
@@ -123,7 +125,7 @@ public abstract class AbstractDAO<T,ID> extends CRUDDao implements GeneralDAO<T,
             StringBuilder builder=new StringBuilder("delete from ");
             builder.append(EntityUtils.getTableName(getEntityType()));
             builder.append(" where id=?");
-            System.out.println(builder);
+            if(applicationConfig.debugEnable()) System.out.println(builder);
             ps=connection.prepareStatement(builder.toString());
             return executeUpdate(ps,id);
         } catch (SQLException e) {

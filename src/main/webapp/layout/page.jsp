@@ -1,6 +1,8 @@
 <%@ taglib prefix="tilesx" uri="http://tiles.apache.org/tags-tiles-extras" %>
 <%@ taglib prefix="ex" uri="/WEB-INF/custom.tld" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@include file="/taglib/taglib.jsp"%>
+<fmt:setLocale value="en_US"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +11,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title><tiles:insertAttribute name="title"/></title>
     <tiles:insertAttribute name="css"/>
-    <tiles:insertAttribute name="head-props"/>
+    <link rel="stylesheet" href="<c:url value='/resources/css/style.css'/> "/>
+    <link rel="stylesheet" href="<c:url value='/resources/plugins/sweetalert/css/sweetalert.css'/>"/>
 </head>
 <body>
 <div id="preloader">
@@ -24,7 +27,14 @@
     <ex:alert type="${alert.type.name()}" link="${alert.link}" href="${alert.href}">${alert.message}</ex:alert>
 </c:if>
 <tiles:insertAttribute name="body"/>
-<tiles:insertAttribute name="script"/>
+<script src='<c:url value="/resources/plugins/common/common.min.js"/>'></script>
+<script src='<c:url value="/resources/js/custom.min.js"/>'></script>
+<script src='<c:url value="/resources/js/settings.js"/> '></script>
+<script src='<c:url value="/resources/js/gleek.js"/>'></script>
+<script src='<c:url value="/resources/js/styleSwitcher.js"/>'></script>
+<script src='<c:url value="/resources/js/base.js"/>'></script>
+<script src='<c:url value="/resources/plugins/sweetalert/js/sweetalert.min.js"/>'></script>
+<%--<tiles:insertAttribute name="script"/>--%>
 <tiles:insertAttribute name="inline-script"/>
 </body>
 </html>

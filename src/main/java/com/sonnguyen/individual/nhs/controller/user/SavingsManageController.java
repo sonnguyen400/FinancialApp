@@ -41,7 +41,6 @@ public class SavingsManageController extends HttpServlet {
         List<Account> accountList=accountService.findByStatusAndTypeAndCustomerId(AccountStatus.OPEN, AccountType.SAVINGS,login.getCustomerId());
         req.setAttribute("accounts",accountList);
         Customer customer=customerService.findById(login.getCustomerId()).orElse(null);
-        System.out.println(customer.getMembershipID());
         req.setAttribute("membership",membershipService.findById(customer.getMembershipID()).orElse(new Membership()));
         req.getRequestDispatcher("/page/user/SavingAccountManage/page.jsp").forward(req, resp);
     }

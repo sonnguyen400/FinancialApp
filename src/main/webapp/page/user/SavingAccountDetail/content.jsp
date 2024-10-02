@@ -12,7 +12,8 @@
     <div class="col-md-6 col-sm-12">
         <div class="card" >
             <div style="border-radius: inherit;min-width:365px" class="p-4 bg-primary text-white" >
-                <h3 class="text-white">${savings.account.balance}
+                <h3 class="text-white">
+                    <fmt:formatNumber value="${savings.account.balance}" currencyCode="."/>
                 </h3>
                 <p class="text-white-50">${savings.account.openDate}</p>
                 <div class="row">

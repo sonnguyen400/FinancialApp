@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IAccountService{
+    Optional<Account> findBranchPrincipalAccount(int branchId);
+
     Optional<Account> findById(int id);
     Optional<Account> findByAccountNumber(String username);
     Collection<Account> findAllByCustomerId(Integer customerId);

@@ -12,13 +12,10 @@ import org.quartz.JobExecutionException;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
-import java.sql.Date;
-import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
 @Model
-@Scheduled(cronExpression = "0 0 2 * * ?")
+@Scheduled(cronExpression = "0 0 3 * * ?")
 public class LoanPaymentScheduler implements Job {
     @Inject
     private ILoanService loanService;
@@ -26,13 +23,13 @@ public class LoanPaymentScheduler implements Job {
     private SendGridEmailService sendGridEmailService;
     @Inject
     ICustomerService customerService;
-
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        List<Loan> loans=loanService.findAllByNextPaymentDate(new Date(Instant.now().getEpochSecond()),-3,false);
+
+        List<Loan> loans=loanService.findAllByNextPaymentDate(3);
         for (Loan loan : loans) {
             Customer customer=customerService.findById(loan.getCustomerId()).get();
-            sendGridEmailService.sendEmail(customer.getEmail(),"Your loan in in close to the payment date","Loan alert");
+            sendGridEmailService.sendEmail(customer.getEmail(),"Your loan is close to the payment date","Loan alert");
         }
     }
 }

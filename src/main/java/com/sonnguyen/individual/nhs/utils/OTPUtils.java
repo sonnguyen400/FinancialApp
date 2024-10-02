@@ -1,5 +1,6 @@
 package com.sonnguyen.individual.nhs.utils;
 
+import com.sonnguyen.individual.nhs.context.ApplicationConfig;
 import com.sonnguyen.individual.nhs.service.EmailService;
 import com.sonnguyen.individual.nhs.service.iservice.IEmailService;
 import com.sonnguyen.individual.nhs.dto.Otp;
@@ -15,10 +16,12 @@ public class OTPUtils {
     EmailService emailService;
     @Inject
     IEmailService iEmailService;
+    @Inject
+    ApplicationConfig config;
     Otp otp;
     public OTPUtils generateOTP() {
         otp= Otp.generator(6,15);
-        System.out.println("Debug: OTP="+otp);
+        if(config.debugEnable())  System.out.println("Debug: OTP="+otp);
         return this;
     }
     public OTPUtils sessionSave(HttpServletRequest request){

@@ -58,7 +58,6 @@ public class SavingsCompleteController extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (!req.getRequestURI().contains("/app/otp")) {
-            System.out.println();
             SessionUtils.setSession(req, "beneficiary_account_id", req.getParameter("beneficiary_account_id"));
             SessionUtils.setSession(req, "savings_id", req.getParameter("savings_id"));
             SessionUtils.setSession(req, "endpoint", req.getContextPath() + "/app/saving/complete");

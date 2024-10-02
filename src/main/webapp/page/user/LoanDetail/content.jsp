@@ -9,15 +9,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:useBean id="loan" scope="request" class="com.sonnguyen.individual.nhs.model.Loan"/>
-<c:if test="${requestScope.alert!=null}">
-    <jsp:useBean id="alert" scope="request" class="com.sonnguyen.individual.nhs.dto.Alert"/>
+<c:forEach var="alert" items="${requestScope.alerts}">
     <ex:alert type="${alert.type.name()}" link="${alert.link}" href="${alert.href}">${alert.message}</ex:alert>
-</c:if>
+</c:forEach>
 <div class="row justify-content-center">
     <div class="col-md-6 col-sm-12">
         <div class="card" >
             <div style="border-radius: inherit;min-width:365px" class="p-4 bg-primary text-white" >
-                <h3 class="text-white">${loan.amount}
+                <h3 class="text-white">
+                    <fmt:formatNumber value="${loan.amount}" currencyCode="."/>
                 </h3>
                 <p class="text-white-50">${loan.createAt}</p>
                 <div class="row">
@@ -32,7 +32,7 @@
                 </div>
             </div>
             <%
-                LocalDateTime localDateTime=LocalDateTime.ofInstant(Instant.ofEpochMilli(loan.getCreateAt().getTime()), ZoneId.of("GMT+7"));
+                LocalDateTime localDateTime=LocalDateTime.ofInstant(Instant.ofEpochMilli(loan.getApprovalDate().getTime()), ZoneId.of("GMT+7"));
                 long currentDays=ChronoUnit.DAYS.between(localDateTime,LocalDateTime.now(ZoneId.of("GMT+7")));
                 long  maturityDays=ChronoUnit.DAYS.between(localDateTime,localDateTime.plusMonths(loan.getTerm()));
                 double process=currentDays*100.0/maturityDays;

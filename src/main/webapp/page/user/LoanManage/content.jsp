@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="com.sonnguyen.individual.nhs.model.Loan" %>
 <jsp:useBean id="loans" scope="request" type="java.util.List"/>
 <%
@@ -63,11 +64,15 @@
                             <tr>
                                 <td>${loan_.id}</td>
                                 <td>${loan_.createAt}</td>
-                                <td>${loan_.amount}</td>
+                                <td><fmt:formatNumber value="${loan_.amount}" type="currency" /> </td>
                                 <td>${loan_.term}</td>
                                 <td>${loan_.interestRate}</td>
                                 <td>${loan_.status}</td>
-                                <td><a href="<%=request.getContextPath()%>/app/loan/detail?id=${loan_.id}" class="link-1">Details</a> </td>
+                                <td>
+                                    <c:if test="${loan_.status==1}">
+                                        <a href="<%=request.getContextPath()%>/app/loan/detail?id=${loan_.id}" class="link-1">Details</a>
+                                    </c:if>
+                                </td>
                             </tr>
                         </c:forEach>
                         </tbody>

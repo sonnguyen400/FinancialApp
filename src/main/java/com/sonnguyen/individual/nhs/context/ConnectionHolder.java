@@ -1,18 +1,24 @@
 package com.sonnguyen.individual.nhs.context;
 
 import javax.enterprise.inject.Model;
-import javax.inject.Inject;
-import javax.servlet.ServletContext;
 import java.sql.Connection;
 
 @Model
 public class ConnectionHolder {
-    @Inject
-    private ServletContext servletContext;
-    public DBConnection getDBConnection() {
-        return (DBConnection) servletContext.getAttribute("connection");
+    private static DBConnection connection;
+    @Value(name="com.data.mysql.driver")
+    private String driver;
+    @Value(name = "com.data.mysql.url")
+    private String url;
+    @Value(name = "com.data.mysql.username")
+    private String username;
+    @Value(name = "com.data.mysql.password")
+    private String password;
+    public void getDBConnection() {
+        connection=new DBConnection(driver, url, username, password);
     }
     public Connection getConnection() {
-        return getDBConnection().getConnection();
+        if(connection==null) getDBConnection();
+        return connection.getConnection();
     }
 }

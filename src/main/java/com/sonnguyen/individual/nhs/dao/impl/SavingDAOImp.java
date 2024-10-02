@@ -34,7 +34,7 @@ public class SavingDAOImp extends AbstractDAO<SavingsInfo,Integer> implements IS
     @Override
     public List<SavingsInfo> findAllMaturity() {
         String query = "select * from savings_info\n" +
-                "         where DATE_ADD(update_at, INTERVAL term MONTH )<now()\n";
+                "         where DATE_ADD(update_at, INTERVAL term MONTH )<now() and (Select status from account where account.id=savings_info.account_id)=1\n";
         return executeSelect(query);
     }
 }

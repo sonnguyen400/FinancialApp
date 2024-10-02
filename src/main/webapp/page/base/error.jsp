@@ -7,14 +7,12 @@
     if(error==null) error="Unknown error";
 %>
 <% final String errorMessage = (String)request.getAttribute("ErrorMessage"); %>
-<% final Throwable errorCause = (Throwable)request.getAttribute("ErrorCause"); %>
-<% final String errorLocation = (String)request.getAttribute("ErrorLocation"); %>
 <!DOCTYPE html>
 <html class="h-100" lang="en">
 
 <head>
     <%@include file="/taglib/header.jsp"%>
-    <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" isErrorPage="true"%>
+    <%@ page contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" isErrorPage="true"%>
     <title><%out.print(status);%></title>
 
 </head>
@@ -56,8 +54,6 @@
                                 %>
 
                                 <%= errorMessage %><br><br>
-
-                                <%= errorCause %><br><br>
                             </small>
                             <form class="mt-5 mb-5">
                                 <div class="text-center mb-4 mt-4"><a href="${pageContext.request.contextPath}/" class="btn btn-primary">Go to Homepage</a>

@@ -12,13 +12,6 @@
                 </tiles:putAttribute>
             </tiles:definition>
         </tiles:putAttribute>
-        <tiles:putAttribute name="script">
-            <tiles:definition extends="script">
-                <tiles:putListAttribute inherit="true" name="script">
-                    <tiles:addAttribute value="/resources/js/gleek.js"/>
-                </tiles:putListAttribute>
-            </tiles:definition>
-        </tiles:putAttribute>
         <tiles:putAttribute name="inline-script" value="/page/user/LoanCreate/script.jsp"/>
     </tiles:definition>
 </tiles:insertDefinition>

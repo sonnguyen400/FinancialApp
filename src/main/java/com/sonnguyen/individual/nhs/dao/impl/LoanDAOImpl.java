@@ -73,8 +73,13 @@ public class LoanDAOImpl extends AbstractDAO<Loan,Integer> implements ILoanDAO {
     @Override
     public List<Loan> findAllByNextPaymentDate(Date nextPaymentDate, int diff, boolean nextnewest) throws SQLException {
         int newest=nextnewest?1:0;
-        String query="select * from loan when DATEDIFF(DATE_ADD(loan.approval_date, INTERVAL TIMESTAMPDIFF(MONTH ,loan.approval_date, now())+? MONTH),?)=?";
+        String query="select * from loan where DATEDIFF(DATE_ADD(loan.approval_date, INTERVAL TIMESTAMPDIFF(MONTH ,loan.approval_date, now())+? MONTH),?)=?";
         return executeSelect(query,newest,nextPaymentDate,diff);
+    }
+    @Override
+    public List<Loan> findAllByNextPaymentDate(int diff) throws SQLException {
+        String query="select * from loan where DATEDIFF(DATE_ADD(loan.approval_date, INTERVAL TIMESTAMPDIFF(MONTH ,loan.approval_date, now())+1 MONTH),now())=?";
+        return executeSelect(query,diff);
     }
 
 

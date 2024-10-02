@@ -10,11 +10,9 @@ The smaller device rules always should write below the bigger device rules
 Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Component
 */
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700");
-@import url('https://cdn-uicons.flaticon.com/2.3.0/uicons-thin-straight/css/uicons-thin-straight.css');
-@import url('https://cdn-uicons.flaticon.com/2.3.0/uicons-solid-rounded/css/uicons-solid-rounded.css');
-@import url(../plugins/animate/animate.min.css);
-@import url(../plugins/metismenu/css/metisMenu.min.css);
-@import url(../plugins/bootstrap-select/dist/css/bootstrap-select.min.css);
+@import url('https://cdn-uicons.flaticon.com/2.5.1/uicons-thin-straight/css/uicons-thin-straight.css');
+@import url('https://cdn-uicons.flaticon.com/2.5.1/uicons-solid-rounded/css/uicons-solid-rounded.css');
+@import url('https://cdn-uicons.flaticon.com/2.5.1/uicons-thin-rounded/css/uicons-thin-rounded.css');
 .gradient-1, .dropdown-mega-menu .ext-link.link-1 a, .morris-hover, .datamaps-hoverover {
   background-image: linear-gradient(230deg, #759bff, #843cf6); }
 
@@ -13345,4 +13343,18 @@ table.dataTable thead .sorting::after {
 }
 .text-green-700{
   color: #387038;
+}
+.select-custom {
+  position: relative;
+}
+.select-custom select {
+  display: none;
+}
+.select-custom .select {
+  width: 100%;
+  position: absolute;
+  z-index: 1;
+}
+.select-custom .content:focus~.select {
+  display: block;
 }

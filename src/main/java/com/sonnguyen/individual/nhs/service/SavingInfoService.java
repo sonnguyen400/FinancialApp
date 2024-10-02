@@ -3,6 +3,8 @@ package com.sonnguyen.individual.nhs.service;
 import com.sonnguyen.individual.nhs.constant.AccountStatus;
 import com.sonnguyen.individual.nhs.constant.TransactionStatus;
 import com.sonnguyen.individual.nhs.constant.TransactionType;
+import com.sonnguyen.individual.nhs.dao.idao.IAccountDAO;
+import com.sonnguyen.individual.nhs.dao.idao.ISavingDAO;
 import com.sonnguyen.individual.nhs.dao.impl.AccountDAOImp;
 import com.sonnguyen.individual.nhs.dao.impl.SavingDAOImp;
 import com.sonnguyen.individual.nhs.dao.core.DBTransaction;
@@ -23,9 +25,9 @@ import java.util.Optional;
 @Model
 public class SavingInfoService implements ISavingsInfoService {
     @Inject
-    SavingDAOImp savingDAO;
+    ISavingDAO savingDAO;
     @Inject
-    AccountDAOImp accountDAOImp;
+    IAccountDAO accountDAOImp;
     @Inject
     DBTransaction dbTransaction;
     @Inject
@@ -59,16 +61,22 @@ public class SavingInfoService implements ISavingsInfoService {
         return savingDAO.findAllMaturity();
     }
 
-
-    public Optional<SavingsInfo> withdrawEntire(SavingsInfo savingsInfo,Account linkedAccount,Account branchAccount,int beneficiaryAccountId){
+    @Override
+    public Optional<SavingsInfo> withdrawEntire(SavingsInfo savingsInfo, Account linkedAccount, Account branchAccount, int beneficiaryAccountId){
         BigDecimal assets=linkedAccount.getBalance();
         BigDecimal profit=savingsInfo.isMature()?calculateProfit(linkedAccount.getBalance(),savingsInfo.getInterestRate().intValue(),savingsInfo.getTerm()):BigDecimal.ZERO;
-        Transaction transactProfit=new Transaction();
-        transactProfit.setTransactionType(TransactionType.DISBURSEMENT.value);
-        transactProfit.setAmount(profit);
-        transactProfit.setStatus(TransactionStatus.PENDING.value);
-        transactProfit.setDescription("Profit for savings");
-        transactProfit.setAccountId(branchAccount.getId());
+        Optional<Transaction> transactProfit=Optional.empty();
+        if(profit.compareTo(BigDecimal.ZERO) > 0){
+            transactProfit=Optional.of(new Transaction()).map(transaction -> {
+                transaction.setTransactionType(TransactionType.DISBURSEMENT.value);
+                transaction.setAmount(profit);
+                transaction.setStatus(TransactionStatus.PENDING.value);
+                transaction.setDescription("Profit for savings");
+                transaction.setAccountId(branchAccount.getId());
+                return transaction;
+            });
+        }
+
 
         Transaction transactInit=new Transaction();
         transactInit.setTransactionType(TransactionType.DISBURSEMENT.value);
@@ -81,18 +89,19 @@ public class SavingInfoService implements ISavingsInfoService {
         transfer.setAccountId(beneficiaryAccountId);
         transfer.setMessage("Disbursement for savings");
 
-        String ref=transferTransactionService.init(transactProfit,transfer);
+        Optional<String> ref=transactProfit.map(transaction -> transferTransactionService.init(transaction,transfer));
         String ref1=transferTransactionService.init(transactInit,transfer);
 
         return Optional.ofNullable(dbTransaction.startTransaction(SavingsInfo.class, (connection -> {
-            transferTransactionService.transferCommit(ref);
+            ref.ifPresent(s -> transferTransactionService.transferCommit(s));
             transferTransactionService.transferCommit(ref1);
             accountDAOImp.updateAccountStatusByAccountId(connection, linkedAccount.getId(), AccountStatus.CLOSED);
             return savingsInfo;
         })));
     }
 
-    public Optional<SavingsInfo> rollOverPrinciple(SavingsInfo savingsInfo,Account linkedAccount,Account branchAccount,int beneficiaryAccountId){
+    @Override
+    public Optional<SavingsInfo> rollOverPrinciple(SavingsInfo savingsInfo, Account linkedAccount, Account branchAccount, int beneficiaryAccountId){
         BigDecimal profit=savingsInfo.isMature()?calculateProfit(linkedAccount.getBalance(),savingsInfo.getInterestRate().intValue(),savingsInfo.getTerm()):BigDecimal.ZERO;
         Transaction transactProfit=new Transaction();
         transactProfit.setTransactionType(TransactionType.DISBURSEMENT.value);
@@ -110,7 +119,8 @@ public class SavingInfoService implements ISavingsInfoService {
             return savingsInfo;
         })));
     }
-    public Optional<SavingsInfo> rollOverAll(SavingsInfo savingsInfo,Account linkedAccount,Account branchAccount){
+    @Override
+    public Optional<SavingsInfo> rollOverAll(SavingsInfo savingsInfo, Account linkedAccount, Account branchAccount){
         BigDecimal profit=savingsInfo.isMature()?calculateProfit(linkedAccount.getBalance(),savingsInfo.getInterestRate().intValue(),savingsInfo.getTerm()):BigDecimal.ZERO;
         Transaction transactProfit=new Transaction();
         transactProfit.setTransactionType(TransactionType.DISBURSEMENT.value);

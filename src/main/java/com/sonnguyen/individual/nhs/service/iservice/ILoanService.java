@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ILoanService{
+
     Optional<Loan> findById(int id);
     Loan updateStatusById(Integer id, LoanStatus status) throws SQLException, NotFoundException;
     Loan approveLoan(Integer id) throws SQLException, NotFoundException;
@@ -19,6 +20,6 @@ public interface ILoanService{
     Loan save(Loan loan);
     Collection<Loan> findAllByStatus(LoanStatus loanStatus);
     Collection<Loan> findAll();
-    List<Loan> findAllByNextPaymentDate(Date nextPaymentDate, int diff, boolean nextnewest);
+    List<Loan> findAllByNextPaymentDate(int diff);
 
 }

@@ -23,6 +23,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "loan/detail",urlPatterns = "/app/loan/detail")
 public class LoansDetailController extends HttpServlet {
@@ -41,11 +43,19 @@ public class LoansDetailController extends HttpServlet {
             LocalDateTime paymentDate=paymentdate.toLocalDate().atTime(LocalTime.MAX);
             long diff = ChronoUnit.DAYS.between(now,paymentDate);
             int unpaid=paymentService.unpaidMonth(loanId);
-            if(diff<3){
-                req.setAttribute("alert", new Alert(Message.Type.WARNING,"Your loan monthly payment are coming up",req.getContextPath()+"/app/loan/payment","Continue"));
-            }
-        }
 
+            List<Alert> alerts=new ArrayList<>();
+            if(diff<=3&&diff!=0){
+                alerts.add( new Alert(Message.Type.WARNING,"Your loan monthly payment are coming up"));
+            }
+            if(diff==0){
+                alerts.add(new Alert(Message.Type.INFO,"Today is monthly payment day",req.getContextPath()+"/app/loan/payment?id="+loan.getId(),"Continue"));
+            }
+            if(unpaid>=2){
+                alerts.add(new Alert(Message.Type.ERROR,"Your payment has late for "+(unpaid-1)+" months"));
+            }
+            req.setAttribute("alerts", alerts);
+        }
         req.getRequestDispatcher("/page/user/LoanDetail/page.jsp").forward(req, resp);
     }
 }

@@ -175,15 +175,15 @@ public class Loan {
                 ", disbursementAccountNumber='" + disbursementAccountNumber + '\'' +
                 '}';
     }
-    public BigDecimal interest(){
+    public BigDecimal paymentInterest(){
         return amount.multiply(interestRate).divide(BigDecimal.valueOf(100),4, RoundingMode.HALF_UP).divide(BigDecimal.valueOf(term),4, RoundingMode.HALF_UP);
     }
-    public BigDecimal principal(){
+    public BigDecimal paymentPrincipal(){
         return amount.divide(BigDecimal.valueOf(term),4, RoundingMode.HALF_UP);
     }
     public BigDecimal monthlyPayment(){
-        final BigDecimal principal=principal();
-        final BigDecimal interest=interest();
+        final BigDecimal principal=paymentPrincipal();
+        final BigDecimal interest=paymentInterest();
         return principal.add(interest);
     }
 
