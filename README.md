@@ -128,11 +128,11 @@ NoPasswordEncoder will be used if CDI doesn't find any appropriate PasswordEncod
 In this project, I'm using Argon as the default PasswordEncoder.
 
 ### Two-Factor Authentication {2FA}
-#### PIN
+#### OTP
 
 OTP sent via Email or can be observed by console (<span style="color: greenyellow">application.debug=true</span>)
 
-#### OTP
+#### PIN
 
 6-digit in length. 
 
